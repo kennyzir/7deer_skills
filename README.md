@@ -16,6 +16,7 @@
 | 3 | **rpg-stat-catalyst** | RPG 数值计算核心（属性加点 + 阈值计算） | 游戏类应用 |
 | 4 | **seo-auditor** | SEO 审计框架（检查清单 + 自动化脚本） | 任何网站 SEO 优化 |
 | 5 | **data-scraper-intent** | 数据提取 & 搜索意图分析（爬虫模式 + LLM Prompt） | SEO/数据采集工作流 |
+| 6 | **youtube-content-gen** | YouTube 内容生成器（视频转 SEO 页面） | 攻略/教程类站点 |
 
 ---
 

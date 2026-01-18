@@ -1,0 +1,144 @@
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Metadata } from 'next';
+import styles from './page.module.css';
+
+// 1. Metadata Generation
+export const metadata: Metadata = {
+    title: "{{ title }}",
+    description: "{{ description }}",
+    openGraph: {
+        title: "{{ title }}",
+        description: "{{ description }}",
+        type: 'article',
+        images: [
+            {
+                url: '/images/guides/{{ slug }}/thumbnail.webp',
+                width: 1200,
+                height: 630,
+                alt: "{{ title }}",
+            },
+        ],
+    },
+};
+
+// 2. Structured Data (JSON-LD)
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "{{ title }}",
+    "description": "{{ description }}",
+    "image": "https://devilhunternexus.com/images/guides/{{ slug }}/thumbnail.webp",
+    "author": {
+        "@type": "Organization",
+        "name": "Devil Hunter Nexus"
+    },
+    "mainEntity": [
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {% for faq in faqs %}
+                {
+                    "@type": "Question",
+                    "name": "{{ faq.question }}",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "{{ faq.answer }}"
+                    }
+                }{{ "," if not loop.last else "" }}
+                {% endfor %}
+            ]
+        }
+    ]
+};
+
+export default function GuidePage() {
+    return (
+        <div className="container mx-auto px-4 py-8 max-w-4xl">
+            {/* JSON-LD Injection */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
+
+            {/* Breadcrumb */}
+            <nav className="text-sm text-gray-400 mb-6">
+                <Link href="/" className="hover:text-white">Home</Link>
+                <span className="mx-2">/</span>
+                <Link href="/guides" className="hover:text-white">Guides</Link>
+                <span className="mx-2">/</span>
+                <span className="text-white">{{ title }}</span>
+            </nav>
+
+            {/* Header Section */}
+            <header className="mb-8">
+                <h1 className={styles.title}>{{ title }}</h1>
+                <p className={styles.description}>{{ description }}</p>
+                <div className="mt-4 flex gap-2">
+                    {% for tag in tags %}
+                    <span className="bg-gray-800 text-gray-300 px-3 py-1 rounded-full text-xs uppercase tracking-wider">
+                        {{ tag }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </header>
+
+            {/* Quick Answer Box */}
+            <div className={styles.quickAnswer}>
+                <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
+                    ⚡ Quick Answer
+                </h3>
+                <p>{{ quick_answer }}</p>
+            </div>
+
+            {/* Video Embed */}
+            <section className={styles.videoSection}>
+                <h2 className={styles.sectionTitle}>📺 Video Walkthrough</h2>
+                <div className={styles.videoWrapper}>
+                    <iframe
+                        src="https://www.youtube.com/embed/{{ video_id }}"
+                        title="{{ title }}"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+                    />
+                </div>
+            </section>
+
+            {/* Main Content Outline */}
+            <article className={styles.content}>
+                {% for section in outline %}
+                <section key="{{ loop.index }}" className="mb-8">
+                    <h2 className={styles.h2}>{{ section.h2 }}</h2>
+                    <ul className="list-disc pl-6 space-y-2 text-gray-300">
+                        {% for point in section.content_points %}
+                        <li>{{ point }}</li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                {% endfor %}
+            </article>
+
+            {/* FAQ Section */}
+            <section className="mt-12 bg-gray-900 p-6 rounded-xl border border-gray-800">
+                <h2 className={styles.h2}>Frequently Asked Questions</h2>
+                <div className="space-y-4">
+                    {% for faq in faqs %}
+                    <details className="group bg-black/40 p-4 rounded-lg">
+                        <summary className="flex justify-between items-center font-medium cursor-pointer list-none text-lg">
+                            <span>{{ faq.question }}</span>
+                            <span className="transition group-open:rotate-180">
+                                <svg fill="none" height="24" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                            </span>
+                        </summary>
+                        <p className="text-gray-400 mt-3 group-open:animate-fadeIn">
+                             {{ faq.answer }}
+                        </p>
+                    </details>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    );
+}
