@@ -1,0 +1,32 @@
+{
+    "seo": {
+        "gameName": "Blox Fruits",
+        "gameSlug": "blox-fruits",
+        "titleTemplate": "%s | Blox Fruits Codes & Wiki (Update 21)",
+        "descriptionTemplate": "Best %s guide for Blox Fruits. Updated for Update 21.",
+        "version": "Update 21",
+        "themeColor": "#ff0000"
+    },
+    "features": {
+        "codes": true,
+        "tierList": true,
+        "buildPlanner": false,
+        "valueCalculator": true
+    },
+    "routes": [
+        {
+            "path": "/codes",
+            "keyword": "blox fruits codes",
+            "priority": 1.0
+        },
+        {
+            "path": "/tier-list",
+            "keyword": "blox fruits tier list",
+            "priority": 0.9
+        }
+    ],
+    "socials": {
+        "discord": "https://discord.gg/bloxfruits",
+        "roblox": "https://www.roblox.com/games/2753915549/Blox-Fruits"
+    }
+}
