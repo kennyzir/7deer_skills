@@ -1,42 +1,19 @@
-import { SITE_URL } from '@/lib/constants';
+import { WithContext, Thing } from 'schema-dts';
 
-export default function StructuredData() {
-    const jsonLd = {
-        "@context": "https://schema.org",
-        "@graph": [
-            {
-                "@type": "WebSite",
-                "name": "YOUR_WEBSITE_NAME",
-                "alternateName": ["ALT_NAME_1", "ALT_NAME_2"],
-                "url": SITE_URL,
-                "description": "YOUR_WEBSITE_DESCRIPTION",
-                "potentialAction": {
-                    "@type": "SearchAction",
-                    "target": {
-                        "@type": "EntryPoint",
-                        "urlTemplate": `${SITE_URL}/search?q={search_term_string}`
-                    },
-                    "query-input": "required name=search_term_string"
-                }
-            },
-            {
-                "@type": "Organization",
-                "name": "YOUR_ORG_NAME",
-                "url": SITE_URL,
-                "logo": `${SITE_URL}/images/logo.png`,
-                "contactPoint": {
-                    "@type": "ContactPoint",
-                    "contactType": "customer support",
-                    "url": `${SITE_URL}/contact`
-                }
-            }
-        ]
-    };
+// Decoupled from lib/constants to ensure portability
+const DEFAULT_SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com';
 
+interface StructuredDataProps<T extends Thing> {
+    data: WithContext<T>;
+    id?: string;
+}
+
+export default function StructuredData<T extends Thing>({ data, id }: StructuredDataProps<T>) {
     return (
         <script
+            id={id}
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
         />
     );
 }
