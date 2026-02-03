@@ -1,39 +1,39 @@
 ---
 name: seo-auditor
-description: A comprehensive SEO audit framework and checklist for web projects. Includes a reusable checklist template and common validation rules.
+description: A comprehensive SEO audit framework and checklist for web projects. Includes a reusable checklist template, detailed standards, and common validation rules.
 ---
 
 # SEO Auditor
 
-A battle-tested SEO audit framework extracted from real-world projects. Use this to systematically review any new website or page for SEO compliance.
+A battle-tested SEO audit framework extracted from real-world high-traffic projects. Use this to systematically review any new website or page for SEO compliance.
 
 ## Resources Included
 
-1.  **`resources/checklist_template.md`**: A generalized Markdown checklist for auditing any page.
-2.  **`resources/audit_rules.js`**: A simple Node.js script to check common SEO issues (H1, Meta Tags, Canonical).
+1.  **[resources/seo_standards.md](resources/seo_standards.md)**: **The Core Knowledge Base**. Detailed guidelines on Metadata, Schema, Content, and Performance standards.
+2.  **[resources/checklist_template.md](resources/checklist_template.md)**: A generalized Markdown checklist for auditing any page.
+3.  **[resources/audit_rules.js](resources/audit_rules.js)**: A simple Node.js script to check common SEO issues (H1, Meta Tags, Canonical).
 
 ## Usage
 
-### 1. Manual Audit with Checklist
-Copy `resources/checklist_template.md` to your project (e.g., `AUDIT-NOTES.md`) and fill it out for each page/sprint.
+### 1. Manual Audit (The Golden Standard)
+For every significant page update or new feature:
 
-### 2. Automated Check (Basic)
-Run the `audit_rules.js` script against your built HTML files:
+1.  **Read the Standards**: Review `resources/seo_standards.md` to understand the *Why* and *How*.
+2.  **Create a Checklist**: Copy `resources/checklist_template.md` to your project (e.g., `docs/audits/PAGE_NAME_AUDIT.md`).
+3.  **Verify & Check**: Go through each item. Do not just tick the box—verify it against the standards.
+
+### 2. Automated Check (Sanity Check)
+Run the `audit_rules.js` script against your built HTML files to catch obvious errors:
 
 ```bash
+# Example
 node .agent/skills/seo-auditor/resources/audit_rules.js ./out/index.html
 ```
 
-This will check for:
-*   Missing or multiple `<h1>` tags
-*   Missing `<meta name="description">`
-*   Missing `<link rel="canonical">`
-*   `<title>` length (warn if < 30 or > 70 chars)
+## Quick Reference (Top 5 Rules)
 
-## Key Principles (from the Checklist)
-
-1.  **Title**: 50-60 chars, primary keyword first, unique per page.
-2.  **Description**: 120-160 chars, include CTA and numbers.
-3.  **Canonical URL**: Always set, use trailing slash consistently.
-4.  **Structured Data**: Use FAQPage (min 5 questions), HowTo, ItemList as appropriate.
-5.  **Internal Links**: Every page should have 3-6 related links. Avoid orphan pages.
+1.  **Title**: 50-60 chars, unique, dynamic date (e.g. "(June 2026)").
+2.  **Canonical**: ALWAYS set, ALWAYS use trailing slash (`/path/`).
+3.  **Schema**: Use `FAQPage` (5+ Qs) or `HowTo` to capture rich results.
+4.  **Internal Links**: Every page needs 3-6 outgoing links in a "Related" section.
+5.  **Performance**: HTML size < 150KB, use `<Image>` component.

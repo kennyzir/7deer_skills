@@ -1,7 +1,36 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+<<<<<<< HEAD
 import { DATA_ITEMS } from "@/data/items"; // You need to implement this
 import { CONFIG } from "@/lib/config"; // You need to implement this
+=======
+
+// [TEMPLATE INSTRUCTION]: Implement your data source
+// import { DATA_ITEMS } from "@/data/items"; 
+// import { CONFIG } from "@/lib/config";
+
+// Mock interfaces for type safety in template
+interface Item {
+    slug: string;
+    name: string;
+    description: string;
+    quickAnswer?: string;
+    image?: string;
+    stats?: Record<string, string | number>;
+}
+
+interface Config {
+    seo: {
+        titleTemplate: string;
+        descriptionTemplate: string;
+        version: string;
+    }
+}
+
+// [TEMPLATE INSTRUCTION]: Replace these mocks with real imports
+const DATA_ITEMS: Item[] = [];
+const CONFIG: Config = { seo: { titleTemplate: '%s | Game', descriptionTemplate: '%s Guide', version: '1.0' } };
+>>>>>>> 9f0d003 (feat(skills): update seo-auditor with checklist and sync all skills)
 
 // 1. Generate Static Params for SSG
 export async function generateStaticParams() {
@@ -10,9 +39,20 @@ export async function generateStaticParams() {
     }));
 }
 
+<<<<<<< HEAD
 // 2. Dynamic Metadata
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
     const item = DATA_ITEMS.find((p) => p.slug === params.slug);
+=======
+type Props = {
+    params: Promise<{ slug: string }>;
+};
+
+// 2. Dynamic Metadata
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    const { slug } = await params;
+    const item = DATA_ITEMS.find((p) => p.slug === slug);
+>>>>>>> 9f0d003 (feat(skills): update seo-auditor with checklist and sync all skills)
     if (!item) return {};
 
     const title = CONFIG.seo.titleTemplate.replace('%s', item.name);
@@ -30,8 +70,14 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 // 3. Page Component
+<<<<<<< HEAD
 export default function PSEOPage({ params }: { params: { slug: string } }) {
     const item = DATA_ITEMS.find((p) => p.slug === params.slug);
+=======
+export default async function PSEOPage({ params }: Props) {
+    const { slug } = await params;
+    const item = DATA_ITEMS.find((p) => p.slug === slug);
+>>>>>>> 9f0d003 (feat(skills): update seo-auditor with checklist and sync all skills)
     if (!item) notFound();
 
     return (
