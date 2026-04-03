@@ -1,0 +1,23 @@
+{
+  "gameName": "Kaizen",
+  "gameSlug": "kaizen",
+  "activeCodes": [
+    {
+      "code": "MahoKaizen!",
+      "reward": "2x Mastery EXP + 5 Vow Spins + 10 Clan Spins",
+      "conditions": "None"
+    },
+    {
+      "code": "CURSEDCOINS",
+      "reward": "10 Cursed Coins + 2x Raid Drops",
+      "expiryDate": "2026-04-15",
+      "conditions": "None"
+    }
+  ],
+  "expiredCodes": [
+    {
+      "code": "LUNAR2026",
+      "reward": "50 Spins + 5 Cursed Coins"
+    }
+  ]
+}

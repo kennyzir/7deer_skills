@@ -1,0 +1,32 @@
+{
+  "gameName": "Your Bizarre Adventure",
+  "gameSlug": "yba",
+  "activeCodes": [
+    {
+      "code": "GULLIBLE",
+      "reward": "5 Lucky Arrows + C-Moon Skin",
+      "conditions": "None"
+    },
+    {
+      "code": "6YEARS",
+      "reward": "2x EXP + 1 Lucky Arrow",
+      "expiryDate": "2026-04-30",
+      "conditions": "6th Anniversary Event"
+    },
+    {
+      "code": "PARAGONLUCK",
+      "reward": "1 Lucky Arrow",
+      "conditions": "None"
+    }
+  ],
+  "expiredCodes": [
+    {
+      "code": "CHRISTMAS2025",
+      "reward": "1 Lucky Arrow + Christmas Present"
+    },
+    {
+      "code": "5YEARS",
+      "reward": "2x EXP + 1 Lucky Arrow"
+    }
+  ]
+}
