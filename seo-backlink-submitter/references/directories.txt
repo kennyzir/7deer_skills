@@ -1,0 +1,35 @@
+# YourProduct Target Keywords Backlinks
+# Keywords: "AI agent skills", "AI skills marketplace", "agent skills"
+
+# === AI Skills / Agent Skills Marketplaces (Direct Competitors/Niches) ===
+https://aiskill.market/submit
+https://skillsllm.com/submit
+https://www.skillregistry.ai/submit
+https://mcpmarket.com/submit
+https://www.aiskillstore.com/submit
+
+# === Agent Skills Directories (Related) ===
+https://skillsdirectory.com/submit
+https://llmbase.ai/skills/submit
+https://aiagentsdirectory.com/submit
+https://fast-agent.ai/submit
+https://www.agenttools.ai/submit
+
+# === AI Tool Directories (Broader) ===
+https://www.producthunt.com/posts/new
+https://www.futurepedia.io/submit-tool
+https://www.futuretools.io/submit-a-tool
+https://aitoptools.com/submit
+https://www.toolpilot.ai/pages/submit-your-ai-tool
+
+# === Developer/Tools Directories ===
+https://www.producthunt.com/posts/new
+https://betalist.com/submissions/new
+https://www.launchingnext.com/submit/
+https://stackshare.io/submit
+https://devpost.com/software/new
+
+# === GitHub (For Awesome Lists) ===
+https://github.com/heilcheng/awesome-agent-skills
+https://github.com/ai-collection/ai-collection
+https://github.com/anthropics/skills

@@ -1,0 +1,22 @@
+# YourProduct Target Directories - AI/Tools Focus
+# Evaluated as potentially free
+
+# === Email submission (free) ===
+https://aitoolsdir.com/submit-ai-tool/
+
+# === Form submission (checking free tier) ===
+https://www.toolsland.ai/submit-ai-tool-free
+https://aitoolsdirectory.com/submit-tool
+https://airespo.com/submit-tool/
+https://aitoolshaven.com/submit-tool
+https://www.aitools-directory.com/submit-tool
+
+# === From existing list - high value ===
+https://www.nextool.ai/submit-a-tool/
+https://aitoolshunt.com/submit
+https://yaatd.com/submit
+https://www.aisuperhub.io/submit
+
+# === GitHub Awesome Lists ===
+https://github.com/heilcheng/awesome-agent-skills
+https://github.com/ai-collection/ai-collection
