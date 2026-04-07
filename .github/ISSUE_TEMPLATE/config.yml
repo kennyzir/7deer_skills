@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security report
+    url: https://github.com/kennyzir
+    about: Please report sensitive security issues privately through GitHub contact channels instead of filing a public issue.
