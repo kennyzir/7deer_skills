@@ -46,9 +46,45 @@ openclaw browser start --profile ~/Library/Application\ Support/Google/Chrome/De
 openclaw browser open "https://www.youtube.com/feed/subscriptions"
 ```
 
-### 定时任务场景注意
+### ⏰ 定时任务配置
 
-如果用 cron job 跑本 skill，需要确保 OpenClaw browser 的 profile 目录是固定的，不会被清空。建议使用专用 Chrome profile 目录（不要用 Default）。
+本 skill 支持每天自动执行。在 OpenClaw 中运行以下命令即可启用定时：
+
+```bash
+openclaw cron add \
+  --name "YouTube Game Keywords 日报" \
+  --schedule "0 10 * * *" \
+  --tz "Asia/Shanghai" \
+  --payload-kind agentTurn \
+  --payload-message "使用 youtube-game-keywords skill，执行 YouTube 订阅频道游戏关键词日报任务。按照 skill 完整流程执行：1. 先尝试运行官方脚本（超时则降级用 browser 抓 YouTube 订阅页）2. 整理游戏关键词日报 3. 发送飞书消息到飞书用户 4. 创建飞书云文档并写入完整报告 5. 在飞书消息里附上文档链接" \
+  --payload-timeout 900 \
+  --delivery-mode announce \
+  --delivery-channel feishu
+```
+
+**或手动创建 Cron Job（JSON）：**
+```json
+{
+  "name": "YouTube Game Keywords 日报",
+  "schedule": { "kind": "cron", "expr": "0 10 * * *", "tz": "Asia/Shanghai" },
+  "sessionTarget": "isolated",
+  "payload": {
+    "kind": "agentTurn",
+    "message": "使用 youtube-game-keywords skill，执行 YouTube 订阅频道游戏关键词日报任务。",
+    "timeoutSeconds": 900
+  },
+  "delivery": {
+    "mode": "announce",
+    "channel": "feishu",
+    "to": "user:YOUR_OPEN_ID",
+    "accountId": "default"
+  }
+}
+```
+
+将 `YOUR_OPEN_ID` 替换为你的飞书 open_id。可选调整：
+- `expr`: `"0 10 * * *"` → 改为其他时间（如 `"0 18 * * *"` 为每天 18:00）
+- `timeoutSeconds`: `900` → 15分钟足够
 
 ---
 
