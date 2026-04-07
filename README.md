@@ -8,6 +8,23 @@ Built from real project work, this repository packages reusable skills with `SKI
 [![Skills](https://img.shields.io/badge/skills-22-blue.svg)](#skill-catalog)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](./CONTRIBUTING.md)
 
+## 中文说明
+
+这是一个面向国内独立出海者的开源技能库，重点服务这些实际场景：
+
+- SEO 自动化和内容站搭建
+- AI agent 工作流复用
+- Next.js / Python 项目的脚本、模板和技能沉淀
+- 游戏站、工具站、内容站的快速启动
+
+这个仓库不是单纯的 prompt 收集，而是把真实项目里反复使用的能力整理成可复用模块。每个 skill 通常都包含：
+
+- `SKILL.md` 使用说明
+- 可直接复用的 scripts / templates / references
+- 适合复制到项目中的目录结构
+
+如果你正在做独立站、出海内容站、SEO 自动化、AI 工具站，或者想把自己的工作流沉淀成可复用技能库，这个仓库会更适合你。
+
 ## Start Here
 
 - Read the [P0 Skills](#p0-skills) first
@@ -37,6 +54,8 @@ This repository is designed for builders working on:
 - content-heavy Next.js projects
 - Python automation pipelines
 - Roblox and game utility sites
+
+For Chinese indie hackers and solo builders shipping globally, this repo is especially useful for reusable SEO systems, content operations, and project bootstrapping.
 
 ## P0 Skills
 
