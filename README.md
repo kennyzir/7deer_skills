@@ -18,7 +18,8 @@
 | 5 | **seo-auditor** | SEO 审计框架（检查清单 + 自动化脚本） | 任何网站 SEO 优化 |
 | 6 | **data-scraper-intent** | 数据提取 & 搜索意图分析（爬虫模式 + LLM Prompt） | SEO/数据采集工作流 |
 | 7 | **youtube-content-gen** | YouTube 内容生成器（视频转 SEO 页面） | 攻略/教程类站点 |
-| 8 | **favicon-icon-generator** | Favicon & Icon 生成器（SVG + PWA + 自动化） | Web 应用图标系统 |
+| 8 | **youtube-game-keywords** | YouTube 订阅频道游戏关键词提取 | 内容创作 / 游戏赛道 |
+| 9 | **favicon-icon-generator** | Favicon & Icon 生成器（SVG + PWA + 自动化） | Web 应用图标系统 |
 | 9 | **gemini-thinking-protocol** | 核心认知引擎（第一性原理 + 系统思维） | 复杂需求分析 |
 | 10 | **plugin-architect** | AI Skills/Plugins 构建标准方法论 | 创建新技能 |
 | 11 | **roblox-site-architect** | Roblox 游戏工具站 SEO 架构 | Roblox 游戏网站 |
@@ -66,6 +67,7 @@ git submodule add https://github.com/kennyzir/7deer_skills.git .agent/skills
 ├── seo-auditor/                   # SEO 审计框架
 ├── seo-backlink-submitter/        # 批量目录提交工具
 ├── seo-link-strategy/             # 外链策略生成器
+├── youtube-game-keywords/        # YouTube 订阅频道游戏关键词提取
 └── youtube-content-gen/           # YouTube 内容生成器
 ```
 
@@ -79,6 +81,9 @@ git submodule add https://github.com/kennyzir/7deer_skills.git .agent/skills
 ---
 
 ## 📝 更新日志
+
+### 2026-04-07
+- 添加 youtube-game-keywords（YouTube 订阅频道游戏关键词提取）
 
 ### 2026-04-04
 - 添加 backlink-discovery（外链机会发现引擎）
