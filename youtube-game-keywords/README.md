@@ -1,13 +1,16 @@
-# YouTube Game Keywords — 独立运行版
+# YouTube Game Keywords — OpenClaw Skill 版
 
-本目录包含可**独立运行**的脚本版本。
+本 skill 有两种使用方式：
+
+1. **OpenClaw Agent 模式**（推荐）：Agent 读 SKILL.md 自动执行全流程
+2. **Python 脚本模式**：直接运行 `analyze_keywords.py`（抓取仍需 openclaw CLI）
 
 ## 文件说明
 
 | 文件 | 说明 |
 |------|------|
 | `SKILL.md` | OpenClaw Skill 标准格式（供 Agent 调用） |
-| `README.md` | 本文档（独立运行说明） |
+| `README.md` | 本文档（含 Python 脚本模式说明） |
 | `scripts/fetch_subscriptions.sh` | 通过 OpenClaw Agent 抓取 YouTube 订阅（需 openclaw CLI） |
 | `scripts/analyze_keywords.py` | 纯 Python 游戏关键词提取（无需 API key） |
 
