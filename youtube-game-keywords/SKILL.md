@@ -4,6 +4,7 @@ description: |
   YouTube 订阅频道游戏关键词提取工具。自动抓取订阅频道视频，识别游戏关键词，
   归类为 Roblox / 独立游戏 / 主机PC 等赛道，生成结构化日报。
   触发词：YouTube 游戏关键词日报 / YouTube 订阅源 / 游戏热度 / YouTube game keywords。
+  附有独立运行脚本，详见 README.md。
 ---
 
 # YouTube Game Keywords Skill
@@ -14,14 +15,13 @@ description: |
 
 ## 🚀 快速开始
 
-### 前提条件
+### 前置要求
 
 | 依赖 | 说明 |
 |------|------|
 | **OpenClaw** | 本 skill 运行于 OpenClaw 环境（https://openclaw.ai） |
 | **飞书 Bot** | 需要已配置好的飞书 Bot 和 `feishu_doc` / `message` 工具权限 |
-| **Browser 工具** | 用于降级抓取（需 Chromium 内核浏览器） |
-| **可选：本地脚本** | 如有 `run_openclaw_subscriptions_hot_games.sh` 脚本可提升抓取效率 |
+| **Browser 工具** | 用于抓取 YouTube 订阅页（需 Chromium 内核浏览器） |
 
 ### 飞书 Bot 所需权限
 
@@ -40,9 +40,8 @@ description: |
 | 变量 | 说明 | 必需 |
 |------|------|------|
 | `FEISHU_TARGET_USER` | 飞书通知目标用户的 open_id | 可选（默认发给当前对话用户） |
-| `YOUTUBE_SUBS_SCRIPT_DIR` | YouTube 订阅抓取脚本所在目录 | 可选（未配置则用 browser 降级方案） |
 
-### 定时任务配置（可选）
+### 定时任务配置
 
 如需每天自动执行，可在 OpenClaw 中创建 cron job：
 
@@ -61,22 +60,26 @@ description: |
 
 ---
 
+## 📁 技能文件说明
+
+本 skill 包含以下文件（见 skill 压缩包）：
+
+```
+youtube-game-keywords/
+├── SKILL.md                        # Skill 标准格式（本文件）
+├── README.md                       # 独立运行说明
+└── scripts/
+    ├── fetch_subscriptions.sh       # OpenClaw Agent 抓取脚本（chmod +x）
+    └── analyze_keywords.py          # 纯 Python 关键词分析（无需 API key）
+```
+
+---
+
 ## 📋 执行流程
 
-### Step 1：尝试运行本地脚本（如已配置）
+### Step 1：Browser 抓取 YouTube 订阅页
 
-```bash
-cd "$YOUTUBE_SUBS_SCRIPT_DIR" && zsh scripts/run_openclaw_subscriptions_hot_games.sh
-```
-
-读取生成的报告：
-```bash
-cat "$YOUTUBE_SUBS_SCRIPT_DIR/data/reports/openclaw_subscriptions_digest.txt"
-```
-
-如果脚本超时（SIGKILL/exit code != 0）或 `YOUTUBE_SUBS_SCRIPT_DIR` 未配置，立即切换 Step 2。
-
-### Step 2：Browser 降级抓取
+使用 browser 工具打开并抓取订阅频道：
 
 ```javascript
 browser(action=open, url="https://www.youtube.com/feed/subscriptions")
@@ -87,21 +90,36 @@ browser(action=open, url="https://www.youtube.com/feed/subscriptions")
 browser(action=snapshot, refs="aria")
 ```
 
-解析页面中的视频列表，提取：视频标题、频道名、播放量、上线日期。
+解析页面中的视频列表，提取：
+- `title`：视频标题
+- `channel_name`：频道名
+- `view_text`：播放量（如 "123K views"）
+- `published_text`：发布时间（如 "2 days ago"）
+- `url`：视频链接
 
-> ⚠️ Browser 方案需要 YouTube 账号处于登录态，且页面需滑动加载才能抓全量数据。
+> ⚠️ 需要 YouTube 账号处于登录态，页面需多次滑动（3-5次）加载更多内容。
 
-### Step 3：识别游戏关键词
+### Step 2：识别游戏关键词
+
+使用 `scripts/analyze_keywords.py` 进行分类（可选，纯规则无需 API key）：
+
+```bash
+python3 scripts/analyze_keywords.py data/videos.json --output data/report.txt
+```
+
+或直接用 Agent 自己做 LLM 分类，输出结构化 JSON。
+
+游戏分类：
 
 | 分类 | 说明 |
 |------|------|
 | Roblox | Roblox 相关内容 |
-| 独立游戏 | 单机/独立制作游戏 |
+| 独立游戏 | Deckbuilder / Roguelike / Horror / Adventure 等 |
 | 主机/PC 大作 | 3A/主流游戏 |
 | 直播 | Twitch/直播相关 |
 | 其他 | 不属于以上类别 |
 
-### Step 4：整理日报格式
+### Step 3：整理日报格式
 
 ```
 📺 YouTube 订阅频道日报 — YYYY-MM-DD
@@ -124,28 +142,46 @@ browser(action=snapshot, refs="aria")
 | 游戏 | 频道 | 播放 | 猎奇点 |
 ```
 
-### Step 5：发送飞书消息
+### Step 4：发送飞书消息
 
 ```javascript
 message(action=send, channel="feishu", target="user:$FEISHU_TARGET_USER", message=日报全文)
 ```
 
-### Step 6：创建飞书云文档
+### Step 5：创建飞书云文档
 
 ```javascript
 feishu_doc(action=create, title="YouTube 订阅频道日报 YYYY-MM-DD", owner_open_id="$FEISHU_TARGET_USER")
 feishu_doc(action=write, doc_token=<创建的文档token>, content=完整报告内容)
 ```
 
-### Step 7：在飞书消息里附上文档链接
+### Step 6：在飞书消息里附上文档链接
+
+---
+
+## 🔧 独立运行（无需 Agent）
+
+如果想在命令行直接运行，不通过 OpenClaw Agent：
+
+```bash
+# 1. 抓取数据（需要 openclaw CLI）
+chmod +x scripts/fetch_subscriptions.sh
+./scripts/fetch_subscriptions.sh ./data/videos.json
+
+# 2. 分析关键词
+python3 scripts/analyze_keywords.py ./data/videos.json --output ./data/report.txt
+
+# 3. 查看报告
+cat ./data/report.txt
+```
 
 ---
 
 ## ⚠️ 注意事项
 
-1. **Browser 降级方案**：需要 YouTube 登录态，建议优先使用本地脚本方案
-2. **脚本超时**（约 60s）时自动切换 browser 降级方案，不要等
+1. **YouTube 登录态**：Browser 方案需要 YouTube 登录态
+2. **播放量**：Browser 显示多少就填多少，不强制要求
 3. **播放量 >100K** 的内容优先呈现
 4. **无游戏内容时**：注明"今日订阅频道无游戏相关更新"
-5. **本 skill 不包含任何 API Key**，所有外部依赖通过环境变量或本地脚本接入
-6. **open_id 获取**：飞书用户的 open_id 可在飞书开发者工具中查看，或在 Bot 收到消息时从事件payload中获取
+5. **open_id 获取**：飞书用户 open_id 可在 Bot 收到消息时从事件 payload 中获取
+6. **本 skill 不包含任何 API Key**，所有外部依赖通过环境变量或本地脚本接入
