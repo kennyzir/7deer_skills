@@ -5,3 +5,19 @@ Thumbs.db
 *.swo
 .idea/
 .vscode/
+
+# Project-specific data (keep private)
+backlink-discovery/memory/*/
+!backlink-discovery/memory/README.md
+
+seo-backlink-submitter/targets/*.json
+seo-backlink-submitter/targets/*.txt
+seo-backlink-submitter/targets/*.md
+!seo-backlink-submitter/targets/README.md
+
+# Internal project reports
+*COMPLETION*.md
+*REPORT*.md
+*SUMMARY*.md
+*_plan*.md
+*_todo*.md
