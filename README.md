@@ -4,11 +4,29 @@ An open-source skill library for SEO automation, content pipelines, and AI agent
 
 Built from real project work, this repository packages reusable skills with `SKILL.md` docs, scripts, templates, and references you can copy into your own projects.
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
+[![Skills](https://img.shields.io/badge/skills-22-blue.svg)](#skill-catalog)
+[![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](./CONTRIBUTING.md)
+
+## Start Here
+
+- Read the [P0 Skills](#p0-skills) first
+- Jump to the [Top Use Cases](#top-use-cases)
+- Clone the repo from [Quick Start](#quick-start)
+- Review [Contributing](./CONTRIBUTING.md) and [Security](./SECURITY.md)
+
 ## Why Star This Repo
 
 - Turn Google Trends data into production-ready SEO page workflows
 - Generate game code pages in minutes instead of rebuilding the same templates
 - Reuse AI agent, scraping, and content automation skills across projects
+
+## What You Get
+
+- `SKILL.md` instructions for each reusable unit
+- scripts, templates, and reference files that are usable in real projects
+- modular top-level skills you can copy selectively
+- a public repo structure designed for reuse instead of one-off project code
 
 ## Quick Value
 
@@ -118,6 +136,20 @@ flowchart LR
 
 7Deer Skills is a reusable library of practical skills extracted from real projects. Instead of starting from scratch, you can reuse agent workflows, SEO automation patterns, content generation modules, scraping utilities, and Next.js/Python building blocks across projects.
 
+## How To Use This Repo
+
+### Use one skill
+
+Copy a single top-level skill directory into your project and follow its `SKILL.md`.
+
+### Use it as a shared skills repo
+
+Clone the whole repository into `.agent/skills` so the same skill set can be reused across projects.
+
+### Use it as a reference library
+
+Browse the scripts, prompts, templates, and references to adapt the parts you need.
+
 ## Skill Catalog
 
 ### SEO and Content
@@ -205,6 +237,15 @@ git submodule add https://github.com/kennyzir/7deer_skills.git .agent/skills
 ### Copy a Single Skill
 
 If you only need one workflow, copy that skill directory into your own project and follow its `SKILL.md`.
+
+## Good First Skills
+
+If you're new to the repository, start with:
+
+- `google-trends-to-pages` for SEO workflow design
+- `multi-game-codes-hub` for page generation patterns
+- `python-agent-engine` for reusable agent loops
+- `nextjs-seo-booster` for lightweight Next.js SEO integration
 
 ## How to Evaluate a Skill
 
