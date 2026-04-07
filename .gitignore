@@ -21,3 +21,4 @@ seo-backlink-submitter/targets/*.md
 *SUMMARY*.md
 *_plan*.md
 *_todo*.md
+!.github/ISSUE_TEMPLATE/bug_report.md
