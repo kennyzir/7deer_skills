@@ -39,20 +39,52 @@ description: |
 |------|------|------|
 | `FEISHU_TARGET_USER` | 飞书通知目标用户的 open_id | 可选（默认发给当前对话用户） |
 
-### 定时任务配置
+### ⏰ 定时任务配置
 
+本 skill 支持设置为每天自动执行。在 OpenClaw 中创建以下 cron job 即可：
+
+**创建命令：**
+```
+openclaw cron add \
+  --name "YouTube Game Keywords 日报" \
+  --schedule "0 10 * * *" \
+  --tz "Asia/Shanghai" \
+  --payload-kind agentTurn \
+  --payload-message "使用 youtube-game-keywords skill，执行 YouTube 订阅频道游戏关键词日报任务。按照 skill 完整流程执行：1. 先尝试运行官方脚本（超时则降级用 browser 抓 YouTube 订阅页）2. 整理游戏关键词日报 3. 发送飞书消息到飞书用户 4. 创建飞书云文档并写入完整报告 5. 在飞书消息里附上文档链接" \
+  --payload-timeout 900 \
+  --delivery-mode announce \
+  --delivery-channel feishu
+```
+
+
+**完整 Cron Job JSON（手动创建时使用）：**
 ```json
 {
   "name": "YouTube Game Keywords 日报",
   "schedule": { "kind": "cron", "expr": "0 10 * * *", "tz": "Asia/Shanghai" },
+  "sessionTarget": "isolated",
   "payload": {
     "kind": "agentTurn",
-    "message": "使用 youtube-game-keywords skill，执行 YouTube 订阅频道游戏关键词日报任务。",
+    "message": "使用 youtube-game-keywords skill，执行 YouTube 订阅频道游戏关键词日报任务。按照 skill 完整流程执行：1. 先尝试运行官方脚本（超时则降级用 browser 抓 YouTube 订阅页）2. 整理游戏关键词日报 3. 发送飞书消息到飞书用户 4. 创建飞书云文档并写入完整报告 5. 在飞书消息里附上文档链接",
     "timeoutSeconds": 900
   },
-  "delivery": { "mode": "announce", "channel": "feishu" }
+  "delivery": {
+    "mode": "announce",
+    "channel": "feishu",
+    "to": "user:YOUR_OPEN_ID",
+    "accountId": "default",
+    "bestEffort": true
+  }
 }
 ```
+
+**参数说明：**
+| 参数 | 值 | 说明 |
+|------|-----|------|
+| `schedule.expr` | `0 10 * * *` | 每天 10:00 执行，可改为其他时间 |
+| `delivery.to` | `user:ou_xxxx` | 替换为接收通知的飞书用户 open_id |
+| `timeoutSeconds` | `900` | 15 分钟超时，覆盖 browser 抓取耗时 |
+| `sessionTarget` | `isolated` | 在独立 session 中运行，不影响主对话 |
 
 ---
 
