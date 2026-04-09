@@ -221,7 +221,7 @@ next-generation, best-in-class, world-class
 
 用户说"生成本周的推文"，按内容日历格式一次性生成 5-7 条，标注每天的支柱和话题。
 
-### 方式四：回复推文链接（新增）
+### 方式四：回复 Twitter/X 帖子链接
 
 当用户发送 Twitter/X 帖子链接（如 `https://x.com/username/status/123` 或 `https://twitter.com/...`）时：
 
@@ -254,7 +254,7 @@ next-generation, best-in-class, world-class
 
 **回复示例：**
 
-原帖：「the best SEO is just writing what people actually search for instead of keyword-stuffing your way to nowhere」（某 SEO guru）
+原帖：「the best SEO is just writing what people actually search for」（某 SEO guru）
 
 Null Axiom 回复：
 ```
@@ -265,23 +265,88 @@ they do it anyway.
 → Null Axiom
 ```
 
-原帖：「i spent 3 months building in public. 0 customers. learned a lot tho!」（独立开发者）
+---
 
-Null Axiom 回复：
+### 方式五：回复 Reddit 帖子链接
+
+当用户发送 Reddit 帖子链接（如 `https://reddit.com/r/subreddit/comments/...`）时：
+
+**Step 1 — 读取帖子内容**
+使用 `browser` 工具（profile=openclaw）打开帖子链接，获取：
+- 帖子标题、作者、正文内容
+- 帖子所属社区（r/subreddit）
+- 评分、评论数
+
+**Step 2 — 提取核心观点和主要内容**
+
+在回复草稿之前，**必须先输出帖子摘要**，格式：
+
 ```
-learning is fine.
-but 3 months of learning without one paying customer is a luxury.
+📌 帖子摘要
+
+社区：r/xxx
+标题：xxx
+作者：u/xxx | 评分：xxx | 评论：xxx
+
+核心观点：
+[1-3句话概括帖子在说什么]
+
+主要内容：
+[帖子正文的关键内容，3-5个要点]
+
+情感倾向：[讨论/提问/分享/炫耀/抱怨]
+Null Axiom 可切入角度：
+[根据五大支柱判断 Null Axiom 会怎么回应这个帖子]
+```
+
+**Step 3 — 生成回复草稿**
+
+Reddit 回复比 Twitter 更长（1-5句），更需要有实质内容。格式：
+
+```
+[回复内容，2-4句，符合 Null Axiom 调性]
+
+—
+[可选的锐利一句话或钩子]
 
 → Null Axiom
 ```
 
-原帖：「our AI agent achieved 95% accuracy on benchmark X!」（AI 创业公司）
+Reddit 回复调性：
+- 比 Twitter 更像在跟人认真讨论
+- 可以稍微长一点（50-280 字符）
+- 但仍然是短句，不要写成文章
+- 可以带 r/subreddit 的语境（Reddit 用户喜欢社区特定梗）
+
+**回复示例：**
+
+原帖（r/Entrepreneur）：「I spent 6 months building my SaaS. Launched today. Zero customers. What did I do wrong?」
+
+帖子摘要：
+```
+社区：r/Entrepreneur
+标题：I spent 6 months building my SaaS. Zero customers on launch day.
+作者：u/xxx | 评分：2.3k | 评论：347
+
+核心观点：花了6个月做产品，上线当天0用户，问自己做错了什么。
+
+主要内容：
+• 6个月全职开发，没有早鸟用户
+• 没有做任何推广，上线当天直接公开
+• 感觉自己产品很好，但没人来
+• 在问做错了什么
+
+情感倾向：沮丧/求助
+Null Axiom 可切入角度：从「产品够好就会有人」的假设反驳，6个月不做用户验证才是核心问题（独立开发哲学支柱）
+```
 
 Null Axiom 回复：
 ```
-benchmark accuracy and real-world accuracy are different things.
-ask them for 100 paying customers.
-then we'll talk.
+six months without one paying user isn't building in stealth.
+it's building blind.
+
+the product didn't fail to launch.
+you launched without finding the problem to solve first.
 
 → Null Axiom
 ```
