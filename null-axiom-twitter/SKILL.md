@@ -225,8 +225,18 @@ next-generation, best-in-class, world-class
 
 当用户发送 Twitter/X 帖子链接（如 `https://x.com/username/status/123` 或 `https://twitter.com/...`）时：
 
-**Step 1 — 读取帖子内容**
-使用 `browser` 工具（profile=openclaw）打开帖子链接，获取帖子正文、作者、互动数据。
+**⚠️ 强制要求：必须读完整篇帖子**
+
+在生成任何回复之前，必须做到：
+1. 用 `browser` 打开帖子链接
+2. 用 `snapshot` 读取完整帖子标题（H1）和正文内容
+3. 确认不是 URL slug 截断导致的错误标题（Reddit 链接经常只显示 URL 的一部分）
+4. 读取至少 2-3 条高票评论内容
+5. **禁止**在未读完全部内容前生成回复
+
+如果帖子标题看起来不完整（如 Reddit URL slug 截断），换一个方式访问：
+- 去掉 `?` 后参数重新访问
+- 直接读取页面 `<h1>` 标签内容
 
 **Step 2 — 分析帖子核心观点**
 识别：
