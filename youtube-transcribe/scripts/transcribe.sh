@@ -1,16 +1,23 @@
 #!/bin/bash
 # youtube-transcribe workflow script
 # Usage: ./transcribe.sh <youtube_url> [language]
-# Requires: yt-dlp, ffmpeg (conda), whisper CLI
+# Requires: yt-dlp, ffmpeg (conda env), whisper CLI
+# PATH setup: /tmp/miniforge/bin:$(python3 -m site --user-base)/bin
 
 set -e
 
 export PATH="/tmp/miniforge/bin:$(python3 -m site --user-base)/bin:$PATH"
+
 WORKSPACE="${WORKSPACE:-./workspace}"
 TODAY=$(date +%Y-%m-%d)
 MEMORY_FILE="${WORKSPACE}/memory/${TODAY}.md"
 AUDIO_DIR="/tmp/yt_audio"
 mkdir -p "${AUDIO_DIR}"
+
+# Dynamic tool discovery
+YTDLP=$(command -v yt-dlp 2>/dev/null || echo "$(python3 -m site --user-base)/bin/yt-dlp")
+FFMPEG=$(command -v ffmpeg 2>/dev/null || echo "/tmp/miniforge/bin/ffmpeg")
+WHISPER=$(command -v whisper 2>/dev/null || echo "$(python3 -m site --user-base)/bin/whisper")
 
 URL="$1"
 LANG="${2:-en}"
@@ -30,39 +37,62 @@ echo "[*] Video ID: ${VIDEO_ID}"
 
 # Step 2: Get video metadata
 echo "[*] Fetching video metadata..."
-TITLE=$(yt-dlp --extractor-args "youtube:player_client=android" \
+TITLE=$($YTDLP --extractor-args "youtube:player_client=android" \
   --print title --no-warnings "https://www.youtube.com/watch?v=${VIDEO_ID}" 2>/dev/null || echo "Unknown")
-CHANNEL=$(yt-dlp --extractor-args "youtube:player_client=android" \
+CHANNEL=$($YTDLP --extractor-args "youtube:player_client=android" \
   --print channel --no-warnings "https://www.youtube.com/watch?v=${VIDEO_ID}" 2>/dev/null || echo "Unknown")
-DURATION=$(yt-dlp --extractor-args "youtube:player_client=android" \
+DURATION=$($YTDLP --extractor-args "youtube:player_client=android" \
   --print duration_string --no-warnings "https://www.youtube.com/watch?v=${VIDEO_ID}" 2>/dev/null || echo "Unknown")
 echo "[*] Title: ${TITLE}"
 echo "[*] Channel: ${CHANNEL}"
 echo "[*] Duration: ${DURATION}"
 
-# Step 3: Download audio
+# Step 3: Download audio (with android → web fallback)
 AUDIO_FILE="${AUDIO_DIR}/${VIDEO_ID}.mp3"
-if [ -f "${AUDIO_DIR}/${VIDEO_ID}.mp4" ]; then
-  echo "[*] MP4 already exists, converting to MP3..."
-  ffmpeg -i "${AUDIO_DIR}/${VIDEO_ID}.mp4" -vn -acodec libmp3lame -q:a 2 "${AUDIO_FILE}" -y 2>/dev/null
-elif [ ! -f "${AUDIO_FILE}" ]; then
-  echo "[*] Downloading audio..."
-  yt-dlp -x --audio-format mp3 --audio-quality 0 \
+MP4_FILE="${AUDIO_DIR}/${VIDEO_ID}.mp4"
+
+if [ -f "${MP4_FILE}" ] || [ -f "${AUDIO_FILE}" ]; then
+  echo "[*] Audio file already exists, skipping download."
+else
+  echo "[*] Downloading audio (trying android client first)..."
+  DOWNLOAD_LOG=$($YTDLP -x --audio-format mp3 --audio-quality 0 \
     --extractor-args "youtube:player_client=android" \
+    -f "best[ext=mp4]/best" \
     -o "${AUDIO_DIR}/${VIDEO_ID}.%(ext)s" \
-    "https://www.youtube.com/watch?v=${VIDEO_ID}" 2>&1 | grep -v "^Deprecated\|^Warning"
+    "https://www.youtube.com/watch?v=${VIDEO_ID}" 2>&1 || true)
+
+  # Check if android failed (GVS PO Token required)
+  if [ ! -f "${MP4_FILE}" ] && [ ! -f "${AUDIO_FILE}" ]; then
+    echo "[*] Android client failed, trying web client..."
+    $YTDLP -x --audio-format mp3 --audio-quality 0 \
+      -o "${AUDIO_DIR}/${VIDEO_ID}.%(ext)s" \
+      "https://www.youtube.com/watch?v=${VIDEO_ID}" 2>&1 | grep -v "^Deprecated\|^NotOpenSSL\|^Warning:"
+  fi
+
+  # If still no audio, exit with error
+  if [ ! -f "${MP4_FILE}" ] && [ ! -f "${AUDIO_FILE}" ]; then
+    echo "Error: Audio download failed. Check yt-dlp output above."
+    exit 1
+  fi
 fi
 
-# Step 4: Transcribe
+# Step 4: Convert to MP3 if needed
+if [ -f "${MP4_FILE}" ]; then
+  echo "[*] Converting MP4 to MP3..."
+  $FFMPEG -i "${MP4_FILE}" -vn -acodec libmp3lame -q:a 2 "${AUDIO_FILE}" -y 2>/dev/null
+  rm -f "${MP4_FILE}"
+fi
+
+# Step 5: Transcribe
 TRANSCRIPT_FILE="${AUDIO_DIR}/${VIDEO_ID}_transcript.txt"
 if [ ! -f "${TRANSCRIPT_FILE}" ]; then
-  echo "[*] Transcribing (this may take a few minutes)..."
-  whisper "${AUDIO_FILE}" \
+  echo "[*] Transcribing (model=tiny, lang=${LANG})..."
+  $WHISPER "${AUDIO_FILE}" \
     --model tiny \
     --language "${LANG}" \
     --output_dir "${AUDIO_DIR}" \
     --output_format txt 2>&1 | grep -v "^Deprecated\|^UserWarning"
-  # Rename output if whisper uses a different naming pattern
+  # Rename whisper output to expected path
   [ -f "${AUDIO_DIR}/${VIDEO_ID}.txt" ] && mv "${AUDIO_DIR}/${VIDEO_ID}.txt" "${TRANSCRIPT_FILE}"
 fi
 
@@ -74,9 +104,8 @@ fi
 TRANSCRIPT=$(cat "${TRANSCRIPT_FILE}")
 echo "[*] Transcript ready (${#TRANSCRIPT} chars)"
 
-# Step 5: Save to memory
+# Step 6: Save to memory
 MEMORY_ENTRY="
-
 ## YouTube 转录: ${TITLE}
 
 - **URL**: https://www.youtube.com/watch?v=${VIDEO_ID}
