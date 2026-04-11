@@ -1,6 +1,6 @@
-# 🛠️ 7Deer Skills — Agent Skills 开放标准技能库
+﻿# 🛠️ 7Deer Skills — Agent Skills 开放标准技能库
 
-> 24 个可复用的 AI Agent 技能模块，基于 [Agent Skills 开放标准](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)构建。
+> 25 个可复用的 AI Agent 技能模块，基于 [Agent Skills 开放标准](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)构建。
 > 克隆到项目中，你的 AI Agent 即可自动发现并加载这些能力。
 
 这是一个开源技能库，包含了从实际项目中提炼出来的可复用代码模块和指令模板。
@@ -23,7 +23,7 @@
 🧩 **不是 prompt 收集，是可执行的工作流** — 每个技能都包含 `SKILL.md` 文档 + 可直接运行的脚本 / 模板 / 参考文件。不是告诉你「应该怎么做」，而是直接帮你做。
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
-[![Skills](https://img.shields.io/badge/skills-24-blue.svg)](#-完整技能清单)
+[![Skills](https://img.shields.io/badge/skills-25-blue.svg)](#-完整技能清单)
 [![Agent Skills Standard](https://img.shields.io/badge/standard-Agent_Skills-8A2BE2.svg)](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](./CONTRIBUTING.md)
 
@@ -107,6 +107,7 @@ cp -r 7deer_skills/google-trends-to-pages .agent/skills/
 | 5 | **youtube-content-gen** | YouTube 内容生成器（视频转 SEO 页面） | 攻略/教程类站点 |
 | 6 | **youtube-game-keywords** | YouTube 订阅频道游戏关键词提取 | 内容创作/游戏赛道 |
 | 7 | **site-keyword-research** | 整站关键词研究（30词初筛→10词详析→3词定方向） | SEO 关键词调研 |
+| 8 | **seo-autopilot** | 全自动 SEO 内容新鲜度引擎（报告 → 生成 → 审计 → 部署） | SEO 内容自动化 |
 
 ### 数据采集 & 分析
 | # | 技能名称 | 描述 | 适用场景 |
@@ -375,7 +376,7 @@ OPENAI_API_KEY=your_openai_api_key_here
 
 ## 📊 技能统计
 
-- **总技能数**: 24 个
+- **总技能数**: 25 个
 - **P0 核心技能**: 3 个
 - **代码行数**: 15,000+ 行
 - **文档页数**: 70+ 页
@@ -397,6 +398,11 @@ OPENAI_API_KEY=your_openai_api_key_here
 ---
 
 ## 📝 更新日志
+
+
+### 2026-04-12
+- 🔥 添加 **seo-autopilot**（全自动 SEO 内容新鲜度引擎，关键词报告 → 页面生成 → 审计 → 部署，零人工干预）
+- �� 技能总数从 24 → 25
 
 ### 2026-04-11
 - 🔥 添加 **null-axiom-twitter**（Twitter/X 推文自动生成，含人设调性 + Reddit 回帖支持）
@@ -459,3 +465,4 @@ MIT License - 开源分享，欢迎使用和贡献。详见 [LICENSE](./LICENSE)
 ---
 
 **⭐ 如果这个技能库对你有帮助，请给个 Star！**
+
