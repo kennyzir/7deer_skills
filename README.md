@@ -1,4 +1,4 @@
-﻿# 🛠️ 7Deer Skills — Agent Skills 开放标准技能库
+# 🛠️ 7Deer Skills — Agent Skills 开放标准技能库
 
 > 25 个可复用的 AI Agent 技能模块，基于 [Agent Skills 开放标准](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)构建。
 > 克隆到项目中，你的 AI Agent 即可自动发现并加载这些能力。
@@ -21,6 +21,8 @@
 🔗 **外链建设自动化** — 从发现机会（`backlink-discovery`）到评估目录（`backlink-intelligence`）到生成个性化邮件（`seo-link-strategy`）到批量提交（`seo-backlink-submitter`），四个技能串起完整的外链工作流。
 
 🧩 **不是 prompt 收集，是可执行的工作流** — 每个技能都包含 `SKILL.md` 文档 + 可直接运行的脚本 / 模板 / 参考文件。不是告诉你「应该怎么做」，而是直接帮你做。
+
+🔄 **内容自动同步** — `auto-page-sync` 让你只管往仓库写 Markdown，前端页面自动生成。配合 GitHub Actions 定时拉取，Google 爬虫看到的永远是最新内容。支持日报、博客、Changelog、Landing Page 等多种页面模式，一套机制复用所有项目。
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 [![Skills](https://img.shields.io/badge/skills-25-blue.svg)](#-完整技能清单)
@@ -107,7 +109,6 @@ cp -r 7deer_skills/google-trends-to-pages .agent/skills/
 | 5 | **youtube-content-gen** | YouTube 内容生成器（视频转 SEO 页面） | 攻略/教程类站点 |
 | 6 | **youtube-game-keywords** | YouTube 订阅频道游戏关键词提取 | 内容创作/游戏赛道 |
 | 7 | **site-keyword-research** | 整站关键词研究（30词初筛→10词详析→3词定方向） | SEO 关键词调研 |
-| 8 | **seo-autopilot** | 全自动 SEO 内容新鲜度引擎（报告 → 生成 → 审计 → 部署） | SEO 内容自动化 |
 
 ### 数据采集 & 分析
 | # | 技能名称 | 描述 | 适用场景 |
@@ -133,22 +134,27 @@ cp -r 7deer_skills/google-trends-to-pages .agent/skills/
 | 18 | **rpg-stat-catalyst** | RPG 数值计算核心（属性加点 + 阈值） | 游戏类应用 |
 | 19 | **roblox-site-architect** | Roblox 游戏工具站 SEO 架构 | Roblox 游戏网站 |
 
+### 自动化 & CI/CD
+| # | 技能名称 | 描述 | 适用场景 |
+|---|---------|------|---------|
+| 20 | **auto-page-sync** | 仓库内容自动同步到前端页面（GitHub Actions 定时拉取 + SEO 新鲜度） | 报告/博客/Landing Page 自动更新 |
+
 ### AI & 开发工具
 | # | 技能名称 | 描述 | 适用场景 |
 |---|---------|------|---------|
-| 20 | **python-agent-engine** | Python AI Agent 引擎（ReAct + 工具调用） | Python AI 应用 |
-| 21 | **gemini-thinking-protocol** | 核心认知引擎（第一性原理 + 系统思维） | 复杂需求分析 |
-| 22 | **plugin-architect** | AI Skills/Plugins 构建标准方法论 | 创建新技能 |
+| 21 | **python-agent-engine** | Python AI Agent 引擎（ReAct + 工具调用） | Python AI 应用 |
+| 22 | **gemini-thinking-protocol** | 核心认知引擎（第一性原理 + 系统思维） | 复杂需求分析 |
+| 23 | **plugin-architect** | AI Skills/Plugins 构建标准方法论 | 创建新技能 |
 
 ### 社交媒体 & 内容运营
 | # | 技能名称 | 描述 | 适用场景 |
 |---|---------|------|---------|
-| 23 | **null-axiom-twitter** | Twitter/X 推文自动生成（人设调性 + 五大内容支柱） | 个人品牌运营 |
+| 24 | **null-axiom-twitter** | Twitter/X 推文自动生成（人设调性 + 五大内容支柱） | 个人品牌运营 |
 
 ### 其他工具
 | # | 技能名称 | 描述 | 适用场景 |
 |---|---------|------|---------|
-| 24 | **favicon-icon-generator** | Favicon & Icon 生成器（SVG + PWA） | Web 应用图标系统 |
+| 25 | **favicon-icon-generator** | Favicon & Icon 生成器（SVG + PWA） | Web 应用图标系统 |
 
 ---
 
@@ -333,6 +339,12 @@ intent = classify_intent("how to get six eyes jujutsu infinite")
 ├── nextjs-seo-booster/                # Next.js SEO 工具包
 ├── nextjs-seo-foundations/            # Next.js SEO 工程化规范
 ├── seo-auditor/                       # SEO 审计框架
+├── auto-page-sync/                    # 🆕 仓库内容自动同步到前端
+│   ├── SKILL.md
+│   └── resources/
+│       ├── rebuild_index.py
+│       ├── sync_workflow_template.yml
+│       └── report_types_example.json
 ├── python-agent-engine/               # Python AI Agent 引擎
 ├── data-scraper-intent/               # 数据提取 & 意图分析
 ├── backlink-discovery/                # 外链机会发现引擎
@@ -394,15 +406,15 @@ OPENAI_API_KEY=your_openai_api_key_here
 - ✅ 数据采集项目
 - ✅ 个人品牌 / 社交媒体运营
 - ✅ YouTube 内容创作
+- ✅ 自动化内容同步 / 定时更新站点
 
 ---
 
 ## 📝 更新日志
 
-
 ### 2026-04-12
-- 🔥 添加 **seo-autopilot**（全自动 SEO 内容新鲜度引擎，关键词报告 → 页面生成 → 审计 → 部署，零人工干预）
-- �� 技能总数从 24 → 25
+- 🆕 添加 **auto-page-sync**（仓库内容自动同步到前端页面，GitHub Actions 定时拉取 + SEO 新鲜度保障）
+- 📊 技能总数从 24 → 25
 
 ### 2026-04-11
 - 🔥 添加 **null-axiom-twitter**（Twitter/X 推文自动生成，含人设调性 + Reddit 回帖支持）
@@ -465,4 +477,3 @@ MIT License - 开源分享，欢迎使用和贡献。详见 [LICENSE](./LICENSE)
 ---
 
 **⭐ 如果这个技能库对你有帮助，请给个 Star！**
-

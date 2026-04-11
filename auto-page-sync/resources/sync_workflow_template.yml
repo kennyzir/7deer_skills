@@ -1,0 +1,63 @@
+# ============================================================
+# Auto Page Sync — GitHub Actions Workflow Template
+# ============================================================
+# 使用方法:
+#   1. 复制此文件到 .github/workflows/sync_{content_type}.yml
+#   2. 替换所有 {placeholder} 为实际值
+#   3. 根据需要调整 cron 时间（注意 UTC 转换）
+#
+# 时区参考:
+#   北京时间 08:00 = UTC 00:00 → cron: '0 0 * * *'
+#   北京时间 11:00 = UTC 03:00 → cron: '0 3 * * *'
+#   北京时间 20:00 = UTC 12:00 → cron: '0 12 * * *'
+# ============================================================
+
+name: Sync {ContentType} to Frontend
+
+on:
+  schedule:
+    - cron: '{cron_expression}'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Sync content to frontend
+      run: |
+        set -e
+        SRC="{source_directory}"
+        DST="{frontend_project}/public/data/{content_type}"
+        mkdir -p "$DST"
+        if [ -d "$SRC" ]; then
+          for date_dir in "$SRC"/*/; do
+            date_name=$(basename "$date_dir")
+            if [[ "$date_name" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+              mkdir -p "$DST/$date_name"
+              cp -f "$date_dir"*.md "$DST/$date_name/" 2>/dev/null || true
+              echo "Synced: $date_name"
+            fi
+          done
+        fi
+
+    - name: Rebuild index
+      run: |
+        python3 .agent/skills/auto-page-sync/resources/rebuild_index.py \
+          --dir "{frontend_project}/public/data/{content_type}"
+
+    - name: Commit and Push
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git pull --rebase || true
+        git add {frontend_project}/public/data/{content_type}/
+        git diff --quiet && git diff --staged --quiet || \
+          (git commit -m "🔄 Auto-sync: {content_type} [deploy]" && git push)
