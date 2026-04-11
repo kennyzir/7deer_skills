@@ -165,7 +165,7 @@ intent = classify_intent("how to get six eyes jujutsu infinite")
 ### 示例 4: 整站关键词研究
 
 ```
-输入：your-product.com
+输入：example.com
 输出：
   阶段一 → 30+ 候选词（标注来源：PASF / RS / AI-主题 / 竞品）
   阶段二 → 10 词 SERP 详细分析 + 竞争度打分

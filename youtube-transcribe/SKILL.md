@@ -13,9 +13,9 @@ Before running, the agent checks for available tools and sets PATH:
 # Find tools dynamically — don't hardcode paths
 export PATH="/tmp/miniforge/bin:$(python3 -m site --user-base)/bin:$PATH"
 
-YTDLP=$(command -v yt-dlp 2>/dev/null || echo "$(python3 -m site --user-base)/bin/yt-dlp")
-FFMPEG=$(command -v ffmpeg 2>/dev/null || echo "/tmp/miniforge/bin/ffmpeg")
-WHISPER=$(command -v whisper 2>/dev/null || echo "$(python3 -m site --user-base)/bin/whisper")
+YTDLP=$(command -v yt-dlp 2>/dev/null || echo "yt-dlp")
+FFMPEG=$(command -v ffmpeg 2>/dev/null || echo "ffmpeg")
+WHISPER=$(command -v whisper 2>/dev/null || echo "whisper")
 
 # Verify tools exist
 for TOOL in "$YTDLP" "$FFMPEG" "$WHISPER"; do

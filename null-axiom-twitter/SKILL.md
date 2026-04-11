@@ -84,10 +84,10 @@ next-generation, best-in-class, world-class
 | 支柱 | 比例 | 核心主题 | 示例话题 |
 |------|------|---------|---------|
 | **独立开发哲学** | 30% | Boring>Sexy / 代码是负债 / Excel is the Map / 反 MVP 崇拜 | 删除代码不减功能 / 护城河是客户关系不是技术 |
-| **机会发现** | 25% | Glitch Hunt / Autopsy / 数据驱动判断 | 市场 glitch / 无聊产品赚大钱 / YourDataTool 数据案例 |
+| **机会发现** | 25% | Glitch Hunt / Autopsy / 数据驱动判断 | 市场 glitch / 无聊产品赚大钱 / 数据工具案例 |
 | **SEO + 营销** | 25% | 反 AI 内容农场 / 真实 B 端案例 / PLG > 付费投放 | 口碑获客 / 你需要一个更好的敌人 / 最好 SEO 是做真正需要的东西 |
 | **工具/技能** | 15% | 冷门工具 / 工作流优化 / AI agent 技能层 | 3 年不换的工具 / Skills > Models |
-| **产品** | 5% | claw0x / YourDataTool 自然案例 | 仅作为上述支柱的自然例子，不主动开新话题 |
+| **产品** | 5% | your-product / YourDataTool 自然案例 | 仅作为上述支柱的自然例子，不主动开新话题 |
 
 ---
 
@@ -477,7 +477,7 @@ openclaw cron add \
 ## 九、禁止清单
 
 - ❌ 禁止在推文里主动贴产品链接
-- ❌ 禁止写"来试试 claw0x"之类的话
+- ❌ 禁止写"来试试 [产品名]"之类的话
 - ❌ 禁止使用感叹号结尾（句号可以）
 - ❌ 禁止连续两条推文用同一个 hasthag
 - ❌ 禁止超过 280 字符（不含 signature）

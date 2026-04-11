@@ -2,22 +2,22 @@
 # youtube-transcribe workflow script
 # Usage: ./transcribe.sh <youtube_url> [language]
 # Requires: yt-dlp, ffmpeg (conda env), whisper CLI
-# PATH setup: /tmp/miniforge/bin:$(python3 -m site --user-base)/bin
+# PATH setup: Ensure yt-dlp, ffmpeg, whisper are on your PATH
 
 set -e
 
 export PATH="/tmp/miniforge/bin:$(python3 -m site --user-base)/bin:$PATH"
 
-WORKSPACE="${WORKSPACE:-./workspace}"
+WORKSPACE="${WORKSPACE:-$(pwd)}"
 TODAY=$(date +%Y-%m-%d)
 MEMORY_FILE="${WORKSPACE}/memory/${TODAY}.md"
 AUDIO_DIR="/tmp/yt_audio"
 mkdir -p "${AUDIO_DIR}"
 
 # Dynamic tool discovery
-YTDLP=$(command -v yt-dlp 2>/dev/null || echo "$(python3 -m site --user-base)/bin/yt-dlp")
-FFMPEG=$(command -v ffmpeg 2>/dev/null || echo "/tmp/miniforge/bin/ffmpeg")
-WHISPER=$(command -v whisper 2>/dev/null || echo "$(python3 -m site --user-base)/bin/whisper")
+YTDLP=$(command -v yt-dlp 2>/dev/null || echo "yt-dlp")
+FFMPEG=$(command -v ffmpeg 2>/dev/null || echo "ffmpeg")
+WHISPER=$(command -v whisper 2>/dev/null || echo "whisper")
 
 URL="$1"
 LANG="${2:-en}"

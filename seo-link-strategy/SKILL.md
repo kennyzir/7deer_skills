@@ -40,7 +40,7 @@ python3 scripts/outreach_db.py <网站URL> --query-only
 
 ```
 Step 1: 从 URL 提取关键词
-        example-game.com → [geography game, H5 game, free game, guessing game]
+        example.com → [your product keywords]
         ↓
 Step 2: 生成搜索查询（基于关键词 + "alternatives"/"submit"/"tools I use"）
         "geography game best free alternatives 2026"
@@ -92,7 +92,7 @@ python3 scripts/outreach_db.py --list --tier P0 --has-email
 
 **示例：**
 ```bash
-python3 scripts/contact_discoverer.py https://example-game.com --type game --tiers P0
+python3 scripts/contact_discoverer.py https://example.com --type game --tiers P0
 ```
 
 ### 内置外链平台分级体系（22个平台）
@@ -192,7 +192,7 @@ python3 scripts/email_generator.py <网站URL> --sender-name "<名字>" --sender
   - 100% free, no account required
   - H5 iframe format
   - Multiple modes (Duels + Multiplayer)
-邮件角度: "covers 2 competitors. ExampleGame differentiates with: 100% free..."
+邮件角度: "covers 2 competitors. YourProduct differentiates with: 100% free..."
 ```
 
 ### 邮件模板库
@@ -224,7 +224,7 @@ python3 scripts/email_generator.py <网站URL> --sender-name "<名字>" --sender
 browser(action=open, profile=user, url="https://mail.google.com/mail/u/0/#inbox")
 → 点击 Compose
 → 填入邮件内容（from email_generator）
-→ 检查邮件内容（确认 example-game.com 链接存在）
+→ 检查邮件内容（确认产品链接存在）
 → 点击 Send
 → 等待 "Message sent"
 → 重复
@@ -244,20 +244,20 @@ browser(action=open, profile=user, url="https://mail.google.com/mail/u/0/#inbox"
 ### 用户输入
 
 ```
-网站：https://example-game.com
+网站：https://example.com
 发件邮箱：your_email@example.com
-发件人名字：Seven
+发件人名字：YourName
 ```
 
 ### 执行序列
 
 ```
 第一阶段：
-python3 scripts/contact_discoverer.py https://example-game.com --type game --tiers P0
+python3 scripts/contact_discoverer.py https://example.com --type game --tiers P0
 → 输出：Tech4Fresher ✅ / SolutionSuggest ✅ / Beebom ✅ / PrivacySavvy ⚠️
 
 第二阶段：
-python3 scripts/email_generator.py https://example-game.com --sender-name Seven --sender-email your_email@example.com
+python3 scripts/email_generator.py https://example.com --sender-name YourName --sender-email your_email@example.com
 → 输出：3 封个性化邮件（Subject + 正文 + 链接）
 
 第三阶段：

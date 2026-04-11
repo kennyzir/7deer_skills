@@ -159,7 +159,7 @@ def build_discovery_prompt(target_url: str, target_count: int = 300) -> str:
 
 将每轮发现结果追加写入文件：
 
-文件路径：`./workspace/skills/backlink-discovery/memory/{提取的域名}/platforms.json`
+文件路径：`memory/{提取的域名}/platforms.json`
 
 格式（JSON，追加模式）：
 ```json
@@ -187,7 +187,7 @@ def build_discovery_prompt(target_url: str, target_count: int = 300) -> str:
 
 ### 生成 summary.md
 
-写入路径：`./workspace/skills/backlink-discovery/memory/{提取的域名}/summary.md`
+写入路径：`memory/{提取的域名}/summary.md`
 
 内容：
 ```

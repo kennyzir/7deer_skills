@@ -11,7 +11,7 @@ import os
 from datetime import datetime
 from urllib.parse import urlparse
 
-sys.path.insert(0, './scripts')
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__))))
 
 from playwright.async_api import async_playwright
 
@@ -20,7 +20,7 @@ from playwright.async_api import async_playwright
 # 外链库存储
 # ============================================================
 
-DB_DIR = "./workspace/skills/seo-link-strategy/memory/outreach_db"
+DB_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "memory", "outreach_db")
 os.makedirs(DB_DIR, exist_ok=True)
 
 PLATFORM_DB_FILE = os.path.join(DB_DIR, "platforms.json")

@@ -15,7 +15,7 @@ from datetime import datetime
 from urllib.parse import urlparse
 from typing import List, Dict, Set, Tuple
 
-sys.path.insert(0, './scripts')
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__))))
 
 
 # ============================================================
@@ -270,7 +270,7 @@ def classify_platform(domain: str, title: str) -> Tuple[str, float, str]:
 # 数据库管理
 # ============================================================
 
-DB_BASE = "./workspace/skills/backlink-discovery/memory"
+DB_BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "memory")
 
 
 def get_target_dir(target_url: str) -> str:

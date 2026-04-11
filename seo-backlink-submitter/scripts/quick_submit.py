@@ -4,10 +4,10 @@ import asyncio
 from playwright.async_api import async_playwright
 
 data = {
-    "name": "YourProduct",
+    "name": "YourProductName",
     "url": "https://your-product.com",
-    "description": "AI Agent Skills Marketplace - 200+ production-ready skills",
-    "email": "contact@your-product.com"
+    "description": "Your product description here",
+    "email": "your_email@example.com"
 }
 
 # Directories with forms

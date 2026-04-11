@@ -4,11 +4,12 @@
 """
 
 import asyncio
+import os
 import re
 import sys
 from urllib.parse import urlparse
 
-sys.path.insert(0, './scripts')
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__))))
 
 from playwright.async_api import async_playwright
 
@@ -74,7 +75,7 @@ PLATFORM_TIERS = {
             "submit_url": "https://geckoandfly.com/contact/",
             "contact_patterns": ["/contact", "/about", "/team"],
             "email_hints": ["contact@", "hello@", "admin@"],
-            "notes": "已有 example-game 收录"
+            "notes": "已有产品收录"
         },
         {
             "name": "GameRant",
@@ -201,7 +202,7 @@ PLATFORM_TIERS = {
             "submit_url": "https://sheppardsoftware.com/contact-us/",
             "contact_patterns": ["/contact", "/about"],
             "email_hints": ["contact@", "info@"],
-            "notes": "地理教育游戏，example-game 适合此类外链"
+            "notes": "地理教育游戏，适合此类外链"
         },
         {
             "name": "LizardPoint",

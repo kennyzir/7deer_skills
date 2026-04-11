@@ -36,7 +36,8 @@ pip install playwright && playwright install chromium
 运行 `scripts/batch_submit.py`：
 
 ```bash
-cd ./workspace/skills/seo-backlink-submitter
+# Navigate to the skill directory
+cd .agent/skills/seo-backlink-submitter
 
 python scripts/batch_submit.py \
   --site "https://你的网站.com" \

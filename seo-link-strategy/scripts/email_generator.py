@@ -4,11 +4,12 @@
 """
 
 import asyncio
+import os
 import re
 import sys
 from urllib.parse import urlparse
 
-sys.path.insert(0, './scripts')
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__))))
 
 from playwright.async_api import async_playwright
 
@@ -22,73 +23,65 @@ PRODUCT_DB = {
         "name": "ExampleGame",
         "url": "https://example-game.com",
         "type": "game",
-        "tagline": "A free, no-login-required geography guessing game that runs in your browser",
-        "category": "Geography guessing game",
-        "category_keywords": ["geoguessr", "geography", "guessing game", "street view",
-                            "map game", "trivia", "educational game"],
+        "tagline": "A free, no-login-required browser game",
+        "category": "Browser game",
+        "category_keywords": ["browser game", "free game", "online game", "casual game"],
         "unique_selling_points": [
             ("100% free, no account required", "instant browser play — open and go"),
             ("H5 iframe format", "no download, no install, works on any device"),
-            ("Multiple modes", "Image Guesser, Country Guesser, 1v1 Duels, Multiplayer"),
-            ("1000+ community maps", "active community creating new maps daily"),
-            ("Multi-language", "10+ languages supported"),
-            ("Custom restrictions", "grayscale, no move, speed run — adds challenge variety"),
+            ("Multiple modes", "single player, multiplayer, competitive"),
+            ("Active community", "community creating new content daily"),
         ],
-        "competitors": ["worldguessr", "geotastic", "cityguessr", "geoguessr", "flagle",
-                       "geography-game", "mapguessr", "globle"],
+        "competitors": ["competitor1", "competitor2", "competitor3"],
         "editor_angles": {
             "alternatives_article": (
-                "Your readers are actively looking for free GeoGuessr alternatives. "
+                "Your readers are actively looking for free alternatives. "
                 "ExampleGame is the most accessible option: no login, no download, "
                 "works on any device with a browser."
             ),
             "game_directory": (
-                "Free geography guessing games are highly searched. "
+                "Free browser games are highly searched. "
                 "ExampleGame's H5 format makes it perfect for your directory — "
                 "readers can play instantly without leaving the page."
             ),
             "reddit_community": (
-                "ExampleGame is a topic of organic interest in geography gaming communities. "
-                "Sharing it provides real value to players looking for free alternatives "
-                "to GeoGuessr's recent paywall."
+                "ExampleGame is a topic of organic interest in gaming communities. "
+                "Sharing it provides real value to players looking for free alternatives."
             )
         }
     },
-    "your-product.com": {
-        "name": "YourProduct",
-        "url": "https://your-product.com",
+    "example-tool.com": {
+        "name": "ExampleTool",
+        "url": "https://example-tool.com",
         "type": "tool",
-        "tagline": "AI Agent Skills Marketplace — 37 production-ready skills with pay-per-call pricing. Works with OpenClaw, LangChain, AutoGen, and any agent framework.",
-        "category": "AI Agent Skills / Developer Tools",
-        "category_keywords": ["AI agent", "agent skills", "LLM tools", "AI automation",
-                            "agent framework", "OpenClaw", "LangChain", "AutoGen", "MCP"],
+        "tagline": "AI-powered developer tool with pay-per-call pricing",
+        "category": "Developer Tools",
+        "category_keywords": ["AI tool", "developer tools", "automation", "API"],
         "unique_selling_points": [
-            ("37 production-ready skills", "covers SEO, scraping, sentiment, summarization, browser automation"),
-            ("Pay-per-call pricing", "no subscription needed — pay only when you use a skill"),
-            ("Works with OpenClaw, LangChain, AutoGen", "any agent framework — no lock-in"),
+            ("Production-ready features", "covers common automation tasks"),
+            ("Pay-per-call pricing", "no subscription needed — pay only when you use it"),
+            ("Framework agnostic", "works with any tech stack — no lock-in"),
             ("Free tier available", "developers can start building without upfront cost"),
-            ("SKILL.md standard", "easy to create, share, and discover agent capabilities"),
         ],
-        "competitors": ["llamaindex", "langchain", "openai assistants", "anthropic tools",
-                       "mcp", "clawhub", "voltagent", "agentbase"],
+        "competitors": ["competitor1", "competitor2", "competitor3"],
         "editor_angles": {
             "alternatives_article": (
-                "Your readers building AI agents need a way to extend their agent's capabilities. "
-                "YourProduct is the skills marketplace for AI agents — plug in production-ready skills "
+                "Your readers need a way to extend their capabilities. "
+                "ExampleTool provides production-ready features "
                 "instead of building every tool from scratch."
             ),
             "product_directory": (
-                "YourProduct is the missing layer in the AI agent stack — a marketplace "
-                "where developers find and pay for exactly the skills their agents need."
+                "ExampleTool fills a gap in the developer tool stack — "
+                "where developers find and pay for exactly the features they need."
             ),
             "reddit_community": (
-                "YourProduct solves the 'which skill should I use for my AI agent?' problem — "
+                "ExampleTool solves common developer pain points — "
                 "pay per call instead of subscription, works with any framework."
             )
         },
         "outreach_history": [
-            {"date": "2026-04-03", "platform": "AIToolsHunt", "email": "aitoolshunt@gmail.com",
-             "result": "sent", "from": "your_email@example.com"},
+            # {"date": "2026-04-03", "platform": "ExampleDirectory", "email": "example@example.com",
+            #  "result": "sent", "from": "your_email@example.com"},
         ]
     }
 }
@@ -507,11 +500,11 @@ async def print_email_report(emails):
 
 
 if __name__ == "__main__":
-    # 测试：生成 example-game 的邮件
+    # 测试：生成示例产品的邮件
     import argparse
     parser = argparse.ArgumentParser(description="生成外链个性化邮件")
     parser.add_argument("product_url", help="你的网站 URL")
-    parser.add_argument("--sender-name", default="Seven", help="发件人名字")
+    parser.add_argument("--sender-name", default="YourName", help="发件人名字")
     parser.add_argument("--sender-email", default="your_email@example.com", help="发件人邮箱")
     args = parser.parse_args()
 
