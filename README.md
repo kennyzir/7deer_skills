@@ -1,15 +1,66 @@
-# 🛠️ 7Deer Skills Library
+# 🛠️ 7Deer Skills — Agent Skills 开放标准技能库
 
-> **开源技能库** - 可复用的 AI Agent 能力模块集合
-
-这是一个开源技能库，包含了从实际项目中提炼出来的可复用代码模块和指令模板。
-将此仓库克隆到任何新项目的 `.agent/skills` 目录，AI Agent 即可自动加载这些能力。
-
-**🌟 特色**: 所有技能均包含完整文档、代码示例和使用指南，开箱即用。
+> 24 个可复用的 AI Agent 技能模块，基于 [Agent Skills 开放标准](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)构建。
+> 克隆到项目中，你的 AI Agent 即可自动发现并加载这些能力。
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 [![Skills](https://img.shields.io/badge/skills-24-blue.svg)](#-完整技能清单)
+[![Agent Skills Standard](https://img.shields.io/badge/standard-Agent_Skills-8A2BE2.svg)](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](./CONTRIBUTING.md)
+
+---
+
+## ⚡ 30 秒上手
+
+```bash
+# 克隆到项目的 skills 目录，Agent 自动加载
+git clone https://github.com/kennyzir/7deer_skills.git .agent/skills
+```
+
+就这样。你的 Agent 会自动扫描每个 `SKILL.md` 的 name 和 description，在你的请求匹配时自动激活对应技能。
+
+---
+
+## 🔌 兼容的 IDE / Agent 框架
+
+本技能库遵循 Anthropic 发起的 **Agent Skills 开放标准**（SKILL.md 格式），已被以下工具原生支持：
+
+| IDE / 框架 | 技能目录位置 | 加载方式 |
+|-----------|------------|---------|
+| **Claude Code** | `.agent/skills/` | 自动发现，`/skill-name` 斜杠命令调用 |
+| **Kiro** (AWS) | `.agent/skills/` | 自动发现，匹配请求时激活 |
+| **Cursor** | `.cursor/skills/` 或 `.agent/skills/` | 通过 Rules 引用或自动加载 |
+| **VS Code + Copilot** | `.agent/skills/` | GitHub Copilot Agent 模式自动加载 |
+| **OpenAI Codex** | `.agent/skills/` | 自动发现 |
+| **Gemini CLI** | `.agent/skills/` | 自动发现 |
+| **OpenClaw** | `~/.openclaw/skills/` 或项目内 `.agent/skills/` | 自动加载，ClawHub 分发 |
+| **Windsurf** | `.agent/skills/` | 自动发现 |
+
+### 不同 IDE 的安装方式
+
+```bash
+# Claude Code / Kiro / VS Code Copilot / Codex / Gemini CLI（通用）
+git clone https://github.com/kennyzir/7deer_skills.git .agent/skills
+
+# Cursor（也支持 .agent/skills，或复制到 .cursor/skills）
+git clone https://github.com/kennyzir/7deer_skills.git .agent/skills
+
+# OpenClaw（全局安装，所有项目共享）
+git clone https://github.com/kennyzir/7deer_skills.git ~/.openclaw/skills/7deer
+
+# 只要一个技能？直接复制文件夹
+cp -r 7deer_skills/google-trends-to-pages .agent/skills/
+```
+
+### 技能如何工作
+
+```
+1. 启动时 → Agent 只读取每个 SKILL.md 的 name + description（轻量）
+2. 你的请求匹配 → Agent 加载完整 SKILL.md 指令
+3. 执行时 → 按需加载 scripts / templates / references
+```
+
+这就是 Agent Skills 标准的「渐进式披露」机制 — 不会一次性塞满上下文，只在需要时加载。
 
 ---
 
@@ -83,19 +134,42 @@
 
 ## 🚀 快速开始
 
-### 方法 1: 克隆到新项目（推荐）
+### 方法 1: 一键克隆（推荐）
+
 ```bash
-# 在新项目根目录执行
+# 在项目根目录执行，适用于 Claude Code / Kiro / VS Code Copilot / Codex / Gemini CLI
 git clone https://github.com/kennyzir/7deer_skills.git .agent/skills
 ```
 
-### 方法 2: 作为 Git Submodule
+### 方法 2: Git Submodule（团队协作推荐）
+
 ```bash
 git submodule add https://github.com/kennyzir/7deer_skills.git .agent/skills
 ```
 
-### 方法 3: 手动复制
-直接复制需要的技能文件夹到项目的 `.agent/skills/` 目录中。
+### 方法 3: npx 一键安装（无需 git）
+
+```bash
+# 下载到当前项目
+npx degit kennyzir/7deer_skills .agent/skills
+```
+
+### 方法 4: 只要某个技能
+
+```bash
+# 只复制你需要的技能
+npx degit kennyzir/7deer_skills/google-trends-to-pages .agent/skills/google-trends-to-pages
+```
+
+### 安装后验证
+
+```bash
+# 检查技能是否就位
+ls .agent/skills/*/SKILL.md
+
+# 在 Claude Code 中测试
+# 输入 / 查看可用的斜杠命令，你应该能看到所有技能
+```
 
 ---
 
