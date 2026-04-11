@@ -1,311 +1,368 @@
-# 7Deer Skills
+# 🛠️ 7Deer Skills Library
 
-An open-source skill library for SEO automation, content pipelines, and AI agent workflows.
+> **开源技能库** - 可复用的 AI Agent 能力模块集合
 
-Built from real project work, this repository packages reusable skills with `SKILL.md` docs, scripts, templates, and references you can copy into your own projects.
+这是一个开源技能库，包含了从实际项目中提炼出来的可复用代码模块和指令模板。
+将此仓库克隆到任何新项目的 `.agent/skills` 目录，AI Agent 即可自动加载这些能力。
+
+**🌟 特色**: 所有技能均包含完整文档、代码示例和使用指南，开箱即用。
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
-[![Skills](https://img.shields.io/badge/skills-22-blue.svg)](#skill-catalog)
+[![Skills](https://img.shields.io/badge/skills-24-blue.svg)](#-完整技能清单)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](./CONTRIBUTING.md)
 
-## 中文说明
-
-这是一个面向国内独立出海者的开源技能库，重点服务这些实际场景：
-
-- SEO 自动化和内容站搭建
-- AI agent 工作流复用
-- Next.js / Python 项目的脚本、模板和技能沉淀
-- 游戏站、工具站、内容站的快速启动
-
-这个仓库不是单纯的 prompt 收集，而是把真实项目里反复使用的能力整理成可复用模块。每个 skill 通常都包含：
-
-- `SKILL.md` 使用说明
-- 可直接复用的 scripts / templates / references
-- 适合复制到项目中的目录结构
-
-如果你正在做独立站、出海内容站、SEO 自动化、AI 工具站，或者想把自己的工作流沉淀成可复用技能库，这个仓库会更适合你。
-
-## Start Here
-
-- Read the [P0 Skills](#p0-skills) first
-- Jump to the [Top Use Cases](#top-use-cases)
-- Clone the repo from [Quick Start](#quick-start)
-- Review [Contributing](./CONTRIBUTING.md) and [Security](./SECURITY.md)
-
-## Why Star This Repo
-
-- Turn Google Trends data into production-ready SEO page workflows
-- Generate game code pages in minutes instead of rebuilding the same templates
-- Reuse AI agent, scraping, and content automation skills across projects
-
-## What You Get
-
-- `SKILL.md` instructions for each reusable unit
-- scripts, templates, and reference files that are usable in real projects
-- modular top-level skills you can copy selectively
-- a public repo structure designed for reuse instead of one-off project code
-
-## Quick Value
-
-This repository is designed for builders working on:
-
-- AI agent workflows
-- SEO automation systems
-- content-heavy Next.js projects
-- Python automation pipelines
-- Roblox and game utility sites
-
-For Chinese indie hackers and solo builders shipping globally, this repo is especially useful for reusable SEO systems, content operations, and project bootstrapping.
-
-## P0 Skills
-
-These are the three strongest entry points in the repository.
-
-| Skill | Input | Output | Best For |
-| --- | --- | --- | --- |
-| `google-trends-to-pages` | Rising keywords from Google Trends | SEO page plans, intent classification, page structure workflows | SEO content operations |
-| `multi-game-codes-hub` | Game codes JSON or structured code data | Production-ready code page templates with SEO structure | Roblox and game sites |
-| `roblox-game-data-scraper` | Trello, Discord, Reddit, and game data sources | Structured game data for downstream site generation | Game data collection |
-
-## Top Use Cases
-
-### 1. Google Trends -> SEO Pages
-
-Input:
-
-```text
-"yba codes" (+400%)
-"how to get fuga in jujutsu infinite" (+90%)
-```
-
-Output:
-
-- intent classification
-- page type selection
-- page structure templates
-- SEO-ready content workflow
-
-### 2. Game Codes Data -> Published Page
-
-Input:
-
-```json
-{
-  "gameName": "Your Bizarre Adventure",
-  "gameSlug": "yba",
-  "activeCodes": [
-    { "code": "GULLIBLE", "reward": "5 Lucky Arrows" }
-  ]
-}
-```
-
-Output:
-
-- code page template
-- active / expired code sections
-- FAQ schema support
-- reusable components for code tables and copy actions
-
-### 3. Raw Community Sources -> Structured Game Data
-
-Input:
-
-- Trello boards
-- Discord channels
-- Reddit threads
-
-Output:
-
-- normalized data files
-- reusable scraping patterns
-- downstream inputs for site pages, guides, and update workflows
-
-## Workflow Visuals
-
-### SEO Automation Flow
-
-```mermaid
-flowchart LR
-  A[Google Trends Keywords] --> B[Intent Classification]
-  B --> C[Template Selection]
-  C --> D[SEO Page Structure]
-  D --> E[Published Content Workflow]
-```
-
-### Game Codes Flow
-
-```mermaid
-flowchart LR
-  A[Codes JSON or Source Data] --> B[Page Generator]
-  B --> C[Next.js Page Output]
-  C --> D[Schema and SEO Sections]
-  D --> E[Deployable Page]
-```
-
-### Agent Skill Reuse Flow
-
-```mermaid
-flowchart LR
-  A[Skill in 7Deer Skills] --> B[Copy into .agent/skills]
-  B --> C[Reuse Scripts and Templates]
-  C --> D[Ship Faster in New Projects]
-```
-
-## English Summary
-
-7Deer Skills is a reusable library of practical skills extracted from real projects. Instead of starting from scratch, you can reuse agent workflows, SEO automation patterns, content generation modules, scraping utilities, and Next.js/Python building blocks across projects.
-
-## How To Use This Repo
-
-### Use one skill
-
-Copy a single top-level skill directory into your project and follow its `SKILL.md`.
-
-### Use it as a shared skills repo
-
-Clone the whole repository into `.agent/skills` so the same skill set can be reused across projects.
-
-### Use it as a reference library
-
-Browse the scripts, prompts, templates, and references to adapt the parts you need.
-
-## Skill Catalog
-
-### SEO and Content
-
-- `google-trends-to-pages`
-- `nextjs-seo-booster`
-- `nextjs-seo-foundations`
-- `seo-auditor`
-- `youtube-content-gen`
-- `youtube-game-keywords`
-
-### Data and Research
-
-- `roblox-game-data-scraper`
-- `data-scraper-intent`
-- `keyword-competition-analysis`
-- `youtube-intel`
-- `youtube-transcribe`
-
-### Backlinks and Distribution
-
-- `backlink-discovery`
-- `backlink-intelligence`
-- `seo-backlink-submitter`
-- `seo-link-strategy`
-
-### Game and Utility Workflows
-
-- `multi-game-codes-hub`
-- `roblox-site-architect`
-- `rpg-stat-catalyst`
-- `favicon-icon-generator`
-
-### AI Agent and Builder Tools
-
-- `python-agent-engine`
-- `gemini-thinking-protocol`
-- `plugin-architect`
-
-## Repository Structure
-
-```text
-7deer_skills/
-|- google-trends-to-pages/
-|- multi-game-codes-hub/
-|- roblox-game-data-scraper/
-|- nextjs-seo-booster/
-|- nextjs-seo-foundations/
-|- seo-auditor/
-|- python-agent-engine/
-|- data-scraper-intent/
-|- backlink-discovery/
-|- backlink-intelligence/
-|- seo-backlink-submitter/
-|- seo-link-strategy/
-|- youtube-content-gen/
-|- youtube-game-keywords/
-|- youtube-intel/
-|- youtube-transcribe/
-|- roblox-site-architect/
-|- rpg-stat-catalyst/
-|- favicon-icon-generator/
-|- gemini-thinking-protocol/
-|- plugin-architect/
-|- .github/
-|- CONTRIBUTING.md
-|- SECURITY.md
-`- LICENSE
-```
-
-## Quick Start
-
-### Clone into an Agent Skills Directory
-
+---
+
+## 🎯 核心技能 (P0 优先级)
+
+这些是最常用、最实用的技能，适合快速启动新项目：
+
+| # | 技能名称 | 描述 | 时间节省 | 适用场景 |
+|---|---------|------|---------|---------|
+| 🔥 | **google-trends-to-pages** | 从 Google Trends 关键词自动生成 SEO 页面 | 90% | SEO 内容生产 |
+| 🔥 | **multi-game-codes-hub** | 5 分钟生成完整的游戏代码页面 | 95% | Roblox/游戏网站 |
+| 🔥 | **roblox-game-data-scraper** | 从 Trello/Discord/Reddit 抓取游戏数据 | 80% | 游戏数据采集 |
+
+---
+
+## 📦 完整技能清单
+
+### SEO & 内容生成
+| # | 技能名称 | 描述 | 适用场景 |
+|---|---------|------|---------|
+| 1 | **google-trends-to-pages** | Google Trends → SEO 页面（意图分类 + 模板选择） | SEO 内容自动化 |
+| 2 | **nextjs-seo-booster** | Next.js SEO 工具包（结构化数据 + Sitemap） | 任何 Next.js 网站 |
+| 3 | **nextjs-seo-foundations** | Next.js SEO 工程化规范（Metadata + Performance） | Next.js 14+ 应用 |
+| 4 | **seo-auditor** | SEO 审计框架（检查清单 + 自动化脚本） | 网站 SEO 优化 |
+| 5 | **youtube-content-gen** | YouTube 内容生成器（视频转 SEO 页面） | 攻略/教程类站点 |
+| 6 | **youtube-game-keywords** | YouTube 订阅频道游戏关键词提取 | 内容创作/游戏赛道 |
+| 7 | **site-keyword-research** | 整站关键词研究（30词初筛→10词详析→3词定方向） | SEO 关键词调研 |
+
+### 数据采集 & 分析
+| # | 技能名称 | 描述 | 适用场景 |
+|---|---------|------|---------|
+| 8 | **roblox-game-data-scraper** | Trello/Discord/Reddit 游戏数据抓取 | Roblox 游戏网站 |
+| 9 | **data-scraper-intent** | 数据提取 & 搜索意图分析（爬虫 + LLM） | SEO/数据采集 |
+| 10 | **youtube-intel** | YouTube 内容情报与竞品监测（Discovery + Monitoring） | 选题策划/竞品分析 |
+| 11 | **youtube-transcribe** | YouTube 视频转录（yt-dlp + whisper） | 视频内容提取 |
+
+### 外链建设
+| # | 技能名称 | 描述 | 适用场景 |
+|---|---------|------|---------|
+| 12 | **backlink-discovery** | 外链机会发现引擎（web_search 多轮派生） | 外链建设 |
+| 13 | **backlink-intelligence** | AI/Tools 目录外链情报收集与评估 | 外链情报 |
+| 14 | **keyword-competition-analysis** | 谷歌关键词竞争度分析 | SEO 调研 |
+| 15 | **seo-backlink-submitter** | 批量目录提交工具（Playwright 自动化） | 外链分发 |
+| 16 | **seo-link-strategy** | 外链策略生成器（发现→评估→邮件→自动发送） | 外链营销 |
+
+### 游戏 & 工具
+| # | 技能名称 | 描述 | 适用场景 |
+|---|---------|------|---------|
+| 17 | **multi-game-codes-hub** | 快速生成游戏代码页面（模板 + 组件） | Roblox/游戏网站 |
+| 18 | **rpg-stat-catalyst** | RPG 数值计算核心（属性加点 + 阈值） | 游戏类应用 |
+| 19 | **roblox-site-architect** | Roblox 游戏工具站 SEO 架构 | Roblox 游戏网站 |
+
+### AI & 开发工具
+| # | 技能名称 | 描述 | 适用场景 |
+|---|---------|------|---------|
+| 20 | **python-agent-engine** | Python AI Agent 引擎（ReAct + 工具调用） | Python AI 应用 |
+| 21 | **gemini-thinking-protocol** | 核心认知引擎（第一性原理 + 系统思维） | 复杂需求分析 |
+| 22 | **plugin-architect** | AI Skills/Plugins 构建标准方法论 | 创建新技能 |
+
+### 社交媒体 & 内容运营
+| # | 技能名称 | 描述 | 适用场景 |
+|---|---------|------|---------|
+| 23 | **null-axiom-twitter** | Twitter/X 推文自动生成（人设调性 + 五大内容支柱） | 个人品牌运营 |
+
+### 其他工具
+| # | 技能名称 | 描述 | 适用场景 |
+|---|---------|------|---------|
+| 24 | **favicon-icon-generator** | Favicon & Icon 生成器（SVG + PWA） | Web 应用图标系统 |
+
+---
+
+## 🚀 快速开始
+
+### 方法 1: 克隆到新项目（推荐）
 ```bash
+# 在新项目根目录执行
 git clone https://github.com/kennyzir/7deer_skills.git .agent/skills
 ```
 
-### Add as a Git Submodule
-
+### 方法 2: 作为 Git Submodule
 ```bash
 git submodule add https://github.com/kennyzir/7deer_skills.git .agent/skills
 ```
 
-### Copy a Single Skill
+### 方法 3: 手动复制
+直接复制需要的技能文件夹到项目的 `.agent/skills/` 目录中。
 
-If you only need one workflow, copy that skill directory into your own project and follow its `SKILL.md`.
+---
 
-## Good First Skills
+## 💡 使用示例
 
-If you're new to the repository, start with:
+### 示例 1: 生成游戏代码页面
 
-- `google-trends-to-pages` for SEO workflow design
-- `multi-game-codes-hub` for page generation patterns
-- `python-agent-engine` for reusable agent loops
-- `nextjs-seo-booster` for lightweight Next.js SEO integration
+```bash
+# 1. 准备数据文件
+cat > yba_codes.json << EOF
+{
+  "gameName": "Your Bizarre Adventure",
+  "gameSlug": "yba",
+  "activeCodes": [
+    {"code": "GULLIBLE", "reward": "5 Lucky Arrows"}
+  ]
+}
+EOF
 
-## How to Evaluate a Skill
+# 2. 生成页面（5 分钟完成）
+python .agent/skills/multi-game-codes-hub/resources/generate_code_page.py \
+  --input yba_codes.json \
+  --output ./src/app/yba/page.tsx
 
-Each top-level skill should give you:
+# 3. 完成！页面已生成，包含：
+# ✅ Active/Expired 代码分区
+# ✅ 一键复制按钮
+# ✅ FAQ Schema 标记
+# ✅ SEO 优化的 Metadata
+```
 
-- a clear `SKILL.md`
-- reusable code or templates
-- a practical workflow, not just abstract prompts
-- enough structure to adapt it into a real project
+### 示例 2: 抓取 Trello 游戏数据
 
-## Security Notes
+```python
+from trello_scraper import TrelloScraper
 
-- No real API keys, tokens, or credentials should be committed
-- Use placeholders like `your_api_key_here`
-- Review `.gitignore` before adding generated reports or project-specific data
-- See [SECURITY.md](./SECURITY.md) for reporting guidance
+# 初始化抓取器（公开看板不需要 API Key）
+scraper = TrelloScraper()
 
-## Contributing
+# 抓取看板数据
+data = scraper.scrape_board('jujutsu-infinite-board-id')
 
-Contributions are welcome. Before opening a pull request:
+# 输出结构化 JSON
+# {
+#   "cards": [...],
+#   "lists": [...],
+#   "labels": [...]
+# }
+```
 
-- keep skills self-contained
-- include or update `SKILL.md`
-- document required dependencies
-- sanitize examples and remove secrets
+### 示例 3: 搜索意图分类
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md).
+```python
+from intent_classifier import classify_intent
 
-## Suggested GitHub Topics
+# 分类搜索意图
+intent = classify_intent("how to get six eyes jujutsu infinite")
 
-If you want better repository discovery, add these topics on GitHub:
+# 输出:
+# {
+#   "type": "informational",
+#   "template": "guide",
+#   "schema": "HowTo"
+# }
+```
 
-- `ai-agents`
-- `seo`
-- `nextjs`
-- `python`
-- `automation`
-- `prompts`
-- `tooling`
-- `content-generation`
+### 示例 4: 整站关键词研究
 
-## License
+```
+输入：your-product.com
+输出：
+  阶段一 → 30+ 候选词（标注来源：PASF / RS / AI-主题 / 竞品）
+  阶段二 → 10 词 SERP 详细分析 + 竞争度打分
+  阶段三 → Top 3 关键词 + 具体操作建议 + 落地页方案
+```
 
-MIT License. See [LICENSE](./LICENSE).
+### 示例 5: YouTube 内容情报
+
+```
+输入："AI 工具类目有没有机会"
+输出：
+  六步工作流 → 需求分析 → 策略制定 → 数据获取 → 清洗 → 识别 → 保存
+  竞争度评估：🔴高 / 🟡中 / 🟢低
+  切入机会 + 数据支撑
+```
+
+---
+
+## 📁 目录结构
+
+```
+7deer_skills/
+├── README.md                          # 本文档
+├── CONTRIBUTING.md                    # 贡献指南
+├── SECURITY.md                        # 安全说明
+├── LICENSE                            # MIT License
+│
+├── google-trends-to-pages/            # 🔥 Google Trends → SEO 页面
+│   ├── SKILL.md
+│   └── resources/
+│       ├── intent_classifier.py
+│       └── page_structure_generator.ts
+│
+├── multi-game-codes-hub/              # 🔥 游戏代码页面生成器
+│   ├── SKILL.md
+│   ├── USAGE.md
+│   └── resources/
+│       ├── generate_code_page.py
+│       ├── templates/codes_page.tsx
+│       ├── components/
+│       ├── schemas/
+│       └── examples/
+│
+├── roblox-game-data-scraper/          # 🔥 游戏数据抓取器
+│   ├── SKILL.md
+│   └── resources/
+│       └── trello_scraper.py
+│
+├── site-keyword-research/             # 整站关键词研究
+│   ├── SKILL.md
+│   └── references/
+│       └── output-template.md
+│
+├── null-axiom-twitter/                # Twitter/X 推文生成
+│   └── SKILL.md
+│
+├── youtube-intel/                     # YouTube 内容情报
+│   ├── SKILL.md
+│   └── references/
+│       ├── data-model.md
+│       ├── discovery-template.md
+│       └── workflow.md
+│
+├── youtube-transcribe/                # YouTube 视频转录
+│   ├── SKILL.md
+│   └── scripts/
+│       └── transcribe.sh
+│
+├── youtube-content-gen/               # YouTube 内容生成器
+├── youtube-game-keywords/             # YouTube 游戏关键词提取
+├── nextjs-seo-booster/                # Next.js SEO 工具包
+├── nextjs-seo-foundations/            # Next.js SEO 工程化规范
+├── seo-auditor/                       # SEO 审计框架
+├── python-agent-engine/               # Python AI Agent 引擎
+├── data-scraper-intent/               # 数据提取 & 意图分析
+├── backlink-discovery/                # 外链机会发现引擎
+├── backlink-intelligence/             # 外链情报收集与评估
+├── keyword-competition-analysis/      # 关键词竞争度分析
+├── seo-backlink-submitter/            # 批量目录提交工具
+├── seo-link-strategy/                 # 外链策略生成器
+├── roblox-site-architect/             # Roblox 站点架构
+├── rpg-stat-catalyst/                 # RPG 数值计算核心
+├── favicon-icon-generator/            # Favicon & Icon 生成器
+├── gemini-thinking-protocol/          # 核心认知引擎
+└── plugin-architect/                  # AI Skills 构建标准
+```
+
+---
+
+## 🔐 安全说明
+
+> ⚠️ **重要：本仓库不包含任何敏感信息**
+
+- ✅ 所有代码均不包含 API Key、Token 或密码
+- ✅ 涉及外部 API 的技能通过环境变量读取密钥
+- ✅ 示例代码使用占位符（如 `your_api_key`）
+- ✅ 已通过安全扫描，无敏感数据泄露
+
+详细安全政策请参阅 [SECURITY.md](./SECURITY.md)。
+
+### 环境变量配置示例
+
+如果某个技能需要 API Key，请在项目中设置环境变量：
+
+```bash
+# .env 文件示例
+TRELLO_API_KEY=your_trello_api_key_here
+TRELLO_TOKEN=your_trello_token_here
+GEMINI_API_KEY=your_gemini_api_key_here
+OPENAI_API_KEY=your_openai_api_key_here
+```
+
+---
+
+## 📊 技能统计
+
+- **总技能数**: 24 个
+- **P0 核心技能**: 3 个
+- **代码行数**: 15,000+ 行
+- **文档页数**: 70+ 页
+- **时间节省**: 平均 80-95%
+
+---
+
+## 🎯 适用项目类型
+
+- ✅ Roblox 游戏工具站
+- ✅ SEO 内容站点
+- ✅ 游戏攻略网站
+- ✅ Next.js Web 应用
+- ✅ Python AI 应用
+- ✅ 数据采集项目
+- ✅ 个人品牌 / 社交媒体运营
+- ✅ YouTube 内容创作
+
+---
+
+## 📝 更新日志
+
+### 2026-04-11
+- 🔥 添加 **null-axiom-twitter**（Twitter/X 推文自动生成，含人设调性 + Reddit 回帖支持）
+- 🔥 添加 **site-keyword-research**（整站关键词研究，三层方法论：30词初筛→10词详析→3词定方向）
+- 📈 升级 **youtube-intel** v2.0（重构 Discovery 工作流，新增六步流程）
+- 🔧 修复 **youtube-transcribe**（修复硬编码路径 + android GVS PO Token fallback）
+- 📝 添加 CONTRIBUTING.md、SECURITY.md、LICENSE
+- 📊 技能总数从 19 → 24
+
+### 2026-04-07
+- 添加 youtube-game-keywords（YouTube 订阅频道游戏关键词提取）
+
+### 2026-04-04
+- 🔥 添加 **google-trends-to-pages**（Google Trends → SEO 页面生成器）
+- 🔥 添加 **multi-game-codes-hub**（5 分钟生成游戏代码页面）
+- 🔥 添加 **roblox-game-data-scraper**（Trello/Discord/Reddit 数据抓取）
+- 添加 backlink-discovery（外链机会发现引擎）
+- 添加 keyword-competition-analysis（关键词竞争度分析）
+- 添加 seo-backlink-submitter（批量目录提交工具）
+- 添加 seo-link-strategy（外链策略生成器）
+
+### 2026-02-09
+- 添加 favicon-icon-generator（图标生成系统）
+- 添加 gemini-thinking-protocol（认知引擎）
+- 添加 plugin-architect（技能构建标准）
+- 添加 roblox-site-architect（Roblox 站点架构）
+- 添加 nextjs-seo-foundations（SEO 工程化规范）
+
+### 2026-01-17
+- 初始化技能库
+- 添加 5 个核心技能模块
+
+---
+
+## 🤝 贡献指南
+
+欢迎贡献新技能或改进现有技能！详细规范请参阅 [CONTRIBUTING.md](./CONTRIBUTING.md)。
+
+### 技能提交规范
+
+每个技能应包含：
+- `SKILL.md` - 完整文档
+- `resources/` - 代码和资源文件
+- 使用示例和测试数据
+- 清晰的使用说明
+
+---
+
+## 📄 License
+
+MIT License - 开源分享，欢迎使用和贡献。详见 [LICENSE](./LICENSE)。
+
+---
+
+## 📧 联系方式
+
+- GitHub: [@kennyzir](https://github.com/kennyzir)
+- Repository: [7deer_skills](https://github.com/kennyzir/7deer_skills)
+
+---
+
+**⭐ 如果这个技能库对你有帮助，请给个 Star！**
