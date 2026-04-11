@@ -3,6 +3,25 @@
 > 24 个可复用的 AI Agent 技能模块，基于 [Agent Skills 开放标准](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)构建。
 > 克隆到项目中，你的 AI Agent 即可自动发现并加载这些能力。
 
+这是一个开源技能库，包含了从实际项目中提炼出来的可复用代码模块和指令模板。
+将此仓库克隆到任何新项目的 `.agent/skills` 目录，AI Agent 即可自动加载这些能力。
+
+每个技能都不是凭空设计的 — 它们来自真实的独立站运营、游戏工具站搭建和出海内容项目，经过反复打磨后整理成可复用模块。
+
+### 🌟 特色
+
+🔍 **SEO 全链路自动化** — 从 Google Trends 热词发现，到搜索意图分类，到页面自动生成，再到外链建设和关键词竞争度分析。`google-trends-to-pages` 能把一个上升关键词在几分钟内变成一个带 Schema 标记的 SEO 页面；`site-keyword-research` 用三层漏斗（30 词初筛 → 10 词 SERP 分析 → 3 词定方向）帮你找到真正值得做的词。
+
+🎮 **游戏站批量生产** — 做 Roblox 游戏工具站最头疼的是内容更新。`multi-game-codes-hub` 让你 5 分钟从一个 JSON 文件生成完整的代码兑换页面（含 Active/Expired 分区、一键复制、FAQ Schema）；`roblox-game-data-scraper` 直接从 Trello 看板和 Discord 频道抓取游戏数据，不用手动搬运。
+
+📣 **社交媒体内容运营** — `null-axiom-twitter` 不是简单的推文生成器，它内置了完整的人设体系、五大内容支柱和发布节奏规划，能按比例自动选择话题方向，生成三个不同风格的草稿（锐利版 / 故事版 / 数据版）供你挑选。
+
+📺 **YouTube 内容情报** — `youtube-intel` 帮你扫描一个类目的竞争格局（六步工作流：需求分析 → 策略制定 → 数据获取 → 清洗 → 识别 → 保存），`youtube-transcribe` 把视频转成文字稿存入 memory，`youtube-content-gen` 再把视频内容转化成 SEO 页面。
+
+🔗 **外链建设自动化** — 从发现机会（`backlink-discovery`）到评估目录（`backlink-intelligence`）到生成个性化邮件（`seo-link-strategy`）到批量提交（`seo-backlink-submitter`），四个技能串起完整的外链工作流。
+
+🧩 **不是 prompt 收集，是可执行的工作流** — 每个技能都包含 `SKILL.md` 文档 + 可直接运行的脚本 / 模板 / 参考文件。不是告诉你「应该怎么做」，而是直接帮你做。
+
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 [![Skills](https://img.shields.io/badge/skills-24-blue.svg)](#-完整技能清单)
 [![Agent Skills Standard](https://img.shields.io/badge/standard-Agent_Skills-8A2BE2.svg)](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)
