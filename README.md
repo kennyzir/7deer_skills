@@ -1,4 +1,4 @@
-# 🛠️ 7Deer Skills — Agent Skills 开放标准技能库
+﻿# 🛠️ 7Deer Skills — Agent Skills 开放标准技能库
 
 > 25 个可复用的 AI Agent 技能模块，基于 [Agent Skills 开放标准](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)构建。
 > 克隆到项目中，你的 AI Agent 即可自动发现并加载这些能力。
@@ -109,6 +109,7 @@ cp -r 7deer_skills/google-trends-to-pages .agent/skills/
 | 5 | **youtube-content-gen** | YouTube 内容生成器（视频转 SEO 页面） | 攻略/教程类站点 |
 | 6 | **youtube-game-keywords** | YouTube 订阅频道游戏关键词提取 | 内容创作/游戏赛道 |
 | 7 | **site-keyword-research** | 整站关键词研究（30词初筛→10词详析→3词定方向） | SEO 关键词调研 |
+| 8 | **seo-autopilot** | 全自动 SEO 内容新鲜度引擎（报告 → 生成 → 审计 → 部署） | SEO 内容自动化 |
 
 ### 数据采集 & 分析
 | # | 技能名称 | 描述 | 适用场景 |
@@ -314,6 +315,11 @@ intent = classify_intent("how to get six eyes jujutsu infinite")
 │   └── resources/
 │       └── trello_scraper.py
 │
+├── seo-autopilot/                     # 全自动 SEO 内容新鲜度引擎
+│   ├── SKILL.md
+│   └── references/
+│       ├── steering-template.md
+│       └── setup-checklist.md
 ├── site-keyword-research/             # 整站关键词研究
 │   ├── SKILL.md
 │   └── references/
@@ -412,6 +418,11 @@ OPENAI_API_KEY=your_openai_api_key_here
 
 ## 📝 更新日志
 
+
+### 2026-04-12
+- 🔥 添加 **seo-autopilot**（全自动 SEO 内容新鲜度引擎，关键词报告 → 页面生成 → 审计 → 部署）
+- 📊 技能总数 → 25
+
 ### 2026-04-12
 - 🆕 添加 **auto-page-sync**（仓库内容自动同步到前端页面，GitHub Actions 定时拉取 + SEO 新鲜度保障）
 - 📊 技能总数从 24 → 25
@@ -477,3 +488,4 @@ MIT License - 开源分享，欢迎使用和贡献。详见 [LICENSE](./LICENSE)
 ---
 
 **⭐ 如果这个技能库对你有帮助，请给个 Star！**
+
