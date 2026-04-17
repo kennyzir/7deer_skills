@@ -10,7 +10,7 @@
 
 ### 🌟 特色
 
-🔍 **SEO 全链路自动化** — 从 Google Trends 热词发现，到搜索意图分类，到页面自动生成，再到外链建设和关键词竞争度分析。`google-trends-to-pages` 能把一个上升关键词在几分钟内变成一个带 Schema 标记的 SEO 页面；`site-keyword-research` 用三层漏斗（30 词初筛 → 10 词 SERP 分析 → 3 词定方向）帮你找到真正值得做的词。
+🔍 **SEO 全链路自动化** — 从 Google Trends 热词发现，到搜索意图分类，到页面自动生成，再到外链建设和关键词竞争度分析。`google-trends-to-pages` 能把一个上升关键词在几分钟内变成一个带 Schema 标记的 SEO 页面；`site-keyword-research` 用递归式关键词树扩展（100词库 → 20词分层 → 10 词 SERP 分析 → 3 词定方向）帮你找到真正值得做的词，每个词标注来源可信度和扩展深度。
 
 🎮 **游戏站批量生产** — 做 Roblox 游戏工具站最头疼的是内容更新。`multi-game-codes-hub` 让你 5 分钟从一个 JSON 文件生成完整的代码兑换页面（含 Active/Expired 分区、一键复制、FAQ Schema）；`roblox-game-data-scraper` 直接从 Trello 看板和 Discord 频道抓取游戏数据，不用手动搬运。
 
@@ -108,7 +108,7 @@ cp -r 7deer_skills/google-trends-to-pages .agent/skills/
 | 4 | **seo-auditor** | SEO 审计框架（检查清单 + 自动化脚本） | 网站 SEO 优化 |
 | 5 | **youtube-content-gen** | YouTube 内容生成器（视频转 SEO 页面） | 攻略/教程类站点 |
 | 6 | **youtube-game-keywords** | YouTube 订阅频道游戏关键词提取 | 内容创作/游戏赛道 |
-| 7 | **site-keyword-research** | 整站关键词研究（30词初筛→10词详析→3词定方向） | SEO 关键词调研 |
+| 7 | **site-keyword-research** | 整站关键词研究 v2（递归扩展100词→20词分层→10词SERP详析→3词定方向） | SEO 关键词调研 |
 | 8 | **seo-autopilot** | 全自动 SEO 内容新鲜度引擎（报告 → 生成 → 审计 → 部署） | SEO 内容自动化 |
 
 ### 数据采集 & 分析
@@ -427,9 +427,12 @@ OPENAI_API_KEY=your_openai_api_key_here
 - 🆕 添加 **auto-page-sync**（仓库内容自动同步到前端页面，GitHub Actions 定时拉取 + SEO 新鲜度保障）
 - 📊 技能总数从 24 → 25
 
+### 2026-04-17
+- 📈 升级 **site-keyword-research** v2.0（递归式关键词树扩展，词库从30词扩充至100词，每个词标注来源可信度+扩展深度）
+
 ### 2026-04-11
 - 🔥 添加 **null-axiom-twitter**（Twitter/X 推文自动生成，含人设调性 + Reddit 回帖支持）
-- 🔥 添加 **site-keyword-research**（整站关键词研究，三层方法论：30词初筛→10词详析→3词定方向）
+- 🔥 添加 **site-keyword-research** v1（整站关键词研究，三层方法论：30词初筛→10词详析→3词定方向）
 - 📈 升级 **youtube-intel** v2.0（重构 Discovery 工作流，新增六步流程）
 - 🔧 修复 **youtube-transcribe**（修复硬编码路径 + android GVS PO Token fallback）
 - 📝 添加 CONTRIBUTING.md、SECURITY.md、LICENSE
