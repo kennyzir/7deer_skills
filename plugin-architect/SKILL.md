@@ -1,10 +1,9 @@
 ---
 name: plugin-architect
-description: 构建 AI Skills/Plugins 的标准方法论 (Based on Anthropic Standard)
-version: 1.0
+description: "Scaffolds AI skill and plugin projects — generates SKILL.md files with YAML frontmatter, defines trigger conditions, creates slash commands, and registers MCP tool servers. Use when the user asks to create a new skill, write a SKILL.md, build a plugin, scaffold skill metadata, add slash commands, or restructure existing skills to match the Anthropic standard."
 ---
 
-# 🏗️ Plugin Architect Protocol
+# Plugin Architect Protocol
 
 本 Skill 定义了本项目构建 **AI Plugins** 的唯一标准。所有 Skill 的创建与修改必须遵循此方法论。
 
@@ -86,5 +85,10 @@ AI 的思维链。必须包含明确的触发条件 (Trigger) 和结构化指令
 4.  **Register Command (Optional)**:
     *   If user needs frequent access, create `.agent/commands/<skill-shortcut>.md`.
 
-5.  **Validation**:
-    *   Ask AI: "Does this skill structure match the `plugin-architect` standard?"
+5.  **Validation Checklist**:
+    *   `plugin.json` exists and contains `name`, `description`, `schema_version`
+    *   `SKILL.md` has valid YAML frontmatter with `name` and `description`
+    *   `SKILL.md` has a `## When This Skill Applies` section with specific triggers
+    *   `SKILL.md` has a `## Instructions` section with verifiable steps
+    *   All file references in SKILL.md point to files that exist
+    *   If validation fails, fix the failing item and re-check
