@@ -9,9 +9,9 @@ The browser session is stateless. Every new browser session starts logged out. M
 ```
 1. Navigate to https://x.com (not x.com/search)
 2. In browser_console, run:
-   document.cookie = "auth_token=06dec19f563932f39d96f93e9d8c005d3de9b7a9; domain=.x.com; path=/; secure; SameSite=None";
+   document.cookie = "auth_token=your_auth_token_here; domain=.x.com; path=/; secure; SameSite=None";
 3. Navigate to https://x.com/home to verify login
-4. Confirm snapshot shows "claw0x" account name and "Home / X" title
+4. Confirm snapshot shows the expected account name and "Home / X" title
 5. Now proceed to search URLs
 ```
 
@@ -19,7 +19,7 @@ The browser session is stateless. Every new browser session starts logged out. M
 
 - **Every Hermes session starts with a fresh browser.** Cookie does NOT persist between agent turns. Must re-inject at the START of every cron run.
 - If navigated search URL redirects to x.com/i/flow/login → cookie already expired → re-inject immediately
-- Always verify login with x.com/home BEFORE starting any search. Check snapshot for "claw0x" account name and "Home / X" title.
+- Always verify login with x.com/home BEFORE starting any search. Check snapshot for the expected account name and "Home / X" title.
 - After injection, navigate to x.com/home FIRST, then proceed to search URLs.
 - If search redirects mid-session (can happen after 5-10 minutes), re-inject at x.com and resume the layer.
 
@@ -27,7 +27,7 @@ The browser session is stateless. Every new browser session starts logged out. M
 1. `browser_navigate` to https://x.com
 2. `browser_console`: inject auth_token cookie
 3. `browser_navigate` to https://x.com/home
-4. Verify snapshot shows "claw0x" → proceed
+4. Verify snapshot shows the expected account → proceed
 5. If not → cookie stale, request new token from user
 
 ## Browser Console Async Pattern
