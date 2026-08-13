@@ -114,49 +114,53 @@ cp -r 7deer_skills/google-trends-to-pages .agent/skills/
 ### 数据采集 & 分析
 | # | 技能名称 | 描述 | 适用场景 |
 |---|---------|------|---------|
-| 8 | **roblox-game-data-scraper** | Trello/Discord/Reddit 游戏数据抓取 | Roblox 游戏网站 |
-| 9 | **data-scraper-intent** | 数据提取 & 搜索意图分析（爬虫 + LLM） | SEO/数据采集 |
-| 10 | **youtube-intel** | YouTube 内容情报与竞品监测（Discovery + Monitoring） | 选题策划/竞品分析 |
-| 11 | **youtube-transcribe** | YouTube 视频转录（yt-dlp + whisper） | 视频内容提取 |
+| 9 | **roblox-game-data-scraper** | Trello/Discord/Reddit 游戏数据抓取 | Roblox 游戏网站 |
+| 10 | **data-scraper-intent** | 数据提取 & 搜索意图分析（爬虫 + LLM） | SEO/数据采集 |
+| 11 | **youtube-intel** | YouTube 内容情报与竞品监测（Discovery + Monitoring） | 选题策划/竞品分析 |
+| 12 | **youtube-transcribe** | YouTube 视频转录（yt-dlp + whisper） | 视频内容提取 |
 
 ### 外链建设
 | # | 技能名称 | 描述 | 适用场景 |
 |---|---------|------|---------|
-| 12 | **backlink-discovery** | 外链机会发现引擎（web_search 多轮派生） | 外链建设 |
-| 13 | **backlink-intelligence** | AI/Tools 目录外链情报收集与评估 | 外链情报 |
-| 14 | **keyword-competition-analysis** | 谷歌关键词竞争度分析 | SEO 调研 |
-| 15 | **seo-backlink-submitter** | 批量目录提交工具（Playwright 自动化） | 外链分发 |
-| 16 | **seo-link-strategy** | 外链策略生成器（发现→评估→邮件→自动发送） | 外链营销 |
-| 17 | **signallayer-backlinks-client** | SignalLayer.io API 客户端（natural / standard / drip） | 外链自动化 |
+| 13 | **backlink-discovery** | 外链机会发现引擎（web_search 多轮派生） | 外链建设 |
+| 14 | **backlink-intelligence** | AI/Tools 目录外链情报收集与评估 | 外链情报 |
+| 15 | **keyword-competition-analysis** | 谷歌关键词竞争度分析 | SEO 调研 |
+| 16 | **seo-backlink-submitter** | 批量目录提交工具（Playwright 自动化） | 外链分发 |
+| 17 | **seo-link-strategy** | 外链策略生成器（发现→评估→邮件→自动发送） | 外链营销 |
+| 18 | **signallayer-backlinks-client** | SignalLayer.io API 客户端（natural / standard / drip） | 外链自动化 |
 
 ### 游戏 & 工具
 | # | 技能名称 | 描述 | 适用场景 |
 |---|---------|------|---------|
-| 17 | **multi-game-codes-hub** | 快速生成游戏代码页面（模板 + 组件） | Roblox/游戏网站 |
-| 18 | **rpg-stat-catalyst** | RPG 数值计算核心（属性加点 + 阈值） | 游戏类应用 |
-| 19 | **roblox-site-architect** | Roblox 游戏工具站 SEO 架构 | Roblox 游戏网站 |
+| 19 | **multi-game-codes-hub** | 快速生成游戏代码页面（模板 + 组件） | Roblox/游戏网站 |
+| 20 | **rpg-stat-catalyst** | RPG 数值计算核心（属性加点 + 阈值） | 游戏类应用 |
+| 21 | **roblox-site-architect** | Roblox 游戏工具站 SEO 架构 | Roblox 游戏网站 |
+| 22 | **youtube-game-scout** | YouTube 订阅频道新游戏信号发现与评分 | 游戏发现 |
+| 23 | **html5-game-radar** | 多源 HTML5 游戏发现雷达与 SEO 信号评分 | 游戏发现 / SEO 选题 |
+| 24 | **itchio-new-game-hunt** | itch.io 浏览器新游发现与 SEO 套利筛选 | 游戏发现 / SEO 选题 |
 
 ### 自动化 & CI/CD
 | # | 技能名称 | 描述 | 适用场景 |
 |---|---------|------|---------|
-| 20 | **auto-page-sync** | 仓库内容自动同步到前端页面（GitHub Actions 定时拉取 + SEO 新鲜度） | 报告/博客/Landing Page 自动更新 |
+| 25 | **auto-page-sync** | 仓库内容自动同步到前端页面（GitHub Actions 定时拉取 + SEO 新鲜度） | 报告/博客/Landing Page 自动更新 |
 
 ### AI & 开发工具
 | # | 技能名称 | 描述 | 适用场景 |
 |---|---------|------|---------|
-| 21 | **python-agent-engine** | Python AI Agent 引擎（ReAct + 工具调用） | Python AI 应用 |
-| 22 | **gemini-thinking-protocol** | 核心认知引擎（第一性原理 + 系统思维） | 复杂需求分析 |
-| 23 | **plugin-architect** | AI Skills/Plugins 构建标准方法论 | 创建新技能 |
+| 26 | **python-agent-engine** | Python AI Agent 引擎（ReAct + 工具调用） | Python AI 应用 |
+| 27 | **gemini-thinking-protocol** | 核心认知引擎（第一性原理 + 系统思维） | 复杂需求分析 |
+| 28 | **plugin-architect** | AI Skills/Plugins 构建标准方法论 | 创建新技能 |
 
 ### 社交媒体 & 内容运营
 | # | 技能名称 | 描述 | 适用场景 |
 |---|---------|------|---------|
-| 24 | **null-axiom-twitter** | Twitter/X 推文自动生成（人设调性 + 五大内容支柱） | 个人品牌运营 |
+| 29 | **null-axiom-twitter** | Twitter/X 推文自动生成（人设调性 + 五大内容支柱） | 个人品牌运营 |
+| 30 | **x-demand-radar** | X 热点雷达（热度分层 + 项目新鲜度校验） | 热点发现 / 独立站选题 |
 
 ### 其他工具
 | # | 技能名称 | 描述 | 适用场景 |
 |---|---------|------|---------|
-| 25 | **favicon-icon-generator** | Favicon & Icon 生成器（SVG + PWA） | Web 应用图标系统 |
+| 31 | **favicon-icon-generator** | Favicon & Icon 生成器（SVG + PWA） | Web 应用图标系统 |
 
 ---
 
@@ -492,4 +496,3 @@ MIT License - 开源分享，欢迎使用和贡献。详见 [LICENSE](./LICENSE)
 ---
 
 **⭐ 如果这个技能库对你有帮助，请给个 Star！**
-

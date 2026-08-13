@@ -99,6 +99,43 @@ description: |
 [直接发送飞书]
 ```
 
+## 可选数据入口：TweetClaw/OpenClaw
+
+默认流程仍可使用浏览器登录态。在 OpenClaw 环境安装 TweetClaw 后，也可以导入经过审核的 X/Twitter 公共帖子证据包，减少 Cookie 注入和手动滚动带来的脆弱性。
+
+首选安装方式：
+
+```bash
+openclaw plugins install clawhub:@xquik/tweetclaw
+```
+
+npm 回退方式：
+
+```bash
+openclaw plugins install npm:@xquik/tweetclaw
+```
+
+导入前，将结果整理为以下字段：
+
+- `query_layer`: 来源搜索层级，如 `L0` 或 `L3`
+- `query`: 产生结果的完整搜索词
+- `url`: 帖子永久链接
+- `author`: 公开账号名
+- `created_at`: 帖子发布时间
+- `captured_at`: 证据包采集时间
+- `text`: 用于趋势判断的公开文本
+- `metrics`: 采集时可见的互动指标
+
+导入规则：
+
+1. 先人工审核证据包，再进入热度评分。
+2. 以帖子永久链接去重；链接缺失时，不自动合并。
+3. 时间戳缺失或不可解析时，保留记录但不计算时效分数。
+4. 互动指标只代表采集时快照，不应描述为实时值。
+5. 不导入 Cookie、访问令牌、私信或其他非公开数据。
+
+TweetClaw 是 Xquik 提供的 OpenClaw 插件，不是 MCP server。Xquik is an independent third-party service. Not affiliated with X Corp. "Twitter" and "X" are trademarks of X Corp.
+
 ## Step 1: 构造搜索 URL
 
 ```javascript
@@ -312,7 +349,7 @@ const filtered = allPosts
 ```markdown
 🔍 AI 热点雷达 | {{DATE}} {{TIME}}
 
-> **数据来源：X/Twitter 实时抓取 @claw0x**
+> **数据来源：X/Twitter 实时公开帖子采集**
 
 ## 📰 Today's News 侧边栏
 
@@ -346,7 +383,7 @@ const filtered = allPosts
 - 时间范围：{{since}} - {{until}}
 - 原始帖子：{{raw}} 条 → 去重 {{deduped}} → 过滤 {{filtered}} → 精选 {{top}} 条
 - GitHub 校验：排除 {{excluded}} 个旧项目
-- 浏览器状态：已登录 @claw0x
+- 浏览器状态：已登录预期账户
 
 ## 🔮 关键洞察
 
@@ -384,12 +421,12 @@ git pull --rebase && git push  # ⚠️ 必须 rebase，防止 non-fast-forward 
 
 ```javascript
 // 先导航到 x.com 再注入，然后验证 x.com/home 登录成功
-document.cookie = "auth_token=06dec19f563932f39d96f93e9d8c005d3de9b7a9; domain=.x.com; path=/; secure; SameSite=None";
+document.cookie = "auth_token=your_auth_token_here; domain=.x.com; path=/; secure; SameSite=None";
 ```
 
 ## 配置
 
-- **X 账户**: @claw0x（已登录浏览器）
+- **X 账户**: 预期的已登录账户
 - **执行频率**: 每 12 小时（9:00 + 21:00 CST）
 - **Cookie 有效期**: 需用户定期更新 auth_token
 - **输出目标**: `daily-reports/YYYY-MM-DD/x-demand-radar.md` + `public/data/demand-radar.json`
