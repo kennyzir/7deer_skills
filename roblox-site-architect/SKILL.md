@@ -2,7 +2,7 @@
 name: roblox-site-architect
 description: Orchestrate an evidence-backed seven-stage Roblox site growth pipeline from opportunity assessment through keyword research, source collection, site planning, SEO QA, freshness, and growth. Use when work needs staged artifacts and explicit handoffs rather than a one-click site generator.
 metadata:
-  version: "4.0"
+  version: "4.1"
 ---
 
 # Roblox Site Growth Pipeline
@@ -38,6 +38,23 @@ Establish these before Stage 01:
 - the user's requested scope: research only, planning, local implementation, or authorized external release.
 
 Unknown inputs stay explicitly unknown. A game name alone does not authorize building, purchasing, publishing, or outreach.
+
+## Initialize pipeline artifacts
+
+Use [scripts/init_pipeline.py](scripts/init_pipeline.py) to prepare the seven contract artifacts from the maintained [pipeline templates](assets/pipeline-templates/). The initializer creates only `<project-root>/pipeline/` and its seven Markdown files; it does not build a website or access the network.
+
+Run a dry-run first from any working directory. Dry-run is the default and prints a JSON plan without creating files:
+
+```bash
+python3 /path/to/roblox-site-architect/scripts/init_pipeline.py \
+  --project-root /path/to/project \
+  --game "Canonical Roblox game name" \
+  --scope "Bounded research and delivery scope"
+```
+
+After reviewing the resolved targets, add `--apply` to create all seven files. The initializer validates every input, template, and target before writing; if any target artifact already exists, it fails without overwriting or creating the other artifacts. There is no force mode.
+
+Initialize a project only once. To resume or repair an existing pipeline, inspect its artifacts in numeric order and continue from their recorded state; never rerun initialization over an existing artifact set.
 
 ## Seven-stage pipeline
 
