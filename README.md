@@ -8,6 +8,8 @@
 
 每个技能都不是凭空设计的 — 它们来自真实的独立站运营、游戏工具站搭建和出海内容项目，经过反复打磨后整理成可复用模块。
 
+由 [七鹿（7Deer）](https://rbauto.ludusdex.com/about/?utm_source=github&utm_medium=opensource&utm_campaign=7deer_skills) 持续维护。我是一名用 AI 做产品和独立站的开发者，希望把真实项目中反复用到的方法，整理成任何人都能查看、修改和复用的开源工具。
+
 ### 🌟 特色
 
 🔍 **SEO 全链路自动化** — 从 Google Trends 热词发现，到搜索意图分类，到页面自动生成，再到外链建设和关键词竞争度分析。`google-trends-to-pages` 能把一个上升关键词在几分钟内变成一个带 Schema 标记的 SEO 页面；`site-keyword-research` 用递归式关键词树扩展（100词库 → 20词分层 → 10 词 SERP 分析 → 3 词定方向）帮你找到真正值得做的词，每个词标注来源可信度和扩展深度。
@@ -287,6 +289,23 @@ intent = classify_intent("how to get six eyes jujutsu infinite")
 
 ---
 
+## 🌱 七鹿、开源 Skills 与 RB Auto
+
+7Deer Skills 是七鹿维护的开源项目。这里的每个 Skill 都可以独立使用，并继续按 MIT License 免费开放；它不是商业产品的残缺试用版。
+
+如果你正在持续建设 Roblox 游戏站，希望把选游戏、关键词研究、页面生成、上线检查、数据回流和后续更新串成一套完整流程，可以了解 [RB Auto](https://rbauto.ludusdex.com/?utm_source=github&utm_medium=opensource&utm_campaign=7deer_skills)。RB Auto 提供私有 Agent 工具源码、操作说明和首站陪跑，更适合已经在使用 AI / Codex 做站、愿意根据真实数据持续运营的人。它不保证搜索排名、流量或收入。
+
+| 7Deer Skills | RB Auto |
+|---|---|
+| 可独立组合的开源技能 | 面向 Roblox 游戏站的完整工作流 |
+| MIT License | 商业授权的私有源码 |
+| 自行安装、选择和编排 | 工具整合、操作说明与首站陪跑 |
+| 适合开发者与 Agent 实验 | 适合持续测试和运营多个游戏站 |
+
+[了解 RB Auto 的工作方式](https://rbauto.ludusdex.com/?utm_source=github&utm_medium=opensource&utm_campaign=7deer_skills) · [查看七鹿的真实实践记录](https://rbauto.ludusdex.com/cases/?utm_source=github&utm_medium=opensource&utm_campaign=7deer_skills)
+
+---
+
 ## 📁 目录结构
 
 ```
@@ -492,6 +511,9 @@ MIT License - 开源分享，欢迎使用和贡献。详见 [LICENSE](./LICENSE)
 ## 📧 联系方式
 
 - GitHub: [@kennyzir](https://github.com/kennyzir)
+- 关于七鹿: [认识七鹿](https://rbauto.ludusdex.com/about/?utm_source=github&utm_medium=opensource&utm_campaign=7deer_skills)
+- 产品与案例: [RB Auto](https://rbauto.ludusdex.com/?utm_source=github&utm_medium=opensource&utm_campaign=7deer_skills) · [真实实践记录](https://rbauto.ludusdex.com/cases/?utm_source=github&utm_medium=opensource&utm_campaign=7deer_skills)
+- 内容动态: [即刻「七鹿AI」](https://m.okjike.com/users/ea42b30c-24db-434b-b969-650d7473f69e)
 - Repository: [7deer_skills](https://github.com/kennyzir/7deer_skills)
 
 ---

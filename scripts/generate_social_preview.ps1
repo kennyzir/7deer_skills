@@ -122,8 +122,8 @@ $arrowPen.EndCap = [System.Drawing.Drawing2D.LineCap]::ArrowAnchor
 $graphics.DrawLine($arrowPen, 984, 220, 1024, 244)
 $graphics.DrawLine($arrowPen, 1024, 334, 984, 358)
 
-$graphics.DrawString("Open source repository", $bodyFont, $footerBrush, 112, 518)
-$graphics.DrawString("github.com/kennyzir/7deer_skills", $bodyFont, $mutedBrush, 332, 518)
+$graphics.DrawString("Built and maintained by 7Deer", $bodyFont, $footerBrush, 112, 518)
+$graphics.DrawString("github.com/kennyzir/7deer_skills", $bodyFont, $mutedBrush, 420, 518)
 
 $bitmap.Save($outputPath, [System.Drawing.Imaging.ImageFormat]::Png)
 

@@ -96,6 +96,6 @@
     <path d="M991 351L983 359L995 362" stroke="#B092FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
 
-  <text x="112" y="522" fill="#DBB6FF" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="20" font-weight="600">Open source repository</text>
-  <text x="330" y="522" fill="#C5DDF0" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="20">github.com/kennyzir/7deer_skills</text>
+  <text x="112" y="522" fill="#DBB6FF" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="20" font-weight="600">Built and maintained by 7Deer</text>
+  <text x="420" y="522" fill="#C5DDF0" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="20">github.com/kennyzir/7deer_skills</text>
 </svg>
