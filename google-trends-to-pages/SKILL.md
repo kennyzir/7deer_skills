@@ -1,17 +1,17 @@
 ---
 name: google-trends-to-pages
-description: 从 Google Trends 关键词自动生成高流量 SEO 页面的完整工作流。包含搜索意图分类、页面模板选择、内容结构生成和 Schema 注入。
+description: 将 Google Trends 关键词分类为搜索意图并生成 SEO 页面结构建议。适用于根据搜索量和增长率确定内容优先级、标题层级、内链与 Schema 类型。
 metadata:
   keywords: google trends, seo, keyword research, page generation, search intent, content automation
 ---
 
 # Google Trends to Pages - 搜索趋势驱动的页面生成器
 
-这个 skill 帮助你从 Google Trends 数据自动生成高质量的 SEO 页面，是快速捕获流量的核心工具。
+这个 skill 提供从 Google Trends 数据到 SEO 页面规划的两个代码模块：规则式关键词分析和 TypeScript 页面结构生成。它输出内容骨架，不会直接生成可部署页面。
 
 ## 核心价值主张
 
-当你发现一个搜索量暴涨的关键词（如 "yba codes" +400%），这个 skill 能在 5 分钟内生成一个完整的、SEO 优化的页面，而不是花费数小时手动编写。
+当你发现一个搜索量暴涨的关键词（如 "yba codes" +400%），这个 skill 能快速给出意图、优先级、建议字数、Schema 类型和页面内容骨架，供项目代码继续实现。
 
 ## 工作流程
 
@@ -38,13 +38,13 @@ interface TrendKeyword {
 
 ### 3. 页面模板选择
 
-根据意图自动选择模板：
+`resources/page_structure_generator.ts` 根据意图选择结构生成函数：
 
 ```
-Transactional → resources/templates/codes_page.tsx
-Informational → resources/templates/guide_page.tsx
-Navigational → resources/templates/hub_page.tsx
-Commercial → resources/templates/comparison_page.tsx
+Transactional → generateCodesPageStructure
+Informational → generateGuidePageStructure
+Navigational → generateComparisonPageStructure（聚合页结构）
+Commercial → generateComparisonPageStructure
 ```
 
 ### 4. 内容结构生成
@@ -103,7 +103,7 @@ Intent: Informational
 
 ### `resources/intent_classifier.py`
 
-使用 NLP 模型分类搜索意图：
+使用确定性关键词规则分类搜索意图，并根据搜索量和增长率计算优先级：
 
 ```python
 def classify_intent(keyword: str) -> str:
@@ -119,48 +119,9 @@ def classify_intent(keyword: str) -> str:
     # 实现逻辑...
 ```
 
-### `resources/page_templates/`
+### `resources/page_structure_generator.ts`
 
-包含 4 种核心模板：
-
-1. **codes_page.tsx** - 代码页模板
-   - Active/Expired 分区
-   - 复制按钮
-   - 兑换指南
-   - FAQ Schema
-
-2. **guide_page.tsx** - 指南页模板
-   - 目录 (TOC)
-   - 分步说明
-   - 截图占位符
-   - HowTo Schema
-
-3. **hub_page.tsx** - 聚合页模板
-   - 卡片式布局
-   - 分类导航
-   - 搜索功能
-   - BreadcrumbList Schema
-
-4. **comparison_page.tsx** - 对比页模板
-   - 对比表格
-   - 优缺点列表
-   - 推荐结论
-   - ItemList Schema
-
-### `resources/keyword_analyzer.ts`
-
-分析关键词的 SEO 机会：
-
-```typescript
-interface KeywordAnalysis {
-  difficulty: 'Easy' | 'Medium' | 'Hard';
-  opportunity: number;  // 0-100 分
-  priority: 'P0' | 'P1' | 'P2';
-  estimatedTraffic: number;
-  competitorCount: number;
-  suggestedWordCount: number;
-}
-```
+根据分类结果生成代码页、指南页或对比/聚合页的标题、Meta、章节、FAQ、内链和 Schema 骨架。该模块不包含可直接复制的页面模板，也不评估关键词难度、预估流量或竞争对手数量；这些数据必须由外部研究提供。
 
 ## 最佳实践
 
@@ -197,15 +158,9 @@ interface KeywordAnalysis {
 ### 在 Next.js 项目中使用
 
 ```typescript
-// 1. 运行意图分类
-python resources/intent_classifier.py --input trends.csv --output classified.json
-
-// 2. 生成页面
-npm run generate-pages -- --input classified.json --priority P0
-
-// 3. 验证生成的页面
-npm run build
-npm run lint
+// 1. 在 Python 流程中导入 analyze_keyword 生成分类和优先级
+// 2. 在 TypeScript 项目中导入 generatePageStructure 生成内容骨架
+// 3. 根据目标项目实现页面，再运行该项目自己的 build/lint
 ```
 
 ### 自动化工作流

@@ -7,7 +7,7 @@ description: 批量将网站提交到 AI 工具目录和 SEO 目录，获取反�
 
 ## 功能说明
 
-批量将网站提交到 AI 工具目录和 SEO 目录，获取反向链接。自动检测目录是否接受免费提交，支持 Playwright 浏览器自动化表单填写。
+批量将网站提交到 AI 工具目录和 SEO 目录，获取反向链接。自动检测目录是否接受免费提交，支持 Playwright 浏览器自动化表单填写。单目录辅助器默认只生成 dry-run 计划，只有显式传入 `--submit` 才允许访问网络和点击提交按钮。
 
 ## 数据格式（必须提供）
 
@@ -26,7 +26,7 @@ description: 批量将网站提交到 AI 工具目录和 SEO 目录，获取反�
 
 ### Step 1：准备工作
 
-确认系统已安装 Playwright：
+默认 dry-run 不需要浏览器依赖。批量检测或真实提交前，确认系统已安装 Playwright：
 ```bash
 pip install playwright && playwright install chromium
 ```
@@ -55,12 +55,24 @@ python scripts/check_directory.py https://aitoolshunt.com/submit
 
 ### Step 4：单目录提交
 
-直接向某个目录提交：
+使用 [targets/README.md](targets/README.md) 约定的 JSON 文件准备单目录提交。以下命令只校验输入并显示计划，不访问目录网站：
 
 ```bash
-python scripts/quick_submit.py https://aitoolshunt.com/submit \
-  --data '{"name":"名称","url":"https://网站.com","description":"描述","email":"邮箱"}'
+python scripts/submit_to_directory.py \
+  --directory https://aitoolshunt.com/submit \
+  --target targets/your-domain-com.json
 ```
+
+人工核对 dry-run 输出后，才可显式授权一次真实提交：
+
+```bash
+python scripts/submit_to_directory.py \
+  --directory https://aitoolshunt.com/submit \
+  --target targets/your-domain-com.json \
+  --submit
+```
+
+`submit_triggered` 只表示浏览器已经点击提交控件，不代表目录方已经审核或收录。缺少 Playwright、找不到表单字段或提交控件、输入 JSON 无效时，脚本会以非零状态退出并给出错误。
 
 ## 目录列表
 
@@ -94,5 +106,5 @@ python scripts/quick_submit.py https://aitoolshunt.com/submit \
 ## 依赖
 
 - Python 3.8+
-- playwright (`pip install playwright && playwright install chromium`)
-- aiohttp（用于异步 HTTP 请求）
+- playwright（仅真实提交需要：`pip install playwright && playwright install chromium`）
+- aiohttp（`check_directory.py` 需要）

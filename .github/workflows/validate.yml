@@ -24,3 +24,6 @@ jobs:
 
       - name: Validate skills and Python syntax
         run: python scripts/validate_repo.py
+
+      - name: Test safe directory submission
+        run: python -m unittest discover -s seo-backlink-submitter/tests -p "test_*.py" -v

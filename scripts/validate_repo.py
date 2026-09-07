@@ -34,19 +34,9 @@ IGNORED_PYTHON_DIRS = {".git", ".mypy_cache", ".pytest_cache", ".venv", "__pycac
 
 # These are known business-content defects outside the repository-baseline scope.
 # Every exception is exact, must be exercised, and should be removed when repaired.
-MISSING_REFERENCE_ALLOWLIST = {
-    "google-trends-to-pages/resources/keyword_analyzer.ts":
-        "documented analyzer has not been implemented yet",
-    "roblox-game-data-scraper/resources/discord_monitor.py":
-        "documented collector has not been implemented yet",
-    "roblox-game-data-scraper/resources/reddit_crawler.py":
-        "documented collector has not been implemented yet",
-}
+MISSING_REFERENCE_ALLOWLIST: dict[str, str] = {}
 
-PYTHON_SYNTAX_ALLOWLIST = {
-    "seo-backlink-submitter/scripts/submit_to_directory.py":
-        "file currently contains a downloaded 404 response; business repair is deferred",
-}
+PYTHON_SYNTAX_ALLOWLIST: dict[str, str] = {}
 
 
 class Results:
