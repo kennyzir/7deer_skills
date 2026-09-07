@@ -1,7 +1,8 @@
 ---
 name: multi-game-codes-hub
 description: 快速为任何 Roblox 游戏生成完整的代码页面。包含一键复制、多语言支持、过期追踪、FAQ Schema 和自动更新机制。
-keywords: roblox codes, promo codes, game codes, code page generator, multilingual
+metadata:
+  keywords: roblox codes, promo codes, game codes, code page generator, multilingual
 ---
 
 # Multi-Game Codes Hub - 多游戏代码聚合中心

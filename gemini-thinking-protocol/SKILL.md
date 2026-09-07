@@ -1,7 +1,8 @@
 ---
 name: gemini-thinking-protocol
 description: 核心认知引擎 - 强制执行 First Principles, Dialectics, Systems Thinking 与 Communication Protocol
-version: 1.0
+metadata:
+  version: 1.0
 ---
 
 # 🧠 Gemini Cognitive Engine Protocol

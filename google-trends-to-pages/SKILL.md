@@ -1,7 +1,8 @@
 ---
 name: google-trends-to-pages
 description: 从 Google Trends 关键词自动生成高流量 SEO 页面的完整工作流。包含搜索意图分类、页面模板选择、内容结构生成和 Schema 注入。
-keywords: google trends, seo, keyword research, page generation, search intent, content automation
+metadata:
+  keywords: google trends, seo, keyword research, page generation, search intent, content automation
 ---
 
 # Google Trends to Pages - 搜索趋势驱动的页面生成器

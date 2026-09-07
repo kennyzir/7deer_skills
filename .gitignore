@@ -23,6 +23,7 @@ seo-backlink-submitter/targets/*.md
 # Internal project reports
 *COMPLETION*.md
 *REPORT*.md
+!roblox-hit-evaluator/templates/report.md
 *SUMMARY*.md
 *_plan*.md
 *_todo*.md

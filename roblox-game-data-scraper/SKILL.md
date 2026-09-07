@@ -1,7 +1,8 @@
 ---
 name: roblox-game-data-scraper
 description: 自动化抓取 Roblox 游戏数据的完整工具链。支持从 Trello、Discord、Reddit 和游戏内 API 收集代码、物品、角色、交易价值等结构化数据。
-keywords: roblox, data scraping, trello, discord, reddit, game data, automation
+metadata:
+  keywords: roblox, data scraping, trello, discord, reddit, game data, automation
 ---
 
 # Roblox Game Data Scraper - 游戏数据自动化抓取器

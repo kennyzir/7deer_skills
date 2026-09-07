@@ -1,7 +1,8 @@
 ---
 name: roblox-site-architect
 description: 专用于构建高流量 Roblox 游戏工具站的 SEO 架构与工程化方法论。从给定游戏词到最终上线部署的完整流程，包含每日自动关键词挖掘→页面构建→部署管道。
-version: 3.1
+metadata:
+  version: 3.1
 ---
 
 # 🏗️ Roblox Site Architect (RSA) Protocol v3.0

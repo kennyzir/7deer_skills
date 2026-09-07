@@ -1,7 +1,8 @@
 ---
 name: seo-autopilot
 description: 全自动 SEO 内容新鲜度引擎。监听关键词研究报告目录，自动生成落地页和博客文章，运行 SEO 审计后推送更新。适用于任何需要定期更新内容以保持 Google 排名新鲜度的网站项目。支持 Next.js / Astro / Nuxt 等主流框架。
-keywords: seo automation, keyword report, content freshness, landing page generation, blog generation, google rankings, automated deployment, git autopull
+metadata:
+  keywords: seo automation, keyword report, content freshness, landing page generation, blog generation, google rankings, automated deployment, git autopull
 ---
 
 # SEO Autopilot — 全自动内容新鲜度引擎

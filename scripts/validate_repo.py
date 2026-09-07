@@ -18,6 +18,7 @@ except ImportError:
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SKILL_NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+ALLOWED_FRONTMATTER_KEYS = {"name", "description", "license", "allowed-tools", "metadata"}
 FENCED_BLOCK_RE = re.compile(r"^[ \t]*(```|~~~).*?^[ \t]*\1[ \t]*$", re.MULTILINE | re.DOTALL)
 MARKDOWN_LINK_RE = re.compile(r"!?\[[^\]\n]*\]\(([^)\n]+)\)")
 INLINE_CODE_RE = re.compile(r"`([^`\n]+)`")
@@ -88,6 +89,13 @@ def parse_frontmatter(skill_file: Path, results: Results) -> str:
     if not isinstance(metadata, dict):
         results.error(f"{relative}: frontmatter must be a YAML mapping")
         return text
+
+    unsupported_keys = set(metadata) - ALLOWED_FRONTMATTER_KEYS
+    if unsupported_keys:
+        results.error(
+            f"{relative}: unsupported top-level frontmatter key(s): "
+            f"{', '.join(sorted(unsupported_keys))}"
+        )
 
     name = metadata.get("name")
     description = metadata.get("description")

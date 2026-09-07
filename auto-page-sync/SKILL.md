@@ -1,8 +1,9 @@
 ---
 name: auto-page-sync
 description: 仓库 Markdown/JSON 内容自动同步到前端页面，配置 GitHub Actions 定时拉取 + 部署，保持 Google SEO 内容新鲜度。支持日报、博客、Changelog、Landing Page 等多种页面模式。
-keywords: auto sync, github actions, cron, markdown, blog, report, landing page, seo freshness, sitemap, content pipeline, static site
-version: 1.0
+metadata:
+  keywords: auto sync, github actions, cron, markdown, blog, report, landing page, seo freshness, sitemap, content pipeline, static site
+  version: 1.0
 ---
 
 # Auto Page Sync — 仓库内容自动同步到前端页面
