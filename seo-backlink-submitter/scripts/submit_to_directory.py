@@ -9,7 +9,7 @@ import json
 import re
 import sys
 from pathlib import Path
-from typing import Any, Sequence
+from typing import Any, Callable, Sequence
 from urllib.parse import urlsplit
 
 
@@ -111,29 +111,44 @@ async def fill_first_visible(page: Any, selectors: Sequence[str], value: str) ->
     return False
 
 
-async def submit_live(directory_url: str, target: dict[str, Any]) -> dict[str, Any]:
-    try:
-        from playwright.async_api import async_playwright
-    except ImportError as exc:
-        raise RuntimeError(
-            "live submission requires Playwright; install it with "
-            "'python3 -m pip install playwright' and 'playwright install chromium'"
-        ) from exc
+async def submit_live(
+    directory_url: str,
+    target: dict[str, Any],
+    playwright_factory: Callable[[], Any] | None = None,
+) -> dict[str, Any]:
+    if playwright_factory is None:
+        try:
+            from playwright.async_api import async_playwright
+        except ImportError as exc:
+            raise RuntimeError(
+                "live submission requires Playwright; install it with "
+                "'python3 -m pip install playwright' and 'playwright install chromium'"
+            ) from exc
+        playwright_factory = async_playwright
 
-    async with async_playwright() as playwright:
+    async with playwright_factory() as playwright:
         browser = await playwright.chromium.launch(headless=True)
         try:
             page = await browser.new_page()
             await page.goto(directory_url, timeout=30_000, wait_until="domcontentloaded")
 
             filled_fields: list[str] = []
-            for field, selectors in FIELD_SELECTORS.items():
-                value = target.get(field)
-                if isinstance(value, str) and await fill_first_visible(page, selectors, value):
+            for field in REQUIRED_FIELDS:
+                if await fill_first_visible(page, FIELD_SELECTORS[field], target[field]):
                     filled_fields.append(field)
 
-            if not filled_fields:
-                raise RuntimeError("no supported visible form fields were found")
+            missing_fields = [field for field in REQUIRED_FIELDS if field not in filled_fields]
+            if missing_fields:
+                raise RuntimeError(
+                    "required form fields were not found or filled: "
+                    f"{', '.join(missing_fields)}; submit was not clicked"
+                )
+
+            category = target.get("category")
+            if isinstance(category, str) and await fill_first_visible(
+                page, FIELD_SELECTORS["category"], category
+            ):
+                filled_fields.append("category")
 
             for selector in SUBMIT_SELECTORS:
                 button = await page.query_selector(selector)

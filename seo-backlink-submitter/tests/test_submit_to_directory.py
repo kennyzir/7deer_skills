@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 import importlib.util
+import asyncio
 import io
 import json
 import tempfile
 import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
-from unittest.mock import AsyncMock, patch
+from unittest.mock import AsyncMock, MagicMock, patch
 
 
 SCRIPT_PATH = Path(__file__).parents[1] / "scripts" / "submit_to_directory.py"
@@ -78,6 +79,32 @@ class SubmitToDirectoryTests(unittest.TestCase):
         self.assertEqual(exit_code, 0)
         fake_submit.assert_awaited_once()
         self.assertEqual(json.loads(output.getvalue()), expected)
+
+    def test_missing_required_form_field_never_reaches_submit_control(self) -> None:
+        page = MagicMock()
+        page.goto = AsyncMock()
+        page.query_selector = AsyncMock()
+        browser = MagicMock()
+        browser.new_page = AsyncMock(return_value=page)
+        browser.close = AsyncMock()
+        playwright = MagicMock()
+        playwright.chromium.launch = AsyncMock(return_value=browser)
+        manager = MagicMock()
+        manager.__aenter__ = AsyncMock(return_value=playwright)
+        manager.__aexit__ = AsyncMock(return_value=None)
+        factory = MagicMock(return_value=manager)
+
+        filled = AsyncMock(side_effect=[True, True, True, False])
+        with patch.object(submitter, "fill_first_visible", filled):
+            with self.assertRaisesRegex(RuntimeError, "email.*submit was not clicked"):
+                asyncio.run(submitter.submit_live(
+                    "https://directory.example/submit",
+                    self.target,
+                    playwright_factory=factory,
+                ))
+
+        page.query_selector.assert_not_awaited()
+        browser.close.assert_awaited_once()
 
 
 if __name__ == "__main__":

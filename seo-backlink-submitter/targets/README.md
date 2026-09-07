@@ -39,11 +39,27 @@ Markdown file with your submission content, press release, or description.
 
 ## Usage
 
-Create your target files, then run:
+Create your target files from the skill directory. Every submitter defaults to an offline dry run.
+
+Plan one directory submission:
 
 ```bash
-python scripts/batch_submit.py --target targets/yoursite-com.json
+python scripts/submit_to_directory.py \
+  --directory https://directory.example/submit \
+  --target targets/your-domain-com.json
 ```
+
+Plan all URLs in a directory list:
+
+```bash
+python scripts/batch_submit.py \
+  --target targets/your-domain-com.json \
+  --directories targets/your-domain-directories.txt
+```
+
+Review the plan before adding `--submit` to either command. That flag permits real browser navigation, form filling, and submit-button clicks. A `submit_triggered` result means only that the button was clicked; it does not mean the directory accepted or published the listing.
+
+`scripts/quick_submit.py` is a compatibility alias for the single-directory command and accepts the same arguments. It has no built-in targets and is also dry-run by default.
 
 ## .gitignore
 
