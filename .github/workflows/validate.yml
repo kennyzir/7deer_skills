@@ -30,3 +30,6 @@ jobs:
 
       - name: Test code-page generator and examples
         run: python -m unittest discover -s multi-game-codes-hub/tests -p "test_*.py" -v
+
+      - name: Test Roblox site pipeline contracts
+        run: python -m unittest discover -s roblox-site-architect/tests -p "test_*.py" -v

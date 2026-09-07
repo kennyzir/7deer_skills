@@ -3,7 +3,7 @@
 **游戏**: Pickaxe Tycoon
 **站点**: {site-a}.pages.dev → {site-a}.gg
 **仓库**: github.com/kennyzir/{repo-name}
-**本地路径**: /Users/zirer/Projects/{repo-name}
+**本地路径**: `<project-root>`
 
 ---
 

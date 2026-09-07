@@ -1,7 +1,7 @@
 # {Game Name} — Game Data Reference
 
 Game domain: `{site-a}.gg`
-Repository: `/Users/zirer/Projects/{repo-name}`
+Repository: `<project-root>`
 Roblox ID: `73814003954154`
 Genre: Tycoon / Simulator
 Developer: Popular Marketplace

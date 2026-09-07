@@ -60,7 +60,7 @@ Game ID: 114204398207377
 - Tailwind CSS v4 (`@tailwindcss/postcss`)
 - TypeScript
 - Cloudflare Pages (`wrangler pages deploy`)
-- 项目路径: `/Users/zirer/Projects/{repo-name}/`
+- 项目路径: `<project-root>`
 
 ## 关键陷阱（遇到过的）
 
@@ -81,7 +81,7 @@ App Router 的 `robots.ts` 在 `output: export` 模式下需要额外配置。�
 
 ## 部署命令
 ```bash
-cd /Users/zirer/Projects/{repo-name}
+cd <project-root>
 
 # 首次创建 Cloudflare Pages 项目
 npx wrangler pages project create {project-name} --production-branch=main
