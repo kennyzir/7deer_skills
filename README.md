@@ -516,6 +516,15 @@ MIT License - 开源分享，欢迎使用和贡献。详见 [LICENSE](./LICENSE)
 - 内容动态: [即刻「七鹿AI」](https://m.okjike.com/users/ea42b30c-24db-434b-b969-650d7473f69e)
 - Repository: [7deer_skills](https://github.com/kennyzir/7deer_skills)
 
+<details>
+<summary><strong>微信交流：七鹿（点击展开二维码）</strong></summary>
+
+如果你正在使用这些 Skills，或想交流 AI 产品、独立站与 Roblox 游戏站实践，欢迎添加微信。备注「GitHub Skills」会更容易识别。
+
+<img src="./assets/wechat-7deer.png" alt="七鹿微信二维码" width="320" />
+
+</details>
+
 ---
 
 **⭐ 如果这个技能库对你有帮助，请给个 Star！**
