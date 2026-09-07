@@ -1,6 +1,7 @@
 {
   "gameName": "Your Bizarre Adventure",
   "gameSlug": "yba",
+  "baseUrl": "https://example.com",
   "gameDescription": "Your Bizarre Adventure is a popular Roblox game based on JoJo's Bizarre Adventure.",
   "lastUpdated": "2026-04-11",
   "activeCodes": [

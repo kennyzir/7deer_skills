@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     description: 'Free {{rewards}} for {{gameName}}. One-click copy, verified daily.',
     images: ['/og-{{gameSlug}}.webp'],
   },
-  alternates: { canonical: 'https://jujutsucalc.com/{{gameSlug}}' },
+  alternates: { canonical: '{{baseUrl}}/{{gameSlug}}' },
 };
 
 interface CodeEntry {
@@ -65,15 +65,18 @@ export default function {{gameSlug}}CodesPage() {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://jujutsucalc.com' },
-      { '@type': 'ListItem', position: 2, name: '{{gameName}} Codes', item: 'https://jujutsucalc.com/{{gameSlug}}' },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: '{{baseUrl}}' },
+      { '@type': 'ListItem', position: 2, name: '{{gameName}} Codes', item: '{{baseUrl}}/{{gameSlug}}' },
     ],
   };
 
+  const faqSchemaMarkup = { __html: JSON.stringify(faqSchema) };
+  const breadcrumbSchemaMarkup = { __html: JSON.stringify(breadcrumbSchema) };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={faqSchemaMarkup} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={breadcrumbSchemaMarkup} />
 
       <main className="container mx-auto px-4 py-8 max-w-5xl">
         <div className="mb-8">

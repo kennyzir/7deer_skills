@@ -39,7 +39,7 @@ export function generateFAQSchema(gameName: string) {
   };
 }
 
-export function generateBreadcrumbSchema(gameName: string, gameSlug: string, baseUrl: string = 'https://jujutsucalc.com') {
+export function generateBreadcrumbSchema(gameName: string, gameSlug: string, baseUrl: string) {
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',

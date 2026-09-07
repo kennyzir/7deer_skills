@@ -1,6 +1,7 @@
 {
   "gameName": "Kaizen",
   "gameSlug": "kaizen",
+  "baseUrl": "https://example.com",
   "activeCodes": [
     {
       "code": "MahoKaizen!",

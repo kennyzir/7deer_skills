@@ -1,43 +1,21 @@
 # 快速示例：搜索意图分类
 
-这个示例展示如何用 `google-trends-to-pages` 技能对关键词进行搜索意图分类。
+这个离线示例调用 `google-trends-to-pages/resources/intent_classifier.py` 的真实 API。从仓库根目录运行：
 
-## 示例关键词
-
-```
-how to get six eyes jujutsu infinite     → informational / guide / HowTo
-yba codes april 2026                     → navigational / codes_page / FAQPage
-best stands in yba tier list             → commercial / tier_list / ItemList
-jujutsu infinite trading value list      → informational / data_table / Dataset
+```bash
+python3 examples/seo-intent-classification/example.py
 ```
 
-## 使用方式
+`classify_intent(keyword)` 直接返回 Title Case 字符串：`Transactional`、`Informational`、`Navigational` 或 `Commercial`，不是字典。
 
-将关键词传入 `intent_classifier.py`：
+`analyze_keyword(keyword, search_volume, growth_rate)` 返回字典，包含：
 
-```python
-import sys
-sys.path.insert(0, '../../google-trends-to-pages/resources')
-from intent_classifier import classify_intent
+- `keyword`
+- `intent`
+- `template`
+- `priority`
+- `priority_score`
+- `suggested_word_count`
+- `schema_type`
 
-keywords = [
-    "how to get six eyes jujutsu infinite",
-    "yba codes april 2026",
-    "best stands in yba tier list",
-    "jujutsu infinite trading value list",
-]
-
-for kw in keywords:
-    result = classify_intent(kw)
-    print(f"{kw}")
-    print(f"  → type: {result['type']}, template: {result['template']}, schema: {result['schema']}")
-    print()
-```
-
-## 输出说明
-
-| 字段 | 含义 |
-|------|------|
-| type | 搜索意图类型（informational / navigational / commercial / transactional） |
-| template | 推荐页面模板 |
-| schema | 推荐 Schema.org 结构化数据类型 |
+示例会断言 `analyze_keyword()` 的 `intent` 与 `classify_intent()` 一致，并以 JSON 输出关键词、意图、优先级和 Schema 类型。它不访问网络。

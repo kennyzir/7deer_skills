@@ -1,148 +1,178 @@
-"""
-代码页面生成器
+#!/usr/bin/env python3
+"""Generate one Roblox codes page from validated JSON data."""
 
-快速为任何 Roblox 游戏生成完整的代码页面
-"""
+from __future__ import annotations
 
-import json
 import argparse
+import json
+import re
+import sys
+from datetime import datetime, timezone
 from pathlib import Path
-from datetime import datetime
-from typing import List, Dict
+from typing import Any, Dict, List, Optional, Sequence
+from urllib.parse import urlsplit
 
-def load_template(template_path: str) -> str:
-    """加载页面模板"""
-    with open(template_path, 'r', encoding='utf-8') as f:
-        return f.read()
 
-def generate_code_page(
-    game_name: str,
-    game_slug: str,
-    active_codes: List[Dict],
-    expired_codes: List[Dict],
-    template_path: str,
-    output_path: str
-):
-    """
-    生成代码页面
-    
-    Args:
-        game_name: 游戏全名 (如 "Your Bizarre Adventure")
-        game_slug: URL slug (如 "yba")
-        active_codes: 有效代码列表
-        expired_codes: 过期代码列表
-        template_path: 模板文件路径
-        output_path: 输出文件路径
-    """
-    # 加载模板
-    template = load_template(template_path)
-    
-    # 提取奖励类型 (用于 meta description)
-    rewards = set()
-    for code in active_codes:
-        reward = code.get('reward', '')
-        if 'Spin' in reward:
-            rewards.add('Spins')
-        if 'Cash' in reward or 'Yen' in reward:
-            rewards.add('Cash')
-        if 'Arrow' in reward:
-            rewards.add('Arrows')
-    rewards_text = ', '.join(rewards) or 'rewards'
-    
-    # 生成 TypeScript 数据
-    active_codes_ts = json.dumps(active_codes, indent=2)
-    expired_codes_ts = json.dumps(expired_codes, indent=2)
-    
-    # 生成 FAQ Schema
-    faq_schema = generate_faq_schema(game_name)
-    faq_schema_json = json.dumps(faq_schema, indent=2)
-    
-    # 替换模板变量
-    content = template
-    content = content.replace('{{gameName}}', game_name)
-    content = content.replace('{{gameSlug}}', game_slug)
-    content = content.replace('{{rewards}}', rewards_text)
-    content = content.replace('{{activeCodesData}}', active_codes_ts)
-    content = content.replace('{{expiredCodesData}}', expired_codes_ts)
-    content = content.replace('{{faqSchema}}', faq_schema_json)
-    content = content.replace('{{lastUpdated}}', datetime.now().strftime('%Y-%m-%d'))
-    
-    # 确保输出目录存在
-    output_file = Path(output_path)
-    output_file.parent.mkdir(parents=True, exist_ok=True)
-    
-    # 写入文件
-    with open(output_file, 'w', encoding='utf-8') as f:
-        f.write(content)
-    
-    print(f'✅ 代码页面已生成: {output_path}')
-    print(f'   游戏: {game_name}')
-    print(f'   有效代码: {len(active_codes)}')
-    print(f'   过期代码: {len(expired_codes)}')
+SKILL_ROOT = Path(__file__).resolve().parent.parent
+DEFAULT_TEMPLATE_PATH = SKILL_ROOT / "resources" / "templates" / "codes_page.tsx"
+TEMPLATE_VARIABLE_RE = re.compile(r"{{\s*[^{}]+\s*}}")
+SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+REQUIRED_CODE_FIELDS = ("code", "reward")
 
-def generate_faq_schema(game_name: str) -> Dict:
-    """生成 FAQ Schema"""
+
+class InputError(ValueError):
+    """Raised when input data or a template cannot produce a safe page."""
+
+
+def validate_base_url(value: Any) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise InputError("baseUrl must be a non-empty string")
+    normalized = value.strip().rstrip("/")
+    parsed = urlsplit(normalized)
+    if parsed.scheme not in {"http", "https"} or not parsed.hostname:
+        raise InputError("baseUrl must be an absolute http:// or https:// URL")
+    if parsed.username or parsed.password:
+        raise InputError("baseUrl must not contain embedded credentials")
+    if parsed.query or parsed.fragment:
+        raise InputError("baseUrl must not contain a query string or fragment")
+    return normalized
+
+
+def validate_codes(value: Any, field_name: str) -> List[Dict[str, Any]]:
+    if not isinstance(value, list):
+        raise InputError(f"{field_name} must be an array")
+    for index, entry in enumerate(value):
+        if not isinstance(entry, dict):
+            raise InputError(f"{field_name}[{index}] must be an object")
+        for required_field in REQUIRED_CODE_FIELDS:
+            field_value = entry.get(required_field)
+            if not isinstance(field_value, str) or not field_value.strip():
+                raise InputError(
+                    f"{field_name}[{index}].{required_field} must be a non-empty string"
+                )
+    return value
+
+
+def validate_config(data: Any) -> Dict[str, Any]:
+    if not isinstance(data, dict):
+        raise InputError("input JSON must be an object")
+
+    game_name = data.get("gameName")
+    if not isinstance(game_name, str) or not game_name.strip():
+        raise InputError("gameName must be a non-empty string")
+
+    game_slug = data.get("gameSlug")
+    if not isinstance(game_slug, str) or not SLUG_RE.fullmatch(game_slug):
+        raise InputError("gameSlug must contain lowercase letters, digits, and single hyphens")
+
     return {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        'mainEntity': [
-            {
-                '@type': 'Question',
-                'name': f'How do I redeem {game_name} codes?',
-                'acceptedAnswer': {
-                    '@type': 'Answer',
-                    'text': f'Open {game_name}, click the Settings icon, find the "Codes" or "Redeem" button, enter the code exactly as shown (case-sensitive), and click Submit.'
-                }
-            },
-            {
-                '@type': 'Question',
-                'name': f'Why isn\'t my {game_name} code working?',
-                'acceptedAnswer': {
-                    '@type': 'Answer',
-                    'text': 'Codes are case-sensitive and may have expired. Check the expiration date in the table above and ensure you\'re typing it correctly without extra spaces.'
-                }
-            },
-            {
-                '@type': 'Question',
-                'name': f'How often are new {game_name} codes released?',
-                'acceptedAnswer': {
-                    '@type': 'Answer',
-                    'text': f'New codes are typically released during game updates, milestones (like 1M likes), special events, and holidays. Follow the official {game_name} Discord and Twitter for instant notifications!'
-                }
-            },
-            {
-                '@type': 'Question',
-                'name': f'Do {game_name} codes expire?',
-                'acceptedAnswer': {
-                    '@type': 'Answer',
-                    'text': 'Yes, most codes expire after a few weeks or when the next update is released. We update this page daily to mark expired codes, so check back regularly!'
-                }
-            }
-        ]
+        "gameName": game_name.strip(),
+        "gameSlug": game_slug,
+        "baseUrl": validate_base_url(data.get("baseUrl")),
+        "activeCodes": validate_codes(data.get("activeCodes", []), "activeCodes"),
+        "expiredCodes": validate_codes(data.get("expiredCodes", []), "expiredCodes"),
     }
 
-def main():
-    parser = argparse.ArgumentParser(description='生成 Roblox 游戏代码页面')
-    parser.add_argument('--input', required=True, help='输入 JSON 文件路径')
-    parser.add_argument('--output', required=True, help='输出 TSX 文件路径')
-    parser.add_argument('--template', default='resources/templates/codes_page.tsx', 
-                       help='模板文件路径')
-    
-    args = parser.parse_args()
-    
-    # 加载输入数据
-    with open(args.input, 'r', encoding='utf-8') as f:
-        data = json.load(f)
-    
-    # 生成页面
-    generate_code_page(
-        game_name=data['gameName'],
-        game_slug=data['gameSlug'],
-        active_codes=data.get('activeCodes', []),
-        expired_codes=data.get('expiredCodes', []),
-        template_path=args.template,
-        output_path=args.output
-    )
 
-if __name__ == '__main__':
-    main()
+def load_json(path: Path) -> Dict[str, Any]:
+    try:
+        raw = path.read_text(encoding="utf-8")
+    except OSError as exc:
+        raise InputError(f"cannot read input file '{path}': {exc}") from exc
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError as exc:
+        raise InputError(f"input file '{path}' is not valid JSON: {exc.msg}") from exc
+    return validate_config(data)
+
+
+def load_template(template_path: Optional[Path] = None) -> str:
+    path = DEFAULT_TEMPLATE_PATH if template_path is None else template_path
+    try:
+        return path.read_text(encoding="utf-8")
+    except OSError as exc:
+        raise InputError(f"cannot read template '{path}': {exc}") from exc
+
+
+def reward_summary(active_codes: List[Dict[str, Any]]) -> str:
+    rewards = set()
+    for entry in active_codes:
+        reward = entry["reward"]
+        if "Spin" in reward:
+            rewards.add("Spins")
+        if "Cash" in reward or "Yen" in reward:
+            rewards.add("Cash")
+        if "Arrow" in reward:
+            rewards.add("Arrows")
+    return ", ".join(sorted(rewards)) or "rewards"
+
+
+def generate_code_page(
+    config: Dict[str, Any],
+    output_path: Path,
+    template_path: Optional[Path] = None,
+    now_utc: Optional[datetime] = None,
+) -> Path:
+    data = validate_config(config)
+    template = load_template(template_path)
+    current = now_utc or datetime.now(timezone.utc)
+    if current.tzinfo is None:
+        current = current.replace(tzinfo=timezone.utc)
+    else:
+        current = current.astimezone(timezone.utc)
+
+    replacements = {
+        "{{gameName}}": data["gameName"],
+        "{{gameSlug}}": data["gameSlug"],
+        "{{baseUrl}}": data["baseUrl"],
+        "{{rewards}}": reward_summary(data["activeCodes"]),
+        "{{activeCodesData}}": json.dumps(data["activeCodes"], indent=2, ensure_ascii=False),
+        "{{expiredCodesData}}": json.dumps(data["expiredCodes"], indent=2, ensure_ascii=False),
+        "{{lastUpdated}}": current.strftime("%Y-%m-%d"),
+        "{{currentMonth}}": current.strftime("%B"),
+        "{{currentYear}}": current.strftime("%Y"),
+    }
+
+    content = template
+    for placeholder, replacement in replacements.items():
+        content = content.replace(placeholder, replacement)
+
+    unresolved = sorted(set(TEMPLATE_VARIABLE_RE.findall(content)))
+    if unresolved:
+        raise InputError(f"template contains unresolved variables: {', '.join(unresolved)}")
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(content, encoding="utf-8")
+    return output_path
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description="Generate a Roblox codes page")
+    parser.add_argument("--input", required=True, type=Path, help="Input JSON file")
+    parser.add_argument("--output", required=True, type=Path, help="Output TSX file")
+    parser.add_argument(
+        "--template",
+        type=Path,
+        help="Optional template path; relative paths resolve from the current working directory",
+    )
+    return parser
+
+
+def main(argv: Optional[Sequence[str]] = None) -> int:
+    args = build_parser().parse_args(argv)
+    try:
+        config = load_json(args.input)
+        output = generate_code_page(config, args.output, args.template)
+    except InputError as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 2
+
+    print(f"Generated codes page: {output}")
+    print(f"Game: {config['gameName']}")
+    print(f"Active codes: {len(config['activeCodes'])}")
+    print(f"Expired codes: {len(config['expiredCodes'])}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

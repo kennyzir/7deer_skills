@@ -27,3 +27,6 @@ jobs:
 
       - name: Test safe directory submission
         run: python -m unittest discover -s seo-backlink-submitter/tests -p "test_*.py" -v
+
+      - name: Test code-page generator and examples
+        run: python -m unittest discover -s multi-game-codes-hub/tests -p "test_*.py" -v

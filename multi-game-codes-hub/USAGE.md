@@ -1,23 +1,20 @@
-# Multi-Game Codes Hub - Usage Guide
+# Multi-Game Codes Hub Usage
 
-Quick reference for generating code pages for any Roblox game.
+## Input
 
-## Quick Start (5 Minutes)
-
-### Step 1: Prepare Your Data
-
-Create a JSON file with your game's codes:
+Create a JSON file containing the target site's base URL and code data:
 
 ```json
 {
   "gameName": "Your Game Name",
   "gameSlug": "your-game-slug",
+  "baseUrl": "https://example.com",
   "activeCodes": [
     {
       "code": "CODE123",
       "reward": "50 Spins",
       "expiryDate": "2026-04-30",
-      "conditions": "None"
+      "conditions": "Optional"
     }
   ],
   "expiredCodes": [
@@ -29,155 +26,47 @@ Create a JSON file with your game's codes:
 }
 ```
 
-### Step 2: Generate the Page
+`gameName`, `gameSlug`, and `baseUrl` are required. Code arrays default to empty, but every entry present must contain string `code` and `reward` values. `baseUrl` must be an absolute HTTP(S) URL.
+
+## Generate
+
+From this Skill directory:
 
 ```bash
-python resources/generate_code_page.py \
-  --input yba_codes.json \
-  --output ./src/app/yba/page.tsx
+python3 resources/generate_code_page.py \
+  --input resources/examples/yba_codes.json \
+  --output /tmp/yba-codes-page.tsx
 ```
 
-### Step 3: Done!
+The bundled template is found relative to the generator script, independent of the current working directory. Explicit `--input`, `--output`, and `--template` paths resolve normally from the caller's current directory unless absolute.
 
-Your page is ready at `/yba` with:
-- ✅ Active codes with copy buttons
-- ✅ Redemption guide
-- ✅ FAQ with Schema markup
-- ✅ Expired codes reference
-- ✅ SEO optimized metadata
-
-## Common Scenarios
-
-### Scenario 1: Batch Create Multiple Games
+Example with a caller-relative custom template:
 
 ```bash
-# Create codes for multiple games at once
-for game in yba kaizen blue-lock volleyball; do
-  python resources/generate_code_page.py \
-    --input "${game}_codes.json" \
-    --output "./src/app/${game}/page.tsx"
-done
+python3 /path/to/multi-game-codes-hub/resources/generate_code_page.py \
+  --input ./game.json \
+  --output ./page.tsx \
+  --template ./custom-template.tsx
 ```
 
-### Scenario 2: Update Existing Page
+## Generated values
 
-```bash
-# Just regenerate with updated JSON
-python resources/generate_code_page.py \
-  --input yba_codes.json \
-  --output ./src/app/yba/page.tsx
-```
+The generator replaces:
 
-### Scenario 3: Add New Code to Existing Page
+- game name and slug;
+- canonical/breadcrumb base URL;
+- active and expired code arrays;
+- detected reward summary;
+- current UTC month, year, and date.
 
-Edit your JSON file and add the new code:
+Generation fails instead of writing a partial page when input validation fails or an unknown `{{...}}` template variable remains.
 
-```json
-{
-  "activeCodes": [
-    {
-      "code": "NEWCODE2026",
-      "reward": "100 Spins",
-      "expiryDate": "2026-05-01",
-      "conditions": "NEW - Apr 4, 2026"
-    }
-  ]
-}
-```
+## Integration
 
-Then regenerate:
+The default page imports `@/components/CopyButton`. Copy [resources/components/CopyButton.tsx](resources/components/CopyButton.tsx) to the matching project alias or adjust the import. The optional [resources/components/CodeTable.tsx](resources/components/CodeTable.tsx) and [resources/schemas/faq_schema.ts](resources/schemas/faq_schema.ts) can be adapted separately.
 
-```bash
-python resources/generate_code_page.py \
-  --input yba_codes.json \
-  --output ./src/app/yba/page.tsx
-```
+Run the target application's typecheck, lint, and build after integrating the generated file. The generator renders supplied data but does not verify whether codes work.
 
-## Template Customization
+## Not implemented
 
-The template uses these placeholders:
-
-- `{{gameName}}` - Full game name
-- `{{gameSlug}}` - URL slug
-- `{{rewards}}` - Auto-extracted reward types
-- `{{activeCodesData}}` - JSON array of active codes
-- `{{expiredCodesData}}` - JSON array of expired codes
-- `{{lastUpdated}}` - Current date
-- `{{currentMonth}}` - Current month name
-- `{{currentYear}}` - Current year
-
-## File Structure
-
-```
-multi-game-codes-hub/
-├── SKILL.md                          # Full documentation
-├── USAGE.md                          # This file
-├── resources/
-│   ├── generate_code_page.py        # Main generator script
-│   ├── templates/
-│   │   └── codes_page.tsx           # Page template
-│   ├── components/
-│   │   ├── CopyButton.tsx           # Copy button component
-│   │   └── CodeTable.tsx            # Code table component
-│   ├── schemas/
-│   │   └── faq_schema.ts            # Schema generators
-│   └── examples/
-│       ├── yba_codes.json           # Example: YBA
-│       └── kaizen_codes.json        # Example: Kaizen
-```
-
-## Tips & Best Practices
-
-1. **Update Frequency**: Update codes daily or when new updates drop
-2. **Expiry Tracking**: Always include `expiryDate` for time-sensitive codes
-3. **Conditions**: Use `conditions` field for level requirements or group membership
-4. **SEO**: The generator automatically creates SEO-optimized metadata
-5. **Schema**: FAQ Schema is auto-generated for Google rich results
-
-## Troubleshooting
-
-### Issue: Template not found
-
-```bash
-# Specify full path to template
-python resources/generate_code_page.py \
-  --input yba_codes.json \
-  --output ./src/app/yba/page.tsx \
-  --template .agent/skills/multi-game-codes-hub/resources/templates/codes_page.tsx
-```
-
-### Issue: Invalid JSON
-
-Validate your JSON file:
-
-```bash
-python -m json.tool yba_codes.json
-```
-
-### Issue: Missing rewards in meta description
-
-The generator auto-detects rewards from the `reward` field. Ensure your rewards contain keywords like:
-- "Spin", "Spins"
-- "Cash", "Yen", "Money"
-- "Arrow", "Arrows"
-- "Gem", "Gems"
-
-## Next Steps
-
-After generating your page:
-
-1. ✅ Test the page locally: `npm run dev`
-2. ✅ Check for linting errors: `npm run lint`
-3. ✅ Verify Schema markup: [Google Rich Results Test](https://search.google.com/test/rich-results)
-4. ✅ Add internal links to related pages
-5. ✅ Deploy and monitor traffic
-
-## Examples
-
-See `resources/examples/` for complete working examples:
-- `yba_codes.json` - Your Bizarre Adventure
-- `kaizen_codes.json` - Kaizen
-
-## Support
-
-For issues or questions, refer to the main SKILL.md documentation.
+The repository does not include code discovery/monitoring, automatic validity checks, update commands, multilingual generation, or deployment automation. Those are roadmap capabilities, not current commands.

@@ -45,7 +45,14 @@ export function CodeTable({
                   </span>
                 )}
               </td>
-              <td className="py-3 px-4 text-white">{code.reward}</td>
+              <td className="py-3 px-4 text-white">
+                {code.reward}
+                {code.conditions && (
+                  <div className="mt-2 text-xs text-muted-foreground">
+                    {code.conditions}
+                  </div>
+                )}
+              </td>
               {status === 'active' && (
                 <td className="py-3 px-4 text-yellow-400">
                   {code.expiryDate || 'Unknown'}
@@ -60,11 +67,6 @@ export function CodeTable({
           ))}
         </tbody>
       </table>
-      {code.conditions && (
-        <div className="mt-2 text-xs text-muted-foreground">
-          * {code.conditions}
-        </div>
-      )}
     </div>
   );
 }

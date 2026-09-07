@@ -1,6 +1,7 @@
 {
   "gameName": "Your Bizarre Adventure",
   "gameSlug": "yba",
+  "baseUrl": "https://example.com",
   "activeCodes": [
     {
       "code": "GULLIBLE",
