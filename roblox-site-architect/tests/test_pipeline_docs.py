@@ -120,6 +120,16 @@ class PipelineDocumentationTests(unittest.TestCase):
         self.assertIn("are not current instructions", self.skill)
         self.assertTrue((SKILL_ROOT / "references" / "legacy" / "README.md").is_file())
 
+    def test_v4_has_no_old_bundle_entry_points(self) -> None:
+        self.assertNotIn("resources/", self.skill)
+        self.assertIn("does not include a complete starter project", self.skill)
+        for old_entry_point in (
+            SKILL_ROOT / "resources" / "scripts" / "setup-site.sh",
+            SKILL_ROOT / "resources" / "scripts" / "deploy.sh",
+        ):
+            with self.subTest(path=old_entry_point):
+                self.assertFalse(old_entry_point.exists())
+
 
 if __name__ == "__main__":
     unittest.main()

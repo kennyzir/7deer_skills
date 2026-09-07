@@ -128,6 +128,8 @@ Unknown inputs stay explicitly unknown. A game name alone does not authorize bui
 
 **Preferred supporting Skill:** `multi-game-codes-hub` for its implemented codes-page generator when relevant; otherwise work directly in the target project with its existing framework and conventions.
 
+This orchestrator does not include a complete starter project. Implement inside the confirmed target project, or use a separately available supporting Skill whose starter/output has been validated for that project.
+
 **Entry criteria**
 
 - Stage 02 identifies target routes and intent.
