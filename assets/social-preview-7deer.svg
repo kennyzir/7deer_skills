@@ -1,101 +1,122 @@
 <svg width="1280" height="640" viewBox="0 0 1280 640" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bg" x1="90" y1="40" x2="1190" y2="640" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#08101F"/>
-      <stop offset="1" stop-color="#1C3864"/>
+    <linearGradient id="bg" x1="80" y1="18" x2="1210" y2="640" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#07101F"/>
+      <stop offset="0.55" stop-color="#102544"/>
+      <stop offset="1" stop-color="#1D3762"/>
     </linearGradient>
     <linearGradient id="panelStroke" x1="72" y1="72" x2="1208" y2="568" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#8BD3FF"/>
-      <stop offset="1" stop-color="#8A7DFF"/>
+      <stop stop-color="#7FD7FF"/>
+      <stop offset="0.52" stop-color="#609CFF"/>
+      <stop offset="1" stop-color="#A47CFF"/>
     </linearGradient>
-    <filter id="shadow" x="42" y="46" width="1196" height="556" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#050B16" flood-opacity="0.45"/>
+    <linearGradient id="accent" x1="112" y1="0" x2="1168" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6ED7FF"/>
+      <stop offset="0.52" stop-color="#5C8FFF"/>
+      <stop offset="1" stop-color="#A47CFF"/>
+    </linearGradient>
+    <linearGradient id="buildFill" x1="562" y1="326" x2="694" y2="438" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#173C65"/>
+      <stop offset="1" stop-color="#35295F"/>
+    </linearGradient>
+    <filter id="shadow" x="40" y="44" width="1200" height="560" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#030814" flood-opacity="0.5"/>
+    </filter>
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="10"/>
     </filter>
   </defs>
 
   <rect width="1280" height="640" fill="url(#bg)"/>
 
-  <g opacity="0.18">
-    <circle cx="130" cy="118" r="78" fill="#D8F5FF"/>
-    <circle cx="280" cy="92" r="78" fill="#D8F5FF"/>
-    <circle cx="430" cy="118" r="78" fill="#D8F5FF"/>
-    <circle cx="580" cy="92" r="78" fill="#D8F5FF"/>
-    <circle cx="730" cy="118" r="78" fill="#D8F5FF"/>
-    <circle cx="880" cy="92" r="78" fill="#D8F5FF"/>
-    <circle cx="1030" cy="118" r="78" fill="#D8F5FF"/>
-    <circle cx="1180" cy="92" r="78" fill="#D8F5FF"/>
+  <g opacity="0.14">
+    <circle cx="126" cy="98" r="78" fill="#BFEAFF"/>
+    <circle cx="278" cy="72" r="78" fill="#BFEAFF"/>
+    <circle cx="430" cy="98" r="78" fill="#BFEAFF"/>
+    <circle cx="582" cy="72" r="78" fill="#BFEAFF"/>
+    <circle cx="734" cy="98" r="78" fill="#BFEAFF"/>
+    <circle cx="886" cy="72" r="78" fill="#BFEAFF"/>
+    <circle cx="1038" cy="98" r="78" fill="#BFEAFF"/>
+    <circle cx="1190" cy="72" r="78" fill="#BFEAFF"/>
   </g>
 
-  <g opacity="0.18" stroke="#88C8FF" stroke-width="2">
-    <path d="M170 108L300 470"/>
-    <path d="M320 108L450 470"/>
-    <path d="M470 108L600 470"/>
-    <path d="M620 108L750 470"/>
-    <path d="M770 108L900 470"/>
-    <path d="M920 108L1050 470"/>
+  <g opacity="0.16" stroke="url(#accent)" stroke-width="2">
+    <path d="M150 76L288 510"/>
+    <path d="M322 76L460 510"/>
+    <path d="M494 76L632 510"/>
+    <path d="M666 76L804 510"/>
+    <path d="M838 76L976 510"/>
+    <path d="M1010 76L1148 510"/>
   </g>
+
+  <ellipse cx="640" cy="392" rx="500" ry="112" fill="#506DFF" fill-opacity="0.11" filter="url(#softGlow)"/>
 
   <g filter="url(#shadow)">
-    <rect x="72" y="72" width="1136" height="496" rx="28" fill="#07111F" fill-opacity="0.58"/>
-    <rect x="73" y="73" width="1134" height="494" rx="27" stroke="url(#panelStroke)" stroke-opacity="0.6" stroke-width="2"/>
+    <rect x="72" y="72" width="1136" height="496" rx="28" fill="#06101F" fill-opacity="0.72"/>
+    <rect x="73" y="73" width="1134" height="494" rx="27" stroke="url(#panelStroke)" stroke-opacity="0.74" stroke-width="2"/>
   </g>
 
-  <text x="112" y="176" fill="white" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="44" font-weight="700">7Deer Skills</text>
-  <text x="112" y="226" fill="#C5DDF0" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="22" font-weight="400">
-    <tspan x="112" dy="0">Reusable skills for SEO automation, content pipelines,</tspan>
-    <tspan x="112" dy="30">and AI agent workflows</tspan>
-  </text>
+  <text x="112" y="166" fill="#FFFFFF" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="54" font-weight="700" letter-spacing="-1.2">7Deer Skills</text>
+  <text x="112" y="220" fill="#D4E8F8" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="28" font-weight="500">Roblox Site Growth Pipeline for AI Agents</text>
 
-  <g font-family="Segoe UI, Inter, Arial, sans-serif" font-size="16" font-weight="700">
-    <rect x="112" y="278" width="141" height="40" rx="20" fill="#275C9C"/>
-    <text x="128" y="303" fill="white">SEO automation</text>
+  <rect x="112" y="252" width="328" height="38" rx="19" fill="#17345D" stroke="url(#accent)" stroke-opacity="0.72"/>
+  <text x="276" y="277" text-anchor="middle" fill="#BDEBFF" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="0.2">Evidence-backed · Stage-gated</text>
 
-    <rect x="265" y="278" width="152" height="40" rx="20" fill="#275C9C"/>
-    <text x="281" y="303" fill="white">content pipelines</text>
-
-    <rect x="429" y="278" width="103" height="40" rx="20" fill="#275C9C"/>
-    <text x="445" y="303" fill="white">AI agents</text>
-
-    <rect x="544" y="278" width="88" height="40" rx="20" fill="#275C9C"/>
-    <text x="560" y="303" fill="white">Next.js</text>
-
-    <rect x="644" y="278" width="78" height="40" rx="20" fill="#275C9C"/>
-    <text x="660" y="303" fill="white">Python</text>
+  <g stroke="url(#accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M244 382H260M254 376L260 382L254 388"/>
+    <path d="M394 382H410M404 376L410 382L404 388"/>
+    <path d="M544 382H560M554 376L560 382L554 388"/>
+    <path d="M694 382H710M704 376L710 382L704 388"/>
+    <path d="M844 382H860M854 376L860 382L854 388"/>
+    <path d="M994 382H1010M1004 376L1010 382L1004 388"/>
   </g>
 
-  <g font-family="Segoe UI, Inter, Arial, sans-serif" font-size="20" font-weight="500" fill="white">
-    <circle cx="125" cy="360" r="5" fill="#7FD7FF"/>
-    <text x="144" y="367">Google Trends -&gt; SEO pages</text>
-
-    <circle cx="125" cy="414" r="5" fill="#7FD7FF"/>
-    <text x="144" y="421">Game codes JSON -&gt; Next.js page</text>
-
-    <circle cx="125" cy="468" r="5" fill="#7FD7FF"/>
-    <text x="144" y="475">SKILL.md + scripts + templates</text>
+  <g font-family="Segoe UI, Inter, Arial, sans-serif">
+    <g>
+      <rect x="112" y="326" width="132" height="112" rx="20" fill="#0B1B32" fill-opacity="0.96" stroke="url(#accent)" stroke-opacity="0.74"/>
+      <circle cx="178" cy="354" r="15" fill="#17517A" stroke="#78DCFF"/>
+      <text x="178" y="360" text-anchor="middle" fill="#FFFFFF" font-size="16" font-weight="800">1</text>
+      <text x="178" y="406" text-anchor="middle" fill="#FFFFFF" font-size="17" font-weight="700">Opportunity</text>
+    </g>
+    <g>
+      <rect x="262" y="326" width="132" height="112" rx="20" fill="#0B1B32" fill-opacity="0.96" stroke="url(#accent)" stroke-opacity="0.74"/>
+      <circle cx="328" cy="354" r="15" fill="#194D83" stroke="#72CAFF"/>
+      <text x="328" y="360" text-anchor="middle" fill="#FFFFFF" font-size="16" font-weight="800">2</text>
+      <text x="328" y="406" text-anchor="middle" fill="#FFFFFF" font-size="17" font-weight="700">Keywords</text>
+    </g>
+    <g>
+      <rect x="412" y="326" width="132" height="112" rx="20" fill="#0B1B32" fill-opacity="0.96" stroke="url(#accent)" stroke-opacity="0.74"/>
+      <circle cx="478" cy="354" r="15" fill="#23498E" stroke="#70B7FF"/>
+      <text x="478" y="360" text-anchor="middle" fill="#FFFFFF" font-size="16" font-weight="800">3</text>
+      <text x="478" y="406" text-anchor="middle" fill="#FFFFFF" font-size="17" font-weight="700">Evidence</text>
+    </g>
+    <g>
+      <rect x="562" y="326" width="132" height="112" rx="20" fill="url(#buildFill)" stroke="#9D8AFF" stroke-width="2"/>
+      <circle cx="628" cy="354" r="15" fill="#5845A0" stroke="#C2A7FF"/>
+      <text x="628" y="360" text-anchor="middle" fill="#FFFFFF" font-size="16" font-weight="800">4</text>
+      <text x="628" y="406" text-anchor="middle" fill="#FFFFFF" font-size="18" font-weight="800">Build</text>
+    </g>
+    <g>
+      <rect x="712" y="326" width="132" height="112" rx="20" fill="#0B1B32" fill-opacity="0.96" stroke="url(#accent)" stroke-opacity="0.74"/>
+      <circle cx="778" cy="354" r="15" fill="#3D438F" stroke="#9FA5FF"/>
+      <text x="778" y="360" text-anchor="middle" fill="#FFFFFF" font-size="16" font-weight="800">5</text>
+      <text x="778" y="406" text-anchor="middle" fill="#FFFFFF" font-size="18" font-weight="700">SEO</text>
+    </g>
+    <g>
+      <rect x="862" y="326" width="132" height="112" rx="20" fill="#0B1B32" fill-opacity="0.96" stroke="url(#accent)" stroke-opacity="0.74"/>
+      <circle cx="928" cy="354" r="15" fill="#51408B" stroke="#B397FF"/>
+      <text x="928" y="360" text-anchor="middle" fill="#FFFFFF" font-size="16" font-weight="800">6</text>
+      <text x="928" y="406" text-anchor="middle" fill="#FFFFFF" font-size="17" font-weight="700">Updates</text>
+    </g>
+    <g>
+      <rect x="1012" y="326" width="132" height="112" rx="20" fill="#0B1B32" fill-opacity="0.96" stroke="url(#accent)" stroke-opacity="0.74"/>
+      <circle cx="1078" cy="354" r="15" fill="#663F87" stroke="#CE9DFF"/>
+      <text x="1078" y="360" text-anchor="middle" fill="#FFFFFF" font-size="16" font-weight="800">7</text>
+      <text x="1078" y="406" text-anchor="middle" fill="#FFFFFF" font-size="17" font-weight="700">Backlinks</text>
+    </g>
   </g>
 
-  <g>
-    <rect x="860" y="132" width="250" height="88" rx="22" fill="#0C1B31" fill-opacity="0.76" stroke="#6DA7FF" stroke-opacity="0.8"/>
-    <text x="879" y="162" fill="#87DAFF" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="16" font-weight="700">INPUT</text>
-    <text x="879" y="194" fill="white" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="17">keywords, source data,</text>
-    <text x="879" y="218" fill="white" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="17">workflow needs</text>
-
-    <rect x="910" y="246" width="220" height="88" rx="22" fill="#0C1B31" fill-opacity="0.76" stroke="#8A7DFF" stroke-opacity="0.85"/>
-    <text x="929" y="276" fill="#87DAFF" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="16" font-weight="700">SKILL</text>
-    <text x="929" y="308" fill="white" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="17">docs, scripts, references,</text>
-    <text x="929" y="332" fill="white" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="17">templates</text>
-
-    <rect x="860" y="360" width="250" height="88" rx="22" fill="#0C1B31" fill-opacity="0.76" stroke="#6DA7FF" stroke-opacity="0.8"/>
-    <text x="879" y="390" fill="#87DAFF" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="16" font-weight="700">OUTPUT</text>
-    <text x="879" y="422" fill="white" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="17">pages, automation flows,</text>
-    <text x="879" y="446" fill="white" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="17">reusable systems</text>
-
-    <path d="M984 220L1016 240" stroke="#B092FF" stroke-width="3" stroke-linecap="round"/>
-    <path d="M1011 233L1019 242L1007 245" stroke="#B092FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M1016 334L984 358" stroke="#B092FF" stroke-width="3" stroke-linecap="round"/>
-    <path d="M991 351L983 359L995 362" stroke="#B092FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  </g>
-
-  <text x="112" y="522" fill="#DBB6FF" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="20" font-weight="600">Built and maintained by 7Deer</text>
-  <text x="420" y="522" fill="#C5DDF0" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="20">github.com/kennyzir/7deer_skills</text>
+  <rect x="112" y="478" width="1032" height="1" fill="url(#accent)" opacity="0.42"/>
+  <text x="112" y="526" fill="#DDB9FF" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="20" font-weight="650">Built and maintained by 7Deer</text>
+  <text x="1144" y="526" text-anchor="end" fill="#C9DFF0" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="20" font-weight="500">github.com/kennyzir/7deer_skills</text>
 </svg>
