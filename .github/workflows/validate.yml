@@ -25,6 +25,12 @@ jobs:
       - name: Validate skills and Python syntax
         run: python scripts/validate_repo.py
 
+      - name: Check generated skill catalog
+        run: python scripts/generate_catalog.py --check
+
+      - name: Test skill catalog
+        run: python -m unittest discover -s tests -p "test_*.py" -v
+
       - name: Test safe directory submission
         run: python -m unittest discover -s seo-backlink-submitter/tests -p "test_*.py" -v
 

@@ -51,7 +51,7 @@ Recommended `SKILL.md` structure:
 - Prefer one skill or one logical change per PR.
 - Explain why the change is useful.
 - Mention any breaking changes to existing paths or expected usage.
-- Update `README.md` if you add or remove a top-level skill.
+- Update `catalog.json` and regenerate `CATALOG.md` when adding or removing a top-level skill. Update `README.md` only when the public workflow or positioning changes.
 
 ## Security and Privacy
 

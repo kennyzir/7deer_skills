@@ -1,362 +1,107 @@
-﻿# 🛠️ 7Deer Skills — Agent Skills 开放标准技能库
+# 7Deer Skills
 
-> 28 个可复用的 AI Agent 技能模块，基于 [Agent Skills 开放标准](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)构建。
-> 克隆到项目中，你的 AI Agent 即可自动发现并加载这些能力。
+**面向 AI Agent 的、可组合且可审计的 Roblox 游戏站增长工作流。**
 
-这是一个开源技能库，包含了从实际项目中提炼出来的可复用代码模块和指令模板。
-将此仓库克隆到任何新项目的 `.agent/skills` 目录，AI Agent 即可自动加载这些能力。
+从发现游戏机会，到关键词研究、证据整理、站点规划、SEO QA、上线后的持续更新与外链增长，每一步都有明确产物、证据边界和停止条件。这里不是“一键生成生产站点”的承诺；你需要选择合适的 Skills、提供项目上下文，并对部署、提交和付费 API 等外部动作明确授权。
 
-每个技能都不是凭空设计的 — 它们来自真实的独立站运营、游戏工具站搭建和出海内容项目，经过反复打磨后整理成可复用模块。
+[![CI](https://github.com/kennyzir/7deer_skills/actions/workflows/validate.yml/badge.svg)](https://github.com/kennyzir/7deer_skills/actions/workflows/validate.yml)
+[![GitHub stars](https://img.shields.io/github/stars/kennyzir/7deer_skills?style=flat)](https://github.com/kennyzir/7deer_skills/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/kennyzir/7deer_skills?style=flat)](https://github.com/kennyzir/7deer_skills/forks)
+[![License](https://img.shields.io/github/license/kennyzir/7deer_skills)](LICENSE)
 
-由 [七鹿（7Deer）](https://rbauto.ludusdex.com/about/?utm_source=github&utm_medium=opensource&utm_campaign=7deer_skills) 持续维护。我是一名用 AI 做产品和独立站的开发者，希望把真实项目中反复用到的方法，整理成任何人都能查看、修改和复用的开源工具。
+[`roblox-hit-evaluator`](roblox-hit-evaluator/SKILL.md) 用公开证据和缺失数据边界判断一个候选游戏是否值得继续；[`roblox-site-architect`](roblox-site-architect/SKILL.md) 将后续工作编排成七阶段、七份可审计的 Markdown artifact。其他 Skills 按需加入，而不是被包装成一个不可检查的黑箱。
 
-### 🌟 特色
+## 从游戏信号到可衡量的增长
 
-🔍 **SEO 全链路自动化** — 从 Google Trends 热词发现，到搜索意图分类，到页面自动生成，再到外链建设和关键词竞争度分析。`google-trends-to-pages` 能把一个上升关键词在几分钟内变成一个带 Schema 标记的 SEO 页面；`site-keyword-research` 用递归式关键词树扩展（100词库 → 20词分层 → 10 词 SERP 分析 → 3 词定方向）帮你找到真正值得做的词，每个词标注来源可信度和扩展深度。
+| 阶段 | 用户要回答的问题 | 主要 Skills | 阶段产物 |
+|---|---|---|---|
+| 01 机会 | 这个 Roblox 游戏值得继续研究吗？ | **[`roblox-hit-evaluator`](roblox-hit-evaluator/SKILL.md)**、**[`roblox-site-architect`](roblox-site-architect/SKILL.md)** | `01-opportunity-report.md` |
+| 02 关键词 | 用户在搜什么，哪些需求值得做？ | [`site-keyword-research`](site-keyword-research/SKILL.md)、[`keyword-competition-analysis`](keyword-competition-analysis/SKILL.md)、[`google-trends-to-pages`](google-trends-to-pages/SKILL.md) | `02-keyword-map.md` |
+| 03 证据 | 页面里的代码、数值、机制和步骤由什么支持？ | [`roblox-game-data-scraper`](roblox-game-data-scraper/SKILL.md)、[`youtube-transcribe`](youtube-transcribe/SKILL.md) | `03-source-ledger.md` |
+| 04 规划与建站 | 最小可发布范围、路由和验收条件是什么？ | **[`roblox-site-architect`](roblox-site-architect/SKILL.md)**、[`multi-game-codes-hub`](multi-game-codes-hub/SKILL.md) | `04-site-plan.md` |
+| 05 SEO QA 与上线 | 当前版本是否 ready，是否真的已经发布？ | [`nextjs-seo-foundations`](nextjs-seo-foundations/SKILL.md)、[`nextjs-seo-booster`](nextjs-seo-booster/SKILL.md)、[`seo-auditor`](seo-auditor/SKILL.md) | `05-seo-audit.md` |
+| 06 持续更新 | 哪些事实会过期，如何复查，部署状态是什么？ | [`seo-autopilot`](seo-autopilot/SKILL.md)、[`auto-page-sync`](auto-page-sync/SKILL.md) | `06-deployment-report.md` |
+| 07 外链增长 | 哪些增长动作可衡量、可授权、可复盘？ | [`backlink-discovery`](backlink-discovery/SKILL.md)、[`seo-link-strategy`](seo-link-strategy/SKILL.md)、[`seo-backlink-submitter`](seo-backlink-submitter/SKILL.md) | `07-growth-backlog.md` |
 
-🎮 **游戏站批量生产** — 做 Roblox 游戏工具站最头疼的是内容更新。`multi-game-codes-hub` 让你 5 分钟从一个 JSON 文件生成完整的代码兑换页面（含 Active/Expired 分区、一键复制、FAQ Schema）；`roblox-game-data-scraper` 直接从 Trello 看板和 Discord 频道抓取游戏数据，不用手动搬运。
+七份 artifact 统一保存在 `<project-root>/pipeline/`。它们使用共同的 YAML header 记录 `status`、`generated_at`、`observed_through`、`upstream`、`sources` 和 `gaps`，正文统一包含决策、证据、未知项与 handoff。具体契约见 [`pipeline-contracts.md`](roblox-site-architect/references/pipeline-contracts.md)。
 
-📣 **社交媒体内容运营** — `null-axiom-twitter` 不是简单的推文生成器，它内置了完整的人设体系、五大内容支柱和发布节奏规划，能按比例自动选择话题方向，生成三个不同风格的草稿（锐利版 / 故事版 / 数据版）供你挑选。
+## 开始使用
 
-📺 **YouTube 内容情报** — `youtube-intel` 帮你扫描一个类目的竞争格局（六步工作流：需求分析 → 策略制定 → 数据获取 → 清洗 → 识别 → 保存），`youtube-transcribe` 把视频转成文字稿存入 memory，`youtube-content-gen` 再把视频内容转化成 SEO 页面。
-
-🔗 **外链建设自动化** — 从发现机会（`backlink-discovery`）到评估目录（`backlink-intelligence`）到生成个性化邮件（`seo-link-strategy`）到批量提交（`seo-backlink-submitter`），四个技能串起完整的外链工作流。`signallayer-backlinks-client` 可通过 SignalLayer.io API 创建和跟踪 campaign，支持 natural、standard 与 10–30 天 drip 排期。
-
-🧩 **不是 prompt 收集，是可执行的工作流** — 每个技能都包含 `SKILL.md` 文档 + 可直接运行的脚本 / 模板 / 参考文件。不是告诉你「应该怎么做」，而是直接帮你做。
-
-🔄 **内容自动同步** — `auto-page-sync` 让你只管往仓库写 Markdown，前端页面自动生成。配合 GitHub Actions 定时拉取，Google 爬虫看到的永远是最新内容。支持日报、博客、Changelog、Landing Page 等多种页面模式，一套机制复用所有项目。
-
-[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
-[![Skills](https://img.shields.io/badge/skills-28-blue.svg)](#-完整技能清单)
-[![Agent Skills Standard](https://img.shields.io/badge/standard-Agent_Skills-8A2BE2.svg)](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)
-[![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](./CONTRIBUTING.md)
-
----
-
-## ⚡ 30 秒上手
+Codex 的项目级 Skills 路径是 `.agents/skills`。下面先安装仓库，再以 dry-run 查看七份 artifact 的明确目标；只有加上 `--apply` 才会创建文件。
 
 ```bash
-# 克隆到项目的 skills 目录，Agent 自动加载
-git clone https://github.com/kennyzir/7deer_skills.git .agent/skills
+mkdir -p .agents
+git clone https://github.com/kennyzir/7deer_skills.git .agents/skills
+
+python3 .agents/skills/roblox-site-architect/scripts/init_pipeline.py \
+  --project-root "$PWD" \
+  --game "<canonical Roblox game name>" \
+  --scope "<bounded research or delivery scope>"
 ```
 
-就这样。你的 Agent 会自动扫描每个 `SKILL.md` 的 name 和 description，在你的请求匹配时自动激活对应技能。
+每个 Skill 都以 `SKILL.md` 描述触发条件、流程和边界。其他 Agent 是否自动发现 Skills、使用什么目录，取决于该工具当前实现；请以对应工具的官方文档为准，不要假设它们与 Codex 使用相同路径。完整选择入口见 [CATALOG.md](CATALOG.md)。
 
----
+## 七个可审计产物
 
-## 🔌 兼容的 IDE / Agent 框架
+1. `01-opportunity-report.md`：游戏身份、需求/供给证据、反证、决策与置信边界。
+2. `02-keyword-map.md`：关键词 cluster、意图、证据、目标路由与优先级。
+3. `03-source-ledger.md`：来源观察、真实观察时间、支持的 claim 与冲突。
+4. `04-site-plan.md`：发布范围、内容/数据契约、内链角色与本地验收结果。
+5. `05-seo-audit.md`：逐项 SEO/build 检查、严重性、修复与 release decision。
+6. `06-deployment-report.md`：真实部署状态、可达性检查与 freshness review loop。
+7. `07-growth-backlog.md`：目标、依据、风险、授权状态、指标和实际结果。
 
-本技能库遵循 Anthropic 发起的 **Agent Skills 开放标准**（SKILL.md 格式），已被以下工具原生支持：
+初始化器使用 [`assets/pipeline-templates`](roblox-site-architect/assets/pipeline-templates/) 中维护的七个模板。初始状态只表示“工作尚未完成”：01 为 `partial`，02–07 因缺少 upstream 为 `blocked`；`observed_through` 是 `unknown`，生成时间不会被当作证据验证时间。已有 pipeline 应按数字顺序恢复，不能通过再次初始化覆盖。
 
-| IDE / 框架 | 技能目录位置 | 加载方式 |
-|-----------|------------|---------|
-| **Claude Code** | `.agent/skills/` | 自动发现，`/skill-name` 斜杠命令调用 |
-| **Kiro** (AWS) | `.agent/skills/` | 自动发现，匹配请求时激活 |
-| **Cursor** | `.cursor/skills/` 或 `.agent/skills/` | 通过 Rules 引用或自动加载 |
-| **VS Code + Copilot** | `.agent/skills/` | GitHub Copilot Agent 模式自动加载 |
-| **OpenAI Codex** | `.agent/skills/` | 自动发现 |
-| **Gemini CLI** | `.agent/skills/` | 自动发现 |
-| **OpenClaw** | `~/.openclaw/skills/` 或项目内 `.agent/skills/` | 自动加载，ClawHub 分发 |
-| **Windsurf** | `.agent/skills/` | 自动发现 |
+## Proof, not promises / 用验证说话
 
-### 不同 IDE 的安装方式
+当前五个明确标记的 Skills 在 CI 中共运行 85 个行为测试：
+
+- `roblox-hit-evaluator`：47
+- `roblox-site-architect`：17
+- `multi-game-codes-hub`：8
+- `seo-backlink-submitter`：7
+- `signallayer-backlinks-client`：6
+
+CI 还单独运行目录一致性测试。仓库验证器检查所有顶层 `SKILL.md` 的 frontmatter、命名、相对引用和 Python 语法；目录生成器检查 [CATALOG.md](CATALOG.md) 是否完整且无漂移。这些结果证明的是当前被检查的行为和结构，不代表所有 Skills 具有相同成熟度，也不构成流量、排名或收入承诺。每个 Skill 的 CI 状态与执行边界以生成目录为准。
+
+本地可运行与 CI 相同的结构检查：
 
 ```bash
-# Claude Code / Kiro / VS Code Copilot / Codex / Gemini CLI（通用）
-git clone https://github.com/kennyzir/7deer_skills.git .agent/skills
-
-# Cursor（也支持 .agent/skills，或复制到 .cursor/skills）
-git clone https://github.com/kennyzir/7deer_skills.git .agent/skills
-
-# OpenClaw（全局安装，所有项目共享）
-git clone https://github.com/kennyzir/7deer_skills.git ~/.openclaw/skills/7deer
-
-# 只要一个技能？直接复制文件夹
-cp -r 7deer_skills/google-trends-to-pages .agent/skills/
+python3 scripts/generate_catalog.py --check
+python3 scripts/validate_repo.py
 ```
 
-### 技能如何工作
+## 开源仓库与 RB Auto
 
-```
-1. 启动时 → Agent 只读取每个 SKILL.md 的 name + description（轻量）
-2. 你的请求匹配 → Agent 加载完整 SKILL.md 指令
-3. 执行时 → 按需加载 scripts / templates / references
-```
+7Deer Skills 是 MIT License 的开源仓库：Skills 可单独查看、组合、修改和审计，编排与运行由你负责。
 
-这就是 Agent Skills 标准的「渐进式披露」机制 — 不会一次性塞满上下文，只在需要时加载。
-
----
-
-## 🎯 核心技能 (P0 优先级)
-
-这些是最常用、最实用的技能，适合快速启动新项目：
-
-| # | 技能名称 | 描述 | 时间节省 | 适用场景 |
-|---|---------|------|---------|---------|
-| 🔥 | **google-trends-to-pages** | 从 Google Trends 关键词自动生成 SEO 页面 | 90% | SEO 内容生产 |
-| 🔥 | **multi-game-codes-hub** | 5 分钟生成完整的游戏代码页面 | 95% | Roblox/游戏网站 |
-| 🔥 | **roblox-game-data-scraper** | 从 Trello/Discord/Reddit 抓取游戏数据 | 80% | 游戏数据采集 |
-
----
-
-## 📦 完整技能清单
-
-### SEO & 内容生成
-| # | 技能名称 | 描述 | 适用场景 |
-|---|---------|------|---------|
-| 1 | **google-trends-to-pages** | Google Trends → SEO 页面（意图分类 + 模板选择） | SEO 内容自动化 |
-| 2 | **nextjs-seo-booster** | Next.js SEO 工具包（结构化数据 + Sitemap） | 任何 Next.js 网站 |
-| 3 | **nextjs-seo-foundations** | Next.js SEO 工程化规范（Metadata + Performance） | Next.js 14+ 应用 |
-| 4 | **seo-auditor** | SEO 审计框架（检查清单 + 自动化脚本） | 网站 SEO 优化 |
-| 5 | **youtube-content-gen** | YouTube 内容生成器（视频转 SEO 页面） | 攻略/教程类站点 |
-| 6 | **youtube-game-keywords** | YouTube 订阅频道游戏关键词提取 | 内容创作/游戏赛道 |
-| 7 | **site-keyword-research** | 整站关键词研究 v2（递归扩展100词→20词分层→10词SERP详析→3词定方向） | SEO 关键词调研 |
-| 8 | **seo-autopilot** | 全自动 SEO 内容新鲜度引擎（报告 → 生成 → 审计 → 部署） | SEO 内容自动化 |
-
-### 数据采集 & 分析
-| # | 技能名称 | 描述 | 适用场景 |
-|---|---------|------|---------|
-| 9 | **roblox-game-data-scraper** | Trello/Discord/Reddit 游戏数据抓取 | Roblox 游戏网站 |
-| 10 | **data-scraper-intent** | 数据提取 & 搜索意图分析（爬虫 + LLM） | SEO/数据采集 |
-| 11 | **youtube-intel** | YouTube 内容情报与竞品监测（Discovery + Monitoring） | 选题策划/竞品分析 |
-| 12 | **youtube-transcribe** | YouTube 视频转录（yt-dlp + whisper） | 视频内容提取 |
-
-### 外链建设
-| # | 技能名称 | 描述 | 适用场景 |
-|---|---------|------|---------|
-| 13 | **backlink-discovery** | 外链机会发现引擎（web_search 多轮派生） | 外链建设 |
-| 14 | **backlink-intelligence** | AI/Tools 目录外链情报收集与评估 | 外链情报 |
-| 15 | **keyword-competition-analysis** | 谷歌关键词竞争度分析 | SEO 调研 |
-| 16 | **seo-backlink-submitter** | 批量目录提交工具（Playwright 自动化） | 外链分发 |
-| 17 | **seo-link-strategy** | 外链策略生成器（发现→评估→邮件→自动发送） | 外链营销 |
-| 18 | **signallayer-backlinks-client** | SignalLayer.io API 客户端（natural / standard / drip） | 外链自动化 |
-
-### 游戏 & 工具
-| # | 技能名称 | 描述 | 适用场景 |
-|---|---------|------|---------|
-| 19 | **multi-game-codes-hub** | 快速生成游戏代码页面（模板 + 组件） | Roblox/游戏网站 |
-| 20 | **rpg-stat-catalyst** | RPG 数值计算核心（属性加点 + 阈值） | 游戏类应用 |
-| 21 | **roblox-site-architect** | Roblox 游戏工具站 SEO 架构 | Roblox 游戏网站 |
-| 22 | **roblox-hit-evaluator** | 基于公开证据评估 Roblox 游戏30日持续起量潜力 | 游戏研究/候选筛选 |
-
-### 自动化 & CI/CD
-| # | 技能名称 | 描述 | 适用场景 |
-|---|---------|------|---------|
-| 23 | **auto-page-sync** | 仓库内容自动同步到前端页面（GitHub Actions 定时拉取 + SEO 新鲜度） | 报告/博客/Landing Page 自动更新 |
-
-### AI & 开发工具
-| # | 技能名称 | 描述 | 适用场景 |
-|---|---------|------|---------|
-| 24 | **python-agent-engine** | Python AI Agent 引擎（ReAct + 工具调用） | Python AI 应用 |
-| 25 | **gemini-thinking-protocol** | 核心认知引擎（第一性原理 + 系统思维） | 复杂需求分析 |
-| 26 | **plugin-architect** | AI Skills/Plugins 构建标准方法论 | 创建新技能 |
-
-### 社交媒体 & 内容运营
-| # | 技能名称 | 描述 | 适用场景 |
-|---|---------|------|---------|
-| 27 | **null-axiom-twitter** | Twitter/X 推文自动生成（人设调性 + 五大内容支柱） | 个人品牌运营 |
-
-### 其他工具
-| # | 技能名称 | 描述 | 适用场景 |
-|---|---------|------|---------|
-| 28 | **favicon-icon-generator** | Favicon & Icon 生成器（SVG + PWA） | Web 应用图标系统 |
-
----
-
-## 🚀 快速开始
-
-### 方法 1: 一键克隆（推荐）
-
-```bash
-# 在项目根目录执行，适用于 Claude Code / Kiro / VS Code Copilot / Codex / Gemini CLI
-git clone https://github.com/kennyzir/7deer_skills.git .agent/skills
-```
-
-### 方法 2: Git Submodule（团队协作推荐）
-
-```bash
-git submodule add https://github.com/kennyzir/7deer_skills.git .agent/skills
-```
-
-### 方法 3: npx 一键安装（无需 git）
-
-```bash
-# 下载到当前项目
-npx degit kennyzir/7deer_skills .agent/skills
-```
-
-### 方法 4: 只要某个技能
-
-```bash
-# 只复制你需要的技能
-npx degit kennyzir/7deer_skills/google-trends-to-pages .agent/skills/google-trends-to-pages
-```
-
-### 安装后验证
-
-```bash
-# 检查技能是否就位
-ls .agent/skills/*/SKILL.md
-
-# 在 Claude Code 中测试
-# 输入 / 查看可用的斜杠命令，你应该能看到所有技能
-```
-
----
-
-## 🌱 七鹿、开源 Skills 与 RB Auto
-
-7Deer Skills 是七鹿维护的开源项目。这里的每个 Skill 都可以独立使用，并继续按 MIT License 免费开放；它不是商业产品的残缺试用版。
-
-如果你正在持续建设 Roblox 游戏站，希望把选游戏、关键词研究、页面生成、上线检查、数据回流和后续更新串成一套完整流程，可以了解 [RB Auto](https://rbauto.ludusdex.com/?utm_source=github&utm_medium=opensource&utm_campaign=7deer_skills)。RB Auto 提供私有 Agent 工具源码、操作说明和首站陪跑，更适合已经在使用 AI / Codex 做站、愿意根据真实数据持续运营的人。它不保证搜索排名、流量或收入。
+[RB Auto](https://rbauto.ludusdex.com/?utm_source=github&utm_medium=readme&utm_campaign=7deer_skills) 是面向 Roblox 游戏站的集成化产品，提供更集中的工作流与持续维护，适合希望缩短自行整合路径的人。它与本仓库的定位不同，也不承诺搜索排名、流量或收入。
 
 | 7Deer Skills | RB Auto |
 |---|---|
-| 可独立组合的开源技能 | 面向 Roblox 游戏站的完整工作流 |
-| MIT License | 商业授权的私有源码 |
-| 自行安装、选择和编排 | 工具整合、操作说明与首站陪跑 |
-| 适合开发者与 Agent 实验 | 适合持续测试和运营多个游戏站 |
+| 开源、可组合、可审计 | 集成化产品与持续维护 |
+| 自行选择工具与编排流程 | 更集中地衔接落地步骤 |
+| 适合开发、研究与自定义 | 适合希望减少整合工作的人 |
 
-[了解 RB Auto 的工作方式](https://rbauto.ludusdex.com/?utm_source=github&utm_medium=opensource&utm_campaign=7deer_skills) · [查看七鹿的真实实践记录](https://rbauto.ludusdex.com/cases/?utm_source=github&utm_medium=opensource&utm_campaign=7deer_skills)
+## 安全、贡献与许可
 
----
+读取公开资料、生成草稿和修改本地文件，不自动授权外部副作用。发送消息、提交表单或外链、部署、push、购买服务/域名、创建定时任务，以及调用付费或会改变远端状态的 API，都需要用户对具体目标与动作明确授权。
 
-## 🔐 安全说明
-
-> ⚠️ **重要：本仓库不包含任何敏感信息**
-
-- ✅ 所有代码均不包含 API Key、Token 或密码
-- ✅ 涉及外部 API 的技能通过环境变量读取密钥
-- ✅ 示例代码使用占位符（如 `your_api_key`）
-- ✅ 已通过安全扫描，无敏感数据泄露
-
-详细安全政策请参阅 [SECURITY.md](./SECURITY.md)。
-
-### 环境变量配置示例
-
-如果某个技能需要 API Key，请在项目中设置环境变量：
-
-```bash
-# .env 文件示例
-TRELLO_API_KEY=your_trello_api_key_here
-TRELLO_TOKEN=your_trello_token_here
-GEMINI_API_KEY=your_gemini_api_key_here
-OPENAI_API_KEY=your_openai_api_key_here
-```
-
----
-
-## 📊 技能统计
-
-- **总技能数**: 28 个
-- **P0 核心技能**: 3 个
-- **代码行数**: 15,000+ 行
-- **文档页数**: 70+ 页
-- **时间节省**: 平均 80-95%
-
----
-
-## 🎯 适用项目类型
-
-- ✅ Roblox 游戏工具站
-- ✅ SEO 内容站点
-- ✅ 游戏攻略网站
-- ✅ Next.js Web 应用
-- ✅ Python AI 应用
-- ✅ 数据采集项目
-- ✅ 个人品牌 / 社交媒体运营
-- ✅ YouTube 内容创作
-- ✅ 自动化内容同步 / 定时更新站点
-
----
-
-## 📝 更新日志
-
-### 2026-09-07
-- 🆕 添加 **roblox-hit-evaluator**（公开证据采集、缺失数据界限、可审计评分与30日冻结复盘）
-- 📊 技能总数 → 28
-
-### 2026-04-12
-- 🔥 添加 **seo-autopilot**（全自动 SEO 内容新鲜度引擎，关键词报告 → 页面生成 → 审计 → 部署）
-- 📊 技能总数 → 25
-
-### 2026-04-12
-- 🆕 添加 **auto-page-sync**（仓库内容自动同步到前端页面，GitHub Actions 定时拉取 + SEO 新鲜度保障）
-- 📊 技能总数从 24 → 25
-
-### 2026-04-17
-- 📈 升级 **site-keyword-research** v2.0（递归式关键词树扩展，词库从30词扩充至100词，每个词标注来源可信度+扩展深度）
-
-### 2026-04-11
-- 🔥 添加 **null-axiom-twitter**（Twitter/X 推文自动生成，含人设调性 + Reddit 回帖支持）
-- 🔥 添加 **site-keyword-research** v1（整站关键词研究，三层方法论：30词初筛→10词详析→3词定方向）
-- 📈 升级 **youtube-intel** v2.0（重构 Discovery 工作流，新增六步流程）
-- 🔧 修复 **youtube-transcribe**（修复硬编码路径 + android GVS PO Token fallback）
-- 📝 添加 CONTRIBUTING.md、SECURITY.md、LICENSE
-- 📊 技能总数从 19 → 24
-
-### 2026-04-07
-- 添加 youtube-game-keywords（YouTube 订阅频道游戏关键词提取）
-
-### 2026-04-04
-- 🔥 添加 **google-trends-to-pages**（Google Trends → SEO 页面生成器）
-- 🔥 添加 **multi-game-codes-hub**（5 分钟生成游戏代码页面）
-- 🔥 添加 **roblox-game-data-scraper**（Trello/Discord/Reddit 数据抓取）
-- 添加 backlink-discovery（外链机会发现引擎）
-- 添加 keyword-competition-analysis（关键词竞争度分析）
-- 添加 seo-backlink-submitter（批量目录提交工具）
-- 添加 seo-link-strategy（外链策略生成器）
-
-### 2026-02-09
-- 添加 favicon-icon-generator（图标生成系统）
-- 添加 gemini-thinking-protocol（认知引擎）
-- 添加 plugin-architect（技能构建标准）
-- 添加 roblox-site-architect（Roblox 站点架构）
-- 添加 nextjs-seo-foundations（SEO 工程化规范）
-
-### 2026-01-17
-- 初始化技能库
-- 添加 5 个核心技能模块
-
----
-
-## 🤝 贡献指南
-
-欢迎贡献新技能或改进现有技能！详细规范请参阅 [CONTRIBUTING.md](./CONTRIBUTING.md)。
-
-### 技能提交规范
-
-每个技能应包含：
-- `SKILL.md` - 完整文档
-- `resources/` - 代码和资源文件
-- 使用示例和测试数据
-- 清晰的使用说明
-
----
-
-## 📄 License
-
-MIT License - 开源分享，欢迎使用和贡献。详见 [LICENSE](./LICENSE)。
-
----
-
-## 📧 联系方式
-
-- GitHub: [@kennyzir](https://github.com/kennyzir)
-- 关于七鹿: [认识七鹿](https://rbauto.ludusdex.com/about/?utm_source=github&utm_medium=opensource&utm_campaign=7deer_skills)
-- 产品与案例: [RB Auto](https://rbauto.ludusdex.com/?utm_source=github&utm_medium=opensource&utm_campaign=7deer_skills) · [真实实践记录](https://rbauto.ludusdex.com/cases/?utm_source=github&utm_medium=opensource&utm_campaign=7deer_skills)
-- 内容动态: [即刻「七鹿AI」](https://m.okjike.com/users/ea42b30c-24db-434b-b969-650d7473f69e)
-- Repository: [7deer_skills](https://github.com/kennyzir/7deer_skills)
+- [CONTRIBUTING.md](CONTRIBUTING.md)：贡献范围与检查清单
+- [SECURITY.md](SECURITY.md)：漏洞报告与敏感信息边界
+- [LICENSE](LICENSE)：MIT License
 
 <details>
-<summary><strong>微信交流：七鹿（点击展开二维码）</strong></summary>
+<summary><strong>联系七鹿 / 7Deer</strong></summary>
 
-如果你正在使用这些 Skills，或想交流 AI 产品、独立站与 Roblox 游戏站实践，欢迎添加微信。备注「GitHub Skills」会更容易识别。
+- GitHub：[@kennyzir](https://github.com/kennyzir)
+- 关于七鹿：[认识七鹿](https://rbauto.ludusdex.com/about/?utm_source=github&utm_medium=readme&utm_campaign=7deer_skills)
+- 产品与案例：[RB Auto](https://rbauto.ludusdex.com/?utm_source=github&utm_medium=readme&utm_campaign=7deer_skills) · [实践记录](https://rbauto.ludusdex.com/cases/?utm_source=github&utm_medium=readme&utm_campaign=7deer_skills)
+- 内容动态：[即刻「七鹿 AI」](https://m.okjike.com/users/ea42b30c-24db-434b-b969-650d7473f69e)
 
-<img src="./assets/wechat-7deer.png" alt="七鹿微信二维码" width="320" />
+微信交流请备注「GitHub Skills」。
+
+<img src="assets/wechat-7deer.png" alt="七鹿微信二维码" width="320" />
 
 </details>
-
----
-
-**⭐ 如果这个技能库对你有帮助，请给个 Star！**

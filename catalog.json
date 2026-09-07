@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "groups": [
+    {
+      "id": "roblox-growth-pipeline",
+      "title": "Roblox Growth Pipeline core",
+      "description": "Skills that map directly to opportunity selection, evidence-backed site delivery, maintenance, and growth.",
+      "skills": [
+        {"name": "roblox-hit-evaluator", "maturity": "ci-tested", "ci_tests": 47, "boundary": "research-output"},
+        {"name": "roblox-site-architect", "maturity": "ci-tested", "ci_tests": 17, "boundary": "external-gated"},
+        {"name": "site-keyword-research", "maturity": "not-ci-tested", "boundary": "research-output"},
+        {"name": "keyword-competition-analysis", "maturity": "not-ci-tested", "boundary": "research-output"},
+        {"name": "google-trends-to-pages", "maturity": "not-ci-tested", "boundary": "research-output"},
+        {"name": "roblox-game-data-scraper", "maturity": "not-ci-tested", "boundary": "research-output"},
+        {"name": "youtube-transcribe", "maturity": "not-ci-tested", "boundary": "research-output"},
+        {"name": "multi-game-codes-hub", "maturity": "ci-tested", "ci_tests": 8, "boundary": "local-output"},
+        {"name": "nextjs-seo-foundations", "maturity": "not-ci-tested", "boundary": "guidance"},
+        {"name": "nextjs-seo-booster", "maturity": "not-ci-tested", "boundary": "local-output"},
+        {"name": "seo-auditor", "maturity": "not-ci-tested", "boundary": "guidance"},
+        {"name": "seo-autopilot", "maturity": "not-ci-tested", "boundary": "external-gated"},
+        {"name": "auto-page-sync", "maturity": "not-ci-tested", "boundary": "external-gated"},
+        {"name": "backlink-discovery", "maturity": "not-ci-tested", "boundary": "research-output"},
+        {"name": "seo-link-strategy", "maturity": "not-ci-tested", "boundary": "external-gated"},
+        {"name": "seo-backlink-submitter", "maturity": "ci-tested", "ci_tests": 7, "boundary": "external-gated"},
+        {"name": "signallayer-backlinks-client", "maturity": "ci-tested", "ci_tests": 6, "boundary": "external-gated"},
+        {"name": "backlink-intelligence", "maturity": "not-ci-tested", "boundary": "external-gated"}
+      ]
+    },
+    {
+      "id": "discovery-content-support",
+      "title": "Discovery and content support",
+      "description": "Supporting research and content workflows that can feed the core pipeline when their inputs and tools are available.",
+      "skills": [
+        {"name": "youtube-game-scout", "maturity": "not-ci-tested", "boundary": "research-output"},
+        {"name": "youtube-game-keywords", "maturity": "not-ci-tested", "boundary": "research-output"},
+        {"name": "youtube-intel", "maturity": "not-ci-tested", "boundary": "research-output"},
+        {"name": "youtube-content-gen", "maturity": "not-ci-tested", "boundary": "research-output"},
+        {"name": "html5-game-radar", "maturity": "not-ci-tested", "boundary": "research-output"},
+        {"name": "itchio-new-game-hunt", "maturity": "not-ci-tested", "boundary": "research-output"},
+        {"name": "x-demand-radar", "maturity": "not-ci-tested", "boundary": "research-output"},
+        {"name": "data-scraper-intent", "maturity": "not-ci-tested", "boundary": "research-output"}
+      ]
+    },
+    {
+      "id": "utilities-labs",
+      "title": "Utilities and labs",
+      "description": "Reusable local utilities, libraries, methods, and experimental workflows outside the main Roblox growth sequence.",
+      "skills": [
+        {"name": "favicon-icon-generator", "maturity": "not-ci-tested", "boundary": "local-output"},
+        {"name": "rpg-stat-catalyst", "maturity": "not-ci-tested", "boundary": "local-output"},
+        {"name": "plugin-architect", "maturity": "not-ci-tested", "boundary": "guidance"},
+        {"name": "python-agent-engine", "maturity": "not-ci-tested", "boundary": "local-output"},
+        {"name": "gemini-thinking-protocol", "maturity": "not-ci-tested", "boundary": "guidance"},
+        {"name": "null-axiom-twitter", "maturity": "not-ci-tested", "boundary": "external-gated"}
+      ]
+    }
+  ]
+}

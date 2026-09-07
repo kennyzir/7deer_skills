@@ -1,0 +1,119 @@
+from __future__ import annotations
+
+import json
+from pathlib import Path
+import re
+import subprocess
+import sys
+import unittest
+from urllib.parse import unquote, urlsplit
+
+import yaml
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+CATALOG_CONFIG = REPO_ROOT / "catalog.json"
+CATALOG_DOCUMENT = REPO_ROOT / "CATALOG.md"
+README = REPO_ROOT / "README.md"
+GENERATOR = REPO_ROOT / "scripts" / "generate_catalog.py"
+EXPECTED_CI_TESTS = {
+    "roblox-hit-evaluator": 47,
+    "roblox-site-architect": 17,
+    "multi-game-codes-hub": 8,
+    "seo-backlink-submitter": 7,
+    "signallayer-backlinks-client": 6,
+}
+ARTIFACTS = (
+    "01-opportunity-report.md",
+    "02-keyword-map.md",
+    "03-source-ledger.md",
+    "04-site-plan.md",
+    "05-seo-audit.md",
+    "06-deployment-report.md",
+    "07-growth-backlog.md",
+)
+MARKDOWN_LINK = re.compile(r"!?\[[^\]\n]*\]\(([^)\n]+)\)")
+
+
+def frontmatter(skill_file: Path) -> dict[str, object]:
+    text = skill_file.read_text(encoding="utf-8")
+    end = text.find("\n---\n", 4)
+    return yaml.safe_load(text[4:end])
+
+
+class CatalogTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.config = json.loads(CATALOG_CONFIG.read_text(encoding="utf-8"))
+        cls.entries = [
+            entry for group in cls.config["groups"] for entry in group["skills"]
+        ]
+        cls.readme = README.read_text(encoding="utf-8")
+        cls.catalog = CATALOG_DOCUMENT.read_text(encoding="utf-8")
+
+    def test_catalog_covers_every_top_level_skill_exactly_once(self) -> None:
+        actual = {
+            frontmatter(path)["name"] for path in sorted(REPO_ROOT.glob("*/SKILL.md"))
+        }
+        configured = [entry["name"] for entry in self.entries]
+        self.assertEqual(len(actual), 32)
+        self.assertEqual(len(configured), len(set(configured)))
+        self.assertEqual(set(configured), actual)
+
+    def test_ci_maturity_is_limited_to_the_five_tested_skills(self) -> None:
+        tested = {
+            entry["name"]: entry["ci_tests"]
+            for entry in self.entries
+            if entry["maturity"] == "ci-tested"
+        }
+        self.assertEqual(tested, EXPECTED_CI_TESTS)
+        self.assertEqual(sum(tested.values()), 85)
+        for entry in self.entries:
+            if entry["name"] not in EXPECTED_CI_TESTS:
+                self.assertEqual(entry["maturity"], "not-ci-tested")
+                self.assertNotIn("ci_tests", entry)
+
+    def test_generated_catalog_has_no_drift(self) -> None:
+        result = subprocess.run(
+            [sys.executable, str(GENERATOR), "--check"],
+            cwd=REPO_ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_catalog_descriptions_come_from_skill_frontmatter(self) -> None:
+        for skill_file in sorted(REPO_ROOT.glob("*/SKILL.md")):
+            metadata = frontmatter(skill_file)
+            description = " ".join(str(metadata["description"]).split()).replace(
+                "|", "\\|"
+            )
+            with self.subTest(skill=metadata["name"]):
+                self.assertIn(description, self.catalog)
+
+    def test_readme_uses_verified_install_path_and_pipeline_artifacts(self) -> None:
+        self.assertFalse(self.readme.startswith("\ufeff"))
+        self.assertIn(".agents/skills", self.readme)
+        self.assertNotIn(".agent/skills", self.readme)
+        self.assertNotIn("使用示例", self.readme)
+        self.assertIn("Proof, not promises", self.readme)
+        self.assertIn("85", self.readme)
+        for artifact in ARTIFACTS:
+            self.assertIn(artifact, self.readme)
+
+    def test_relative_readme_and_catalog_links_exist(self) -> None:
+        for document in (README, CATALOG_DOCUMENT):
+            content = document.read_text(encoding="utf-8")
+            for raw_target in MARKDOWN_LINK.findall(content):
+                target = raw_target.strip().split(maxsplit=1)[0]
+                parsed = urlsplit(target)
+                if parsed.scheme or target.startswith(("#", "mailto:")):
+                    continue
+                relative = unquote(parsed.path).removeprefix("./")
+                with self.subTest(document=document.name, target=target):
+                    self.assertTrue((REPO_ROOT / relative).exists())
+
+
+if __name__ == "__main__":
+    unittest.main()
