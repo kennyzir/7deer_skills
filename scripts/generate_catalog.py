@@ -152,7 +152,7 @@ def render_catalog(config: dict[str, Any], descriptions: dict[str, str]) -> str:
         "",
         f"This catalog covers all {skill_total} top-level Skills. Descriptions come directly from each `SKILL.md` frontmatter; grouping, maturity, and execution boundaries come from `catalog.json`.",
         "",
-        "Maturity is deliberately narrow: **CI-tested** means this repository currently runs that Skill's tests in CI. **Not in repository CI** does not mean unusable or low quality; it means there is no equivalent repository-level CI claim. The current CI-tested rows account for "
+        "Maturity is deliberately narrow: **CI-tested** means this repository currently treats that Skill's behavior suite as a maturity signal. **Not in repository CI** means no comprehensive CI maturity claim; a row may still have narrow safety or contract checks. It does not mean unusable or low quality. The current CI-tested rows account for "
         f"{test_total} tests.",
         "",
         "Execution-boundary labels describe the broadest behavior represented by a Skill. Reading external sources still depends on tool availability and access. Sending, submitting, deploying, purchasing, scheduling, or calling a paid/mutating API always requires explicit user authorization.",

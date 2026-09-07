@@ -31,6 +31,7 @@ MARKDOWN_LINK_RE = re.compile(r"!?\[[^\]\n]*\]\(([^)\n]+)\)")
 INLINE_CODE_RE = re.compile(r"`([^`\n]+)`")
 RESOURCE_PREFIXES = {"assets", "examples", "references", "resources", "scripts", "templates", "tests"}
 IGNORED_PYTHON_DIRS = {".git", ".mypy_cache", ".pytest_cache", ".venv", "__pycache__", "node_modules", "venv"}
+PRIVATE_MAC_PATH_RE = re.compile("/" + r"Users/[A-Za-z0-9._-]+/")
 
 # These are known business-content defects outside the repository-baseline scope.
 # Every exception is exact, must be exercised, and should be removed when repaired.
@@ -236,10 +237,29 @@ def validate_python(results: Results) -> None:
         results.error(f"stale Python-syntax allowlist entry: {path}")
 
 
+def validate_portable_paths(results: Results) -> None:
+    for path in sorted(REPO_ROOT.rglob("*")):
+        if not path.is_file():
+            continue
+        relative_parts = path.relative_to(REPO_ROOT).parts
+        if IGNORED_PYTHON_DIRS.intersection(relative_parts):
+            continue
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            continue
+        for line_number, line in enumerate(text.splitlines(), 1):
+            if PRIVATE_MAC_PATH_RE.search(line):
+                results.error(
+                    f"{repo_path(path)}:{line_number}: hard-coded macOS user path is not portable"
+                )
+
+
 def main() -> int:
     results = Results()
     validate_skills(results)
     validate_python(results)
+    validate_portable_paths(results)
 
     for warning in results.warnings:
         print(f"WARN: {warning}")

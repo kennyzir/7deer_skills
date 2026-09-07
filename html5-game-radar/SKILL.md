@@ -77,6 +77,13 @@ document.querySelectorAll('.game_cell').forEach(cell => {
 
 ## Step 2: Reddit r/webgames 扫描
 
+`scripts/reddit_monitor.py` 需要通过 `--reddit-script` 或专用环境变量 `HTML5_REDDIT_SCRIPT` 指向已有的 `reddit.ts`。未配置时停止，不会调用 `npx`；默认输出 JSON 到 stdout，只有显式 `--output` 才创建新文件且不会覆盖已有路径。
+
+```bash
+python3 scripts/reddit_monitor.py --reddit-script /path/to/reddit.ts
+python3 scripts/reddit_monitor.py --reddit-script /path/to/reddit.ts --output reddit_output.json
+```
+
 **使用 reddit-research skill 的 CLI：**
 ```bash
 npx tsx reddit.ts new webgames --limit 30

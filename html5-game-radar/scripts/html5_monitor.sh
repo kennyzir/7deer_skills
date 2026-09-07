@@ -10,7 +10,6 @@
 #   /tmp/html5_radar_output.json
 #===========================================================
 
-SKILL_DIR="$HOME/.openclaw/workspaces/automation-publisher/skills/html5-game-radar"
 OUTPUT_FILE="/tmp/html5_radar_output.json"
 DATE=$(date '+%Y-%m-%d %H:%M')
 
@@ -20,7 +19,8 @@ echo "========================================"
 #===========================================================
 # Source functions
 #===========================================================
-SCRIPT_DIR="$SKILL_DIR/scripts"
+SCRIPT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+REDDIT_OUTPUT="${HTML5_REDDIT_OUTPUT:-$PWD/reddit_output.json}"
 
 if [ -f "$SCRIPT_DIR/itch_scraper.py" ]; then
     echo "[1/5] 抓取 itch.io..."
@@ -31,8 +31,11 @@ fi
 
 if [ -f "$SCRIPT_DIR/reddit_monitor.py" ]; then
     echo "[2/5] 扫描 Reddit r/webgames..."
-    python3 "$SCRIPT_DIR/reddit_monitor.py" >> /tmp/reddit_output.json 2>&1
-    REDDIT_COUNT=$(cat /tmp/reddit_output.json 2>/dev/null | grep -c '"title"' || echo 0)
+    if ! python3 "$SCRIPT_DIR/reddit_monitor.py" --output "$REDDIT_OUTPUT"; then
+        echo "[ERROR] Reddit 扫描失败；请检查 HTML5_REDDIT_SCRIPT 配置和输出路径" >&2
+        exit 1
+    fi
+    REDDIT_COUNT=$(grep -c '"title"' "$REDDIT_OUTPUT" || true)
     echo "   → 发现 $REDDIT_COUNT 篇相关帖子"
 fi
 
@@ -48,7 +51,7 @@ echo "[5/5] 信号评分..."
 if [ -f "$SCRIPT_DIR/signal_scorer.py" ]; then
     python3 "$SCRIPT_DIR/signal_scorer.py" \
         --itch /tmp/itch_output.json \
-        --reddit /tmp/reddit_output.json \
+        --reddit "$REDDIT_OUTPUT" \
         --trends /tmp/trends_output.json \
         --output "$OUTPUT_FILE"
 fi

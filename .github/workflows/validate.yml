@@ -45,3 +45,9 @@ jobs:
 
       - name: Test SignalLayer client
         run: python -m unittest discover -s signallayer-backlinks-client/tests -p "test_*.py" -v
+
+      - name: Test HTML5 Reddit monitor safety
+        run: python -m unittest discover -s html5-game-radar/tests -p "test_*.py" -v
+
+      - name: Test SEO link strategy safety
+        run: python -m unittest discover -s seo-link-strategy/tests -p "test_*.py" -v

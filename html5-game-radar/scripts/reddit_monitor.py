@@ -1,170 +1,212 @@
 #!/usr/bin/env python3
-"""
-Reddit r/webgames HTML5 游戏监测
-调用 reddit-research skill 的 CLI 抓取新帖
-"""
+"""Run a configured Reddit CLI and extract HTML5/browser-game posts."""
 
+from __future__ import annotations
+
+import argparse
 import json
-import subprocess
+import os
+from pathlib import Path
 import re
+import subprocess
 import sys
-from datetime import datetime
+from typing import Any, Sequence
 
-REDDIT_SCRIPT = "$HOME/.openclaw/workspaces/automation-publisher/skills/reddit-research-but-free/scripts/reddit.ts"
 
-def run_reddit_cli(args: list) -> str:
-    """运行 reddit.ts CLI"""
-    cmd = ["npx", "tsx", REDDIT_SCRIPT] + args
+REDDIT_SCRIPT_ENV = "HTML5_REDDIT_SCRIPT"
+
+
+class ConfigurationError(ValueError):
+    """Raised before any subprocess or output operation can begin."""
+
+
+class RedditCliError(RuntimeError):
+    """Raised when the configured Reddit CLI does not complete successfully."""
+
+
+def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Scan r/webgames with an explicitly configured reddit.ts CLI. "
+            "JSON is printed to stdout unless --output is supplied."
+        )
+    )
+    parser.add_argument(
+        "--reddit-script",
+        help=f"Path to reddit.ts (or set {REDDIT_SCRIPT_ENV})",
+    )
+    parser.add_argument(
+        "--output",
+        help="Create a new JSON output file; existing paths are never overwritten",
+    )
+    parser.add_argument("--timeout", type=float, default=30.0)
+    return parser.parse_args(argv)
+
+
+def resolve_reddit_script(cli_value: str | None) -> Path:
+    configured = cli_value or os.environ.get(REDDIT_SCRIPT_ENV)
+    if not configured or not configured.strip():
+        raise ConfigurationError(
+            f"Reddit CLI is not configured; pass --reddit-script or set {REDDIT_SCRIPT_ENV}"
+        )
+    script = Path(configured.strip()).expanduser().resolve(strict=False)
+    if not script.is_file():
+        raise ConfigurationError("configured Reddit CLI path is not an existing file")
+    return script
+
+
+def resolve_output(raw_output: str | None) -> Path | None:
+    if raw_output is None:
+        return None
+    if not raw_output.strip():
+        raise ConfigurationError("output path must not be empty")
+    output = Path(raw_output.strip()).expanduser().resolve(strict=False)
+    if output.exists() or output.is_symlink():
+        raise ConfigurationError("output path already exists; refusing to overwrite it")
+    if not output.parent.is_dir():
+        raise ConfigurationError("output parent directory does not exist")
+    return output
+
+
+def run_reddit_cli(
+    script: Path,
+    arguments: Sequence[str],
+    timeout: float,
+    runner: Any = None,
+) -> str:
+    if runner is None:
+        runner = subprocess.run
+    command = ["npx", "--no-install", "tsx", str(script), *arguments]
     try:
-        result = subprocess.run(
-            cmd,
+        result = runner(
+            command,
             capture_output=True,
             text=True,
-            timeout=30,
-            cwd="/Users/zirer/.openclaw/workspaces/automation-publisher/skills/reddit-research-but-free/scripts"
+            timeout=timeout,
+            cwd=str(script.parent),
+            check=False,
         )
-        return result.stdout + result.stderr
-    except Exception as e:
-        return f"[ERROR] {e}"
+    except subprocess.TimeoutExpired as error:
+        raise RedditCliError("Reddit CLI timed out") from error
+    except OSError as error:
+        raise RedditCliError("Reddit CLI could not be started") from error
+    if result.returncode != 0:
+        raise RedditCliError(f"Reddit CLI failed with exit code {result.returncode}")
+    return result.stdout
 
-def extract_posts(raw_output: str) -> list:
-    """从 reddit.ts 输出解析帖子"""
-    posts = []
-    lines = raw_output.strip().split('\n')
-    
-    # 解析 reddit.ts 的 markdown 输出格式
-    # 格式: [⬆️ N] Title | r/sub | by u/author | X hours ago
-    post_block = []
-    in_block = False
-    
-    for line in lines:
-        # 检测到帖子开始（包含 ⬆️ 或 ↑ 则为帖子行）
-        if '⬆️' in line or '⬆' in line:
-            if post_block:
-                posts.append('\n'.join(post_block))
-            post_block = [line]
-            in_block = True
-        elif in_block:
+
+def extract_posts(raw_output: str) -> list[str]:
+    """Extract post-shaped blocks from the Reddit CLI Markdown output."""
+    posts: list[str] = []
+    post_block: list[str] = []
+    for line in raw_output.strip().splitlines():
+        is_start = "⬆️" in line or "⬆" in line
+        if is_start and post_block:
+            posts.append("\n".join(post_block))
+            post_block = []
+        if is_start or post_block:
             post_block.append(line)
-            # 遇到空行或下一个帖子开始，结束当前块
-            if line.strip() == '' or ('⬆️' in line or '⬆' in line) and len(post_block) > 1:
-                posts.append('\n'.join(post_block))
+            if not line.strip():
+                posts.append("\n".join(post_block))
                 post_block = []
-                in_block = False
-    
     if post_block:
-        posts.append('\n'.join(post_block))
-    
+        posts.append("\n".join(post_block))
     return posts
 
-def parse_post(post_text: str) -> dict:
-    """解析单个帖子"""
-    result = {
-        'title': '',
-        'upvotes': 0,
-        'comments': 0,
-        'author': '',
-        'time': '',
-        'url': '',
-        'sub': 'webgames',
-        'raw': post_text
+
+def parse_post(post_text: str) -> dict[str, object]:
+    result: dict[str, object] = {
+        "title": "",
+        "upvotes": 0,
+        "comments": 0,
+        "author": "",
+        "time": "",
+        "url": "",
+        "sub": "webgames",
+        "raw": post_text,
     }
-    
-    lines = post_text.split('\n')
+    lines = post_text.splitlines()
     for line in lines:
-        # 解析 upvotes
-        upvotes_match = re.search(r'[⬆️⬆]\s*(\d+)', line)
+        upvotes_match = re.search(r"[⬆️⬆]\s*(\d+)", line)
         if upvotes_match:
-            result['upvotes'] = int(upvotes_match.group(1))
-        
-        # 解析时间
-        time_match = re.search(r'(\d+)\s*(hour|day|minute|week|month)', line, re.I)
+            result["upvotes"] = int(upvotes_match.group(1))
+        time_match = re.search(r"(\d+)\s*(hour|day|minute|week|month)", line, re.I)
         if time_match:
-            result['time'] = f"{time_match.group(1)} {time_match.group(2)}"
-        
-        # 解析作者
-        author_match = re.search(r'by\s+u/(\w+)', line, re.I)
+            result["time"] = f"{time_match.group(1)} {time_match.group(2)}"
+        author_match = re.search(r"by\s+u/(\w+)", line, re.I)
         if author_match:
-            result['author'] = author_match.group(1)
-        
-        # 解析 URL
-        url_match = re.search(r'https?://[^\s\)]+', line)
+            result["author"] = author_match.group(1)
+        url_match = re.search(r"https?://[^\s)]+", line)
         if url_match:
-            result['url'] = url_match.group(0)
-    
-    # 第一行通常是标题
-    first_line = lines[0] if lines else ''
-    # 移除 upvote 部分，保留标题
-    title = re.sub(r'^[⬆️⬆]\s*\d+\s*', '', first_line).strip()
-    # 移除 sub 和 author 信息
-    title = re.sub(r'\s*\|\s*r/\w+\s*\|\s*by.*$', '', title)
-    result['title'] = title
-    
+            result["url"] = url_match.group(0)
+
+    first_line = lines[0] if lines else ""
+    title = re.sub(r"^[⬆️⬆]\s*\d+\s*", "", first_line).strip()
+    result["title"] = re.sub(r"\s*\|\s*r/\w+\s*\|\s*by.*$", "", title).strip()
     return result
 
-def filter_html5_related(post: dict) -> bool:
-    """过滤与 HTML5/浏览器游戏相关的帖子"""
-    if not post['title']:
+
+def filter_html5_related(post: dict[str, object]) -> bool:
+    title = post.get("title")
+    if not isinstance(title, str) or not title:
         return False
-    
-    keywords = [
-        'html5', 'html 5', 'browser game', 'web game',
-        'itch.io', 'no download', 'play in browser',
-        'free to play', 'online game', 'unblocked',
-        'io game', '.io', 'crazy games', 'miniclip',
-        'kongregate', 'armor games', 'gamepix',
-        'new game', 'just released', 'first look'
-    ]
-    
-    title_lower = post['title'].lower()
-    return any(kw.lower() in title_lower for kw in keywords)
+    keywords = (
+        "html5", "html 5", "browser game", "web game", "itch.io",
+        "no download", "play in browser", "free to play", "online game",
+        "unblocked", "io game", ".io", "crazy games", "miniclip",
+        "kongregate", "armor games", "gamepix", "new game",
+        "just released", "first look",
+    )
+    title_lower = title.lower()
+    return any(keyword in title_lower for keyword in keywords)
 
-def main():
-    output = []
-    
-    print("[Reddit Monitor] 正在扫描 r/webgames...")
-    
-    # 方法1: 获取 hot 帖子里找新的
-    print("  → 获取 hot 帖子...")
-    hot_output = run_reddit_cli(["hot", "webgames", "--limit", "50"])
-    hot_posts = extract_posts(hot_output)
-    
-    # 方法2: 获取最新帖子
-    print("  → 获取最新帖子...")
-    new_output = run_reddit_cli(["new", "webgames", "--limit", "30"])
-    new_posts = extract_posts(new_output)
-    
-    all_posts = hot_posts + new_posts
-    
-    print(f"  → 解析 {len(all_posts)} 个帖子...")
-    
-    for post_text in all_posts:
-        post = parse_post(post_text)
-        if filter_html5_related(post):
-            output.append(post)
-    
-    # 去重（按标题）
-    seen = set()
-    unique_output = []
-    for post in output:
-        if post['title'] not in seen:
-            seen.add(post['title'])
-            unique_output.append(post)
-    
-    # 按 upvotes 排序
-    unique_output.sort(key=lambda x: x['upvotes'], reverse=True)
-    
-    print(f"  → 发现 {len(unique_output)} 个 HTML5 相关帖子")
-    
-    # 输出 JSON
-    with open('/tmp/reddit_output.json', 'w') as f:
-        json.dump(unique_output, f, indent=2, ensure_ascii=False)
-    
-    # 打印 Top 5
-    print("\n🏆 Top 5 HTML5 游戏讨论：")
-    for i, post in enumerate(unique_output[:5], 1):
-        print(f"  {i}. [{post['upvotes']}⬆] {post['title'][:50]}...")
-        print(f"     r/webgames | by u/{post['author']} | {post['time']}")
 
-if __name__ == '__main__':
-    main()
+def collect_posts(script: Path, timeout: float) -> list[dict[str, object]]:
+    raw_outputs = (
+        run_reddit_cli(script, ["hot", "webgames", "--limit", "50"], timeout),
+        run_reddit_cli(script, ["new", "webgames", "--limit", "30"], timeout),
+    )
+    unique: dict[str, dict[str, object]] = {}
+    for raw_output in raw_outputs:
+        for post_text in extract_posts(raw_output):
+            post = parse_post(post_text)
+            title = post["title"]
+            if isinstance(title, str) and filter_html5_related(post):
+                unique.setdefault(title, post)
+    return sorted(unique.values(), key=lambda post: int(post["upvotes"]), reverse=True)
+
+
+def emit_json(posts: list[dict[str, object]], output: Path | None) -> None:
+    payload = json.dumps(posts, ensure_ascii=False, indent=2) + "\n"
+    if output is None:
+        sys.stdout.write(payload)
+        return
+    with output.open("x", encoding="utf-8", newline="\n") as output_file:
+        output_file.write(payload)
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    args = parse_args(argv)
+    try:
+        if args.timeout <= 0:
+            raise ConfigurationError("timeout must be greater than zero")
+        script = resolve_reddit_script(args.reddit_script)
+        output = resolve_output(args.output)
+    except ConfigurationError as error:
+        print(f"ERROR: {error}", file=sys.stderr)
+        return 2
+
+    try:
+        posts = collect_posts(script, args.timeout)
+        emit_json(posts, output)
+    except RedditCliError as error:
+        print(f"ERROR: {error}", file=sys.stderr)
+        return 1
+    except OSError:
+        print("ERROR: output could not be written", file=sys.stderr)
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
