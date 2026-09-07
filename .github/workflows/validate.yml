@@ -19,8 +19,8 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install validator dependency
-        run: python -m pip install "PyYAML>=6,<7"
+      - name: Install test dependencies
+        run: python -m pip install "PyYAML>=6,<7" "requests>=2,<3"
 
       - name: Validate skills and Python syntax
         run: python scripts/validate_repo.py
@@ -33,3 +33,9 @@ jobs:
 
       - name: Test Roblox site pipeline contracts
         run: python -m unittest discover -s roblox-site-architect/tests -p "test_*.py" -v
+
+      - name: Test Roblox hit evaluator
+        run: python -m unittest discover -s roblox-hit-evaluator/tests -p "test_*.py" -v
+
+      - name: Test SignalLayer client
+        run: python -m unittest discover -s signallayer-backlinks-client/tests -p "test_*.py" -v

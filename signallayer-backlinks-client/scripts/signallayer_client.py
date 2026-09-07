@@ -5,6 +5,8 @@ The server requires an explicit linkCount. This CLI intentionally supplies a
 client-side default of 200 when --quantity is omitted.
 """
 
+from __future__ import annotations
+
 import argparse
 import json
 import os
