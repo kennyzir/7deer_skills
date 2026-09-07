@@ -17,8 +17,15 @@ except ImportError:
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-SKILL_NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
-ALLOWED_FRONTMATTER_KEYS = {"name", "description", "license", "allowed-tools", "metadata"}
+SKILL_NAME_RE = re.compile(r"^[a-z0-9-]+$")
+ALLOWED_FRONTMATTER_KEYS = {
+    "name",
+    "description",
+    "license",
+    "compatibility",
+    "allowed-tools",
+    "metadata",
+}
 FENCED_BLOCK_RE = re.compile(r"^[ \t]*(```|~~~).*?^[ \t]*\1[ \t]*$", re.MULTILINE | re.DOTALL)
 MARKDOWN_LINK_RE = re.compile(r"!?\[[^\]\n]*\]\(([^)\n]+)\)")
 INLINE_CODE_RE = re.compile(r"`([^`\n]+)`")
@@ -102,12 +109,37 @@ def parse_frontmatter(skill_file: Path, results: Results) -> str:
     if not isinstance(name, str) or not name.strip():
         results.error(f"{relative}: frontmatter requires a non-empty string 'name'")
     else:
+        if len(name) > 64:
+            results.error(f"{relative}: name must be no more than 64 characters")
         if not SKILL_NAME_RE.fullmatch(name):
             results.error(f"{relative}: name '{name}' must use lowercase letters, digits, and hyphens")
+        if name.startswith("-") or name.endswith("-"):
+            results.error(f"{relative}: name must not start or end with a hyphen")
+        if "--" in name:
+            results.error(f"{relative}: name must not contain consecutive hyphens")
         if name != skill_file.parent.name:
             results.error(f"{relative}: name '{name}' does not match directory '{skill_file.parent.name}'")
     if not isinstance(description, str) or not description.strip():
         results.error(f"{relative}: frontmatter requires a non-empty string 'description'")
+    elif len(description.strip()) > 1024:
+        results.error(f"{relative}: description must be no more than 1024 characters")
+
+    compatibility = metadata.get("compatibility")
+    if "compatibility" in metadata:
+        if not isinstance(compatibility, str) or not compatibility.strip():
+            results.error(f"{relative}: compatibility must be a non-empty string when provided")
+        elif len(compatibility.strip()) > 500:
+            results.error(f"{relative}: compatibility must be no more than 500 characters")
+
+    additional_metadata = metadata.get("metadata")
+    if "metadata" in metadata:
+        if not isinstance(additional_metadata, dict):
+            results.error(f"{relative}: metadata must be a mapping")
+        else:
+            for key, value in additional_metadata.items():
+                if not isinstance(key, str) or not isinstance(value, str):
+                    results.error(f"{relative}: metadata keys and values must all be strings")
+                    break
 
     return text[end + 5 :]
 

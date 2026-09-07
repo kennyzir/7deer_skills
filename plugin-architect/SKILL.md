@@ -2,7 +2,7 @@
 name: plugin-architect
 description: 构建 AI Skills/Plugins 的标准方法论 (Based on Anthropic Standard)
 metadata:
-  version: 1.0
+  version: "1.0"
 ---
 
 # 🏗️ Plugin Architect Protocol

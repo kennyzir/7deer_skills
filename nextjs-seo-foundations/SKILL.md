@@ -2,7 +2,7 @@
 name: nextjs-seo-foundations
 description: Next.js 14 应用的生产级 SEO 工程化规范 (Metadata, Schema, Performance)
 metadata:
-  version: 1.0
+  version: "1.0"
 ---
 
 # 🚀 Next.js SEO Foundations

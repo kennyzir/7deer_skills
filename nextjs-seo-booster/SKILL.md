@@ -2,7 +2,7 @@
 name: nextjs-seo-booster
 description: A complete SEO toolkit for Next.js applications, including structured data (Schema.org), dynamic sitemap generation, and meta tags.
 metadata:
-  version: 1.1
+  version: "1.1"
 ---
 
 # Next.js SEO Booster Protocol

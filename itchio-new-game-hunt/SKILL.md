@@ -3,13 +3,7 @@ name: itchio-new-game-hunt
 description: Hunt for fresh browser-playable games on itch.io /newest that are worth building SEO arbitrage sites for. Crawls new releases, scores them by signals, produces ranked shortlist.
 metadata:
   category: software-development
-  triggers:
-    - "itch.io 新游发现"
-    - "找 itch 游戏套利"
-    - "itch new game hunt"
-    - "发现值得建站的 itch 游戏"
-    - "itchio SEO 套利"
-    - "scan itch.io for games"
+  triggers: "itch.io 新游发现; 找 itch 游戏套利; itch new game hunt; 发现值得建站的 itch 游戏; itchio SEO 套利; scan itch.io for games"
 ---
 
 # itch.io New Game Hunt → SEO Arbitrage Discovery
