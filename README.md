@@ -1,6 +1,6 @@
 ﻿# 🛠️ 7Deer Skills — Agent Skills 开放标准技能库
 
-> 25 个可复用的 AI Agent 技能模块，基于 [Agent Skills 开放标准](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)构建。
+> 28 个可复用的 AI Agent 技能模块，基于 [Agent Skills 开放标准](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)构建。
 > 克隆到项目中，你的 AI Agent 即可自动发现并加载这些能力。
 
 这是一个开源技能库，包含了从实际项目中提炼出来的可复用代码模块和指令模板。
@@ -25,7 +25,7 @@
 🔄 **内容自动同步** — `auto-page-sync` 让你只管往仓库写 Markdown，前端页面自动生成。配合 GitHub Actions 定时拉取，Google 爬虫看到的永远是最新内容。支持日报、博客、Changelog、Landing Page 等多种页面模式，一套机制复用所有项目。
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
-[![Skills](https://img.shields.io/badge/skills-26-blue.svg)](#-完整技能清单)
+[![Skills](https://img.shields.io/badge/skills-28-blue.svg)](#-完整技能清单)
 [![Agent Skills Standard](https://img.shields.io/badge/standard-Agent_Skills-8A2BE2.svg)](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](./CONTRIBUTING.md)
 
@@ -114,49 +114,50 @@ cp -r 7deer_skills/google-trends-to-pages .agent/skills/
 ### 数据采集 & 分析
 | # | 技能名称 | 描述 | 适用场景 |
 |---|---------|------|---------|
-| 8 | **roblox-game-data-scraper** | Trello/Discord/Reddit 游戏数据抓取 | Roblox 游戏网站 |
-| 9 | **data-scraper-intent** | 数据提取 & 搜索意图分析（爬虫 + LLM） | SEO/数据采集 |
-| 10 | **youtube-intel** | YouTube 内容情报与竞品监测（Discovery + Monitoring） | 选题策划/竞品分析 |
-| 11 | **youtube-transcribe** | YouTube 视频转录（yt-dlp + whisper） | 视频内容提取 |
+| 9 | **roblox-game-data-scraper** | Trello/Discord/Reddit 游戏数据抓取 | Roblox 游戏网站 |
+| 10 | **data-scraper-intent** | 数据提取 & 搜索意图分析（爬虫 + LLM） | SEO/数据采集 |
+| 11 | **youtube-intel** | YouTube 内容情报与竞品监测（Discovery + Monitoring） | 选题策划/竞品分析 |
+| 12 | **youtube-transcribe** | YouTube 视频转录（yt-dlp + whisper） | 视频内容提取 |
 
 ### 外链建设
 | # | 技能名称 | 描述 | 适用场景 |
 |---|---------|------|---------|
-| 12 | **backlink-discovery** | 外链机会发现引擎（web_search 多轮派生） | 外链建设 |
-| 13 | **backlink-intelligence** | AI/Tools 目录外链情报收集与评估 | 外链情报 |
-| 14 | **keyword-competition-analysis** | 谷歌关键词竞争度分析 | SEO 调研 |
-| 15 | **seo-backlink-submitter** | 批量目录提交工具（Playwright 自动化） | 外链分发 |
-| 16 | **seo-link-strategy** | 外链策略生成器（发现→评估→邮件→自动发送） | 外链营销 |
-| 17 | **signallayer-backlinks-client** | SignalLayer.io API 客户端（natural / standard / drip） | 外链自动化 |
+| 13 | **backlink-discovery** | 外链机会发现引擎（web_search 多轮派生） | 外链建设 |
+| 14 | **backlink-intelligence** | AI/Tools 目录外链情报收集与评估 | 外链情报 |
+| 15 | **keyword-competition-analysis** | 谷歌关键词竞争度分析 | SEO 调研 |
+| 16 | **seo-backlink-submitter** | 批量目录提交工具（Playwright 自动化） | 外链分发 |
+| 17 | **seo-link-strategy** | 外链策略生成器（发现→评估→邮件→自动发送） | 外链营销 |
+| 18 | **signallayer-backlinks-client** | SignalLayer.io API 客户端（natural / standard / drip） | 外链自动化 |
 
 ### 游戏 & 工具
 | # | 技能名称 | 描述 | 适用场景 |
 |---|---------|------|---------|
-| 17 | **multi-game-codes-hub** | 快速生成游戏代码页面（模板 + 组件） | Roblox/游戏网站 |
-| 18 | **rpg-stat-catalyst** | RPG 数值计算核心（属性加点 + 阈值） | 游戏类应用 |
-| 19 | **roblox-site-architect** | Roblox 游戏工具站 SEO 架构 | Roblox 游戏网站 |
+| 19 | **multi-game-codes-hub** | 快速生成游戏代码页面（模板 + 组件） | Roblox/游戏网站 |
+| 20 | **rpg-stat-catalyst** | RPG 数值计算核心（属性加点 + 阈值） | 游戏类应用 |
+| 21 | **roblox-site-architect** | Roblox 游戏工具站 SEO 架构 | Roblox 游戏网站 |
+| 22 | **roblox-hit-evaluator** | 基于公开证据评估 Roblox 游戏30日持续起量潜力 | 游戏研究/候选筛选 |
 
 ### 自动化 & CI/CD
 | # | 技能名称 | 描述 | 适用场景 |
 |---|---------|------|---------|
-| 20 | **auto-page-sync** | 仓库内容自动同步到前端页面（GitHub Actions 定时拉取 + SEO 新鲜度） | 报告/博客/Landing Page 自动更新 |
+| 23 | **auto-page-sync** | 仓库内容自动同步到前端页面（GitHub Actions 定时拉取 + SEO 新鲜度） | 报告/博客/Landing Page 自动更新 |
 
 ### AI & 开发工具
 | # | 技能名称 | 描述 | 适用场景 |
 |---|---------|------|---------|
-| 21 | **python-agent-engine** | Python AI Agent 引擎（ReAct + 工具调用） | Python AI 应用 |
-| 22 | **gemini-thinking-protocol** | 核心认知引擎（第一性原理 + 系统思维） | 复杂需求分析 |
-| 23 | **plugin-architect** | AI Skills/Plugins 构建标准方法论 | 创建新技能 |
+| 24 | **python-agent-engine** | Python AI Agent 引擎（ReAct + 工具调用） | Python AI 应用 |
+| 25 | **gemini-thinking-protocol** | 核心认知引擎（第一性原理 + 系统思维） | 复杂需求分析 |
+| 26 | **plugin-architect** | AI Skills/Plugins 构建标准方法论 | 创建新技能 |
 
 ### 社交媒体 & 内容运营
 | # | 技能名称 | 描述 | 适用场景 |
 |---|---------|------|---------|
-| 24 | **null-axiom-twitter** | Twitter/X 推文自动生成（人设调性 + 五大内容支柱） | 个人品牌运营 |
+| 27 | **null-axiom-twitter** | Twitter/X 推文自动生成（人设调性 + 五大内容支柱） | 个人品牌运营 |
 
 ### 其他工具
 | # | 技能名称 | 描述 | 适用场景 |
 |---|---------|------|---------|
-| 25 | **favicon-icon-generator** | Favicon & Icon 生成器（SVG + PWA） | Web 应用图标系统 |
+| 28 | **favicon-icon-generator** | Favicon & Icon 生成器（SVG + PWA） | Web 应用图标系统 |
 
 ---
 
@@ -359,6 +360,7 @@ intent = classify_intent("how to get six eyes jujutsu infinite")
 ├── keyword-competition-analysis/      # 关键词竞争度分析
 ├── seo-backlink-submitter/            # 批量目录提交工具
 ├── seo-link-strategy/                 # 外链策略生成器
+├── roblox-hit-evaluator/              # Roblox 爆款潜力研究与30日复盘
 ├── roblox-site-architect/             # Roblox 站点架构
 ├── rpg-stat-catalyst/                 # RPG 数值计算核心
 ├── favicon-icon-generator/            # Favicon & Icon 生成器
@@ -395,7 +397,7 @@ OPENAI_API_KEY=your_openai_api_key_here
 
 ## 📊 技能统计
 
-- **总技能数**: 25 个
+- **总技能数**: 28 个
 - **P0 核心技能**: 3 个
 - **代码行数**: 15,000+ 行
 - **文档页数**: 70+ 页
@@ -419,6 +421,9 @@ OPENAI_API_KEY=your_openai_api_key_here
 
 ## 📝 更新日志
 
+### 2026-09-07
+- 🆕 添加 **roblox-hit-evaluator**（公开证据采集、缺失数据界限、可审计评分与30日冻结复盘）
+- 📊 技能总数 → 28
 
 ### 2026-04-12
 - 🔥 添加 **seo-autopilot**（全自动 SEO 内容新鲜度引擎，关键词报告 → 页面生成 → 审计 → 部署）
@@ -492,4 +497,3 @@ MIT License - 开源分享，欢迎使用和贡献。详见 [LICENSE](./LICENSE)
 ---
 
 **⭐ 如果这个技能库对你有帮助，请给个 Star！**
-

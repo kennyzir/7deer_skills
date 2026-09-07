@@ -1,0 +1,241 @@
+{
+  "model_version": "qilu-hit-v0.1",
+  "example_only": true,
+  "data_as_of": "2026-09-06T12:00:00Z",
+  "game": {
+    "universe_id": "999999999999",
+    "root_place_id": "888888888888",
+    "name": "SYNTHETIC EXAMPLE — NOT A REAL GAME",
+    "canonical_url": null,
+    "stage": "GROWING",
+    "identity_verified": true,
+    "identity_evidence_ids": [
+      "E001"
+    ]
+  },
+  "evidence": [
+    {
+      "id": "E001",
+      "source": "synthetic://test-fixture",
+      "locator": "generated-test-data",
+      "claim": "Synthetic data only: demonstrates the input format, not a real researched game.",
+      "kind": "gameplay_observation",
+      "observed_at": "2026-09-06T10:00:00Z",
+      "collected_at": "2026-09-06T11:00:00Z"
+    }
+  ],
+  "metrics": {
+    "ccu_g7": {
+      "status": "derived",
+      "value": 4,
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game.",
+      "evidence_ids": [
+        "E001"
+      ],
+      "method": "synthetic fixture only",
+      "window_start": "2026-08-23T00:00:00Z",
+      "window_end": "2026-09-06T00:00:00Z"
+    },
+    "ccu_floor_g7": {
+      "status": "derived",
+      "value": 1.6,
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game.",
+      "evidence_ids": [
+        "E001"
+      ],
+      "method": "synthetic fixture only",
+      "window_start": "2026-08-23T00:00:00Z",
+      "window_end": "2026-09-06T00:00:00Z"
+    },
+    "visits_accel7": {
+      "status": "derived",
+      "value": 2.4,
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game.",
+      "evidence_ids": [
+        "E001"
+      ],
+      "method": "synthetic fixture only",
+      "window_start": "2026-08-23T00:00:00Z",
+      "window_end": "2026-09-06T00:00:00Z"
+    },
+    "favorites_accel7": {
+      "status": "derived",
+      "value": 1.8,
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game.",
+      "evidence_ids": [
+        "E001"
+      ],
+      "method": "synthetic fixture only",
+      "window_start": "2026-08-23T00:00:00Z",
+      "window_end": "2026-09-06T00:00:00Z"
+    },
+    "core_loop": {
+      "status": "observed",
+      "value": 75,
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game.",
+      "evidence_ids": [
+        "E001"
+      ],
+      "method": "synthetic fixture only",
+      "window_start": "2026-08-23T00:00:00Z",
+      "window_end": "2026-09-06T00:00:00Z"
+    },
+    "replay_depth": {
+      "status": "observed",
+      "value": 75,
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game.",
+      "evidence_ids": [
+        "E001"
+      ],
+      "method": "synthetic fixture only",
+      "window_start": "2026-08-23T00:00:00Z",
+      "window_end": "2026-09-06T00:00:00Z"
+    },
+    "design_difference": {
+      "status": "observed",
+      "value": 50,
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game.",
+      "evidence_ids": [
+        "E001"
+      ],
+      "method": "synthetic fixture only",
+      "window_start": "2026-08-23T00:00:00Z",
+      "window_end": "2026-09-06T00:00:00Z"
+    },
+    "decision_depth": {
+      "status": "observed",
+      "value": 75,
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game.",
+      "evidence_ids": [
+        "E001"
+      ],
+      "method": "synthetic fixture only",
+      "window_start": "2026-08-23T00:00:00Z",
+      "window_end": "2026-09-06T00:00:00Z"
+    },
+    "community_participation": {
+      "status": "observed",
+      "value": 75,
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game.",
+      "evidence_ids": [
+        "E001"
+      ],
+      "method": "synthetic fixture only",
+      "window_start": "2026-08-23T00:00:00Z",
+      "window_end": "2026-09-06T00:00:00Z"
+    },
+    "yt_creators7": {
+      "status": "derived",
+      "value": 18,
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game.",
+      "evidence_ids": [
+        "E001"
+      ],
+      "method": "synthetic fixture only",
+      "window_start": "2026-08-23T00:00:00Z",
+      "window_end": "2026-09-06T00:00:00Z"
+    },
+    "yt_videos_g7": {
+      "status": "derived",
+      "value": 2.3,
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game.",
+      "evidence_ids": [
+        "E001"
+      ],
+      "method": "synthetic fixture only",
+      "window_start": "2026-08-23T00:00:00Z",
+      "window_end": "2026-09-06T00:00:00Z"
+    },
+    "yt_velocity_ratio": {
+      "status": "derived",
+      "value": 1.5,
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game.",
+      "evidence_ids": [
+        "E001"
+      ],
+      "method": "synthetic fixture only",
+      "window_start": "2026-08-23T00:00:00Z",
+      "window_end": "2026-09-06T00:00:00Z"
+    },
+    "shareable_moments": {
+      "status": "observed",
+      "value": 75,
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game.",
+      "evidence_ids": [
+        "E001"
+      ],
+      "method": "synthetic fixture only",
+      "window_start": "2026-08-23T00:00:00Z",
+      "window_end": "2026-09-06T00:00:00Z"
+    },
+    "content_updates14": {
+      "status": "derived",
+      "value": 2,
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game.",
+      "evidence_ids": [
+        "E001"
+      ],
+      "method": "synthetic fixture only",
+      "window_start": "2026-08-23T00:00:00Z",
+      "window_end": "2026-09-06T00:00:00Z"
+    },
+    "post_update_baseline": {
+      "status": "derived",
+      "value": 1.4,
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game.",
+      "evidence_ids": [
+        "E001"
+      ],
+      "method": "synthetic fixture only",
+      "window_start": "2026-08-23T00:00:00Z",
+      "window_end": "2026-09-06T00:00:00Z"
+    }
+  },
+  "diagnostics": {
+    "baseline_ccu": 8000,
+    "baseline_evidence_ids": [
+      "E001"
+    ],
+    "entity_count_verified": null,
+    "new_entities14": null,
+    "first_reward_seconds": null,
+    "paid_promotion": null,
+    "hypotheses": [],
+    "counter_evidence": []
+  },
+  "collection_log": [
+    {
+      "family": "roblox_identity",
+      "status": "success",
+      "detail": "SYNTHETIC fixture only; no actual collection."
+    },
+    {
+      "family": "roblox_history",
+      "status": "success",
+      "detail": "SYNTHETIC fixture only; no actual collection."
+    },
+    {
+      "family": "gameplay",
+      "status": "success",
+      "detail": "SYNTHETIC fixture only; no actual collection."
+    },
+    {
+      "family": "updates",
+      "status": "success",
+      "detail": "SYNTHETIC fixture only; no actual collection."
+    },
+    {
+      "family": "youtube",
+      "status": "success",
+      "detail": "SYNTHETIC fixture only; no actual collection."
+    },
+    {
+      "family": "community",
+      "status": "success",
+      "detail": "SYNTHETIC fixture only; no actual collection."
+    }
+  ],
+  "seo_assessment": {
+    "status": "NOT_REQUESTED"
+  }
+}

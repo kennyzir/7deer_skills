@@ -1,0 +1,370 @@
+{
+  "version": "qilu-hit-v0.1",
+  "calibrated": false,
+  "is_probability": false,
+  "metrics": {
+    "ccu_g7": {
+      "dimension": "G",
+      "weight": 15,
+      "breakpoints": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          10
+        ],
+        [
+          1,
+          30
+        ],
+        [
+          1.5,
+          45
+        ],
+        [
+          2,
+          60
+        ],
+        [
+          3,
+          75
+        ],
+        [
+          5,
+          90
+        ],
+        [
+          8,
+          100
+        ]
+      ],
+      "rubric_values": null
+    },
+    "ccu_floor_g7": {
+      "dimension": "G",
+      "weight": 5,
+      "breakpoints": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          15
+        ],
+        [
+          1,
+          40
+        ],
+        [
+          1.2,
+          60
+        ],
+        [
+          1.5,
+          80
+        ],
+        [
+          2,
+          100
+        ]
+      ],
+      "rubric_values": null
+    },
+    "visits_accel7": {
+      "dimension": "G",
+      "weight": 5,
+      "breakpoints": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          15
+        ],
+        [
+          1,
+          40
+        ],
+        [
+          1.5,
+          65
+        ],
+        [
+          2,
+          85
+        ],
+        [
+          3,
+          100
+        ]
+      ],
+      "rubric_values": null
+    },
+    "favorites_accel7": {
+      "dimension": "G",
+      "weight": 5,
+      "breakpoints": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          15
+        ],
+        [
+          1,
+          40
+        ],
+        [
+          1.5,
+          65
+        ],
+        [
+          2,
+          85
+        ],
+        [
+          3,
+          100
+        ]
+      ],
+      "rubric_values": null
+    },
+    "core_loop": {
+      "dimension": "C",
+      "weight": 8,
+      "breakpoints": null,
+      "rubric_values": [
+        0,
+        25,
+        50,
+        75,
+        100
+      ]
+    },
+    "replay_depth": {
+      "dimension": "C",
+      "weight": 8,
+      "breakpoints": null,
+      "rubric_values": [
+        0,
+        25,
+        50,
+        75,
+        100
+      ]
+    },
+    "design_difference": {
+      "dimension": "C",
+      "weight": 9,
+      "breakpoints": null,
+      "rubric_values": [
+        0,
+        25,
+        50,
+        75,
+        100
+      ]
+    },
+    "decision_depth": {
+      "dimension": "D",
+      "weight": 8,
+      "breakpoints": null,
+      "rubric_values": [
+        0,
+        25,
+        50,
+        75,
+        100
+      ]
+    },
+    "community_participation": {
+      "dimension": "D",
+      "weight": 7,
+      "breakpoints": null,
+      "rubric_values": [
+        0,
+        25,
+        50,
+        75,
+        100
+      ]
+    },
+    "yt_creators7": {
+      "dimension": "V",
+      "weight": 7,
+      "breakpoints": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          15
+        ],
+        [
+          3,
+          30
+        ],
+        [
+          5,
+          45
+        ],
+        [
+          10,
+          60
+        ],
+        [
+          15,
+          75
+        ],
+        [
+          30,
+          90
+        ],
+        [
+          50,
+          100
+        ]
+      ],
+      "rubric_values": null
+    },
+    "yt_videos_g7": {
+      "dimension": "V",
+      "weight": 6,
+      "breakpoints": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          15
+        ],
+        [
+          1,
+          40
+        ],
+        [
+          1.5,
+          65
+        ],
+        [
+          2,
+          85
+        ],
+        [
+          3,
+          100
+        ]
+      ],
+      "rubric_values": null
+    },
+    "yt_velocity_ratio": {
+      "dimension": "V",
+      "weight": 4,
+      "breakpoints": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          15
+        ],
+        [
+          1,
+          40
+        ],
+        [
+          1.5,
+          65
+        ],
+        [
+          2,
+          85
+        ],
+        [
+          3,
+          100
+        ]
+      ],
+      "rubric_values": null
+    },
+    "shareable_moments": {
+      "dimension": "V",
+      "weight": 3,
+      "breakpoints": null,
+      "rubric_values": [
+        0,
+        25,
+        50,
+        75,
+        100
+      ]
+    },
+    "content_updates14": {
+      "dimension": "U",
+      "weight": 3,
+      "breakpoints": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          60
+        ],
+        [
+          2,
+          80
+        ],
+        [
+          3,
+          90
+        ],
+        [
+          4,
+          100
+        ]
+      ],
+      "rubric_values": null
+    },
+    "post_update_baseline": {
+      "dimension": "U",
+      "weight": 7,
+      "breakpoints": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          15
+        ],
+        [
+          1,
+          40
+        ],
+        [
+          1.2,
+          65
+        ],
+        [
+          1.5,
+          85
+        ],
+        [
+          2,
+          100
+        ]
+      ],
+      "rubric_values": null
+    }
+  }
+}

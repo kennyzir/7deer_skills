@@ -1,0 +1,298 @@
+{
+  "model_version": "qilu-hit-v0.1",
+  "data_as_of": "2026-09-06T12:00:00Z",
+  "game": {
+    "universe_id": "999999999999",
+    "root_place_id": "888888888888",
+    "name": "SYNTHETIC EXAMPLE — NOT A REAL GAME",
+    "canonical_url": null,
+    "stage": "GROWING",
+    "identity_verified": true,
+    "identity_evidence_ids": [
+      "E001"
+    ]
+  },
+  "status": "WATCHLIST",
+  "example_only": true,
+  "score": 72.7,
+  "observed_subscore": 72.7,
+  "weighted_evidence_coverage": 1.0,
+  "evidence_sufficiency": "HIGH",
+  "score_bounds": [
+    72.7,
+    72.7
+  ],
+  "bounds_meaning": "Missing-data best/worst bounds, NOT a confidence interval or probability.",
+  "dimensions": {
+    "G": {
+      "weight": 30,
+      "observed_weight": 30,
+      "contribution": 22.75,
+      "score": 75.8,
+      "coverage": 1.0
+    },
+    "C": {
+      "weight": 25,
+      "observed_weight": 25,
+      "contribution": 16.5,
+      "score": 66.0,
+      "coverage": 1.0
+    },
+    "D": {
+      "weight": 15,
+      "observed_weight": 15,
+      "contribution": 11.25,
+      "score": 75.0,
+      "coverage": 1.0
+    },
+    "V": {
+      "weight": 20,
+      "observed_weight": 20,
+      "contribution": 15.2,
+      "score": 76.0,
+      "coverage": 1.0
+    },
+    "U": {
+      "weight": 10,
+      "observed_weight": 10,
+      "contribution": 6.95,
+      "score": 69.5,
+      "coverage": 1.0
+    }
+  },
+  "metric_scores": [
+    {
+      "metric": "ccu_g7",
+      "dimension": "G",
+      "weight": 15,
+      "status": "derived",
+      "value": 4,
+      "score": 75.0,
+      "contribution": 11.25,
+      "evidence_ids": [
+        "E001"
+      ],
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game."
+    },
+    {
+      "metric": "ccu_floor_g7",
+      "dimension": "G",
+      "weight": 5,
+      "status": "derived",
+      "value": 1.6,
+      "score": 80.0,
+      "contribution": 4.0,
+      "evidence_ids": [
+        "E001"
+      ],
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game."
+    },
+    {
+      "metric": "visits_accel7",
+      "dimension": "G",
+      "weight": 5,
+      "status": "derived",
+      "value": 2.4,
+      "score": 85.0,
+      "contribution": 4.25,
+      "evidence_ids": [
+        "E001"
+      ],
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game."
+    },
+    {
+      "metric": "favorites_accel7",
+      "dimension": "G",
+      "weight": 5,
+      "status": "derived",
+      "value": 1.8,
+      "score": 65.0,
+      "contribution": 3.25,
+      "evidence_ids": [
+        "E001"
+      ],
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game."
+    },
+    {
+      "metric": "core_loop",
+      "dimension": "C",
+      "weight": 8,
+      "status": "observed",
+      "value": 75,
+      "score": 75,
+      "contribution": 6.0,
+      "evidence_ids": [
+        "E001"
+      ],
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game."
+    },
+    {
+      "metric": "replay_depth",
+      "dimension": "C",
+      "weight": 8,
+      "status": "observed",
+      "value": 75,
+      "score": 75,
+      "contribution": 6.0,
+      "evidence_ids": [
+        "E001"
+      ],
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game."
+    },
+    {
+      "metric": "design_difference",
+      "dimension": "C",
+      "weight": 9,
+      "status": "observed",
+      "value": 50,
+      "score": 50,
+      "contribution": 4.5,
+      "evidence_ids": [
+        "E001"
+      ],
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game."
+    },
+    {
+      "metric": "decision_depth",
+      "dimension": "D",
+      "weight": 8,
+      "status": "observed",
+      "value": 75,
+      "score": 75,
+      "contribution": 6.0,
+      "evidence_ids": [
+        "E001"
+      ],
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game."
+    },
+    {
+      "metric": "community_participation",
+      "dimension": "D",
+      "weight": 7,
+      "status": "observed",
+      "value": 75,
+      "score": 75,
+      "contribution": 5.25,
+      "evidence_ids": [
+        "E001"
+      ],
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game."
+    },
+    {
+      "metric": "yt_creators7",
+      "dimension": "V",
+      "weight": 7,
+      "status": "derived",
+      "value": 18,
+      "score": 75.0,
+      "contribution": 5.25,
+      "evidence_ids": [
+        "E001"
+      ],
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game."
+    },
+    {
+      "metric": "yt_videos_g7",
+      "dimension": "V",
+      "weight": 6,
+      "status": "derived",
+      "value": 2.3,
+      "score": 85.0,
+      "contribution": 5.1,
+      "evidence_ids": [
+        "E001"
+      ],
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game."
+    },
+    {
+      "metric": "yt_velocity_ratio",
+      "dimension": "V",
+      "weight": 4,
+      "status": "derived",
+      "value": 1.5,
+      "score": 65.0,
+      "contribution": 2.6,
+      "evidence_ids": [
+        "E001"
+      ],
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game."
+    },
+    {
+      "metric": "shareable_moments",
+      "dimension": "V",
+      "weight": 3,
+      "status": "observed",
+      "value": 75,
+      "score": 75,
+      "contribution": 2.25,
+      "evidence_ids": [
+        "E001"
+      ],
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game."
+    },
+    {
+      "metric": "content_updates14",
+      "dimension": "U",
+      "weight": 3,
+      "status": "derived",
+      "value": 2,
+      "score": 80.0,
+      "contribution": 2.4,
+      "evidence_ids": [
+        "E001"
+      ],
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game."
+    },
+    {
+      "metric": "post_update_baseline",
+      "dimension": "U",
+      "weight": 7,
+      "status": "derived",
+      "value": 1.4,
+      "score": 65.0,
+      "contribution": 4.55,
+      "evidence_ids": [
+        "E001"
+      ],
+      "reason": "SYNTHETIC: input-format demonstration, not evidence of a real game."
+    }
+  ],
+  "missing_metrics": [],
+  "collection_status": "COMPLETE_WITHIN_DECLARED_SCOPE",
+  "unattempted_families": [],
+  "unresolved_families": [],
+  "warnings": [
+    "SYNTHETIC EXAMPLE: do not use in real prediction performance statistics."
+  ],
+  "probability": null,
+  "prediction": {
+    "model_version": "qilu-hit-v0.1",
+    "assessment_hash": "8240aaeefa9b55adb60f6386db88ca4a7fe022cddbeff032920c310208b1b3ac",
+    "game_universe_id": "999999999999",
+    "frozen_at": "2026-09-06T12:00:00Z",
+    "outcome_window_start": "2026-09-07T00:00:00Z",
+    "outcome_window_end": "2026-10-07T00:00:00Z",
+    "horizon_days": 30,
+    "primary_target": "sustained_breakout_30d",
+    "example_only": true,
+    "baseline_ccu": 8000,
+    "daily_median_threshold": 24000,
+    "required_consecutive_days": 3,
+    "scale_hit_daily_median_threshold": 100000,
+    "peak_diagnostic_threshold": 100000,
+    "vote": "ABSTAIN",
+    "score": 72.7,
+    "observed_weight": 100,
+    "is_probability": false,
+    "sampling_policy": {
+      "min_hour_bins": 18,
+      "max_missing_hour_run": 4,
+      "timezone": "UTC"
+    },
+    "prediction_hash": "daa8fc67719cd81b1991ca90cd825049e162cac0fd0063b840d85cd3ea8c055c"
+  },
+  "seo_assessment": {
+    "status": "NOT_REQUESTED"
+  },
+  "next_action": "Investigate the highest-weight missing input that could change the decision. Do not auto-build."
+}

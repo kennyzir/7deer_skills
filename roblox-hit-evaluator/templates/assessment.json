@@ -1,0 +1,197 @@
+{
+  "model_version": "qilu-hit-v0.1",
+  "example_only": false,
+  "data_as_of": "REPLACE_WITH_END_OF_COLLECTION_UTC",
+  "game": {
+    "universe_id": "REPLACE",
+    "root_place_id": null,
+    "name": "REPLACE",
+    "canonical_url": null,
+    "stage": "UNKNOWN",
+    "identity_verified": false,
+    "identity_evidence_ids": []
+  },
+  "evidence": [],
+  "metrics": {
+    "ccu_g7": {
+      "status": "not_collected",
+      "value": null,
+      "reason": "尚未执行本项采集；Agent必须更新。",
+      "evidence_ids": [],
+      "method": null,
+      "window_start": null,
+      "window_end": null
+    },
+    "ccu_floor_g7": {
+      "status": "not_collected",
+      "value": null,
+      "reason": "尚未执行本项采集；Agent必须更新。",
+      "evidence_ids": [],
+      "method": null,
+      "window_start": null,
+      "window_end": null
+    },
+    "visits_accel7": {
+      "status": "not_collected",
+      "value": null,
+      "reason": "尚未执行本项采集；Agent必须更新。",
+      "evidence_ids": [],
+      "method": null,
+      "window_start": null,
+      "window_end": null
+    },
+    "favorites_accel7": {
+      "status": "not_collected",
+      "value": null,
+      "reason": "尚未执行本项采集；Agent必须更新。",
+      "evidence_ids": [],
+      "method": null,
+      "window_start": null,
+      "window_end": null
+    },
+    "core_loop": {
+      "status": "not_collected",
+      "value": null,
+      "reason": "尚未执行本项采集；Agent必须更新。",
+      "evidence_ids": [],
+      "method": null,
+      "window_start": null,
+      "window_end": null
+    },
+    "replay_depth": {
+      "status": "not_collected",
+      "value": null,
+      "reason": "尚未执行本项采集；Agent必须更新。",
+      "evidence_ids": [],
+      "method": null,
+      "window_start": null,
+      "window_end": null
+    },
+    "design_difference": {
+      "status": "not_collected",
+      "value": null,
+      "reason": "尚未执行本项采集；Agent必须更新。",
+      "evidence_ids": [],
+      "method": null,
+      "window_start": null,
+      "window_end": null
+    },
+    "decision_depth": {
+      "status": "not_collected",
+      "value": null,
+      "reason": "尚未执行本项采集；Agent必须更新。",
+      "evidence_ids": [],
+      "method": null,
+      "window_start": null,
+      "window_end": null
+    },
+    "community_participation": {
+      "status": "not_collected",
+      "value": null,
+      "reason": "尚未执行本项采集；Agent必须更新。",
+      "evidence_ids": [],
+      "method": null,
+      "window_start": null,
+      "window_end": null
+    },
+    "yt_creators7": {
+      "status": "not_collected",
+      "value": null,
+      "reason": "尚未执行本项采集；Agent必须更新。",
+      "evidence_ids": [],
+      "method": null,
+      "window_start": null,
+      "window_end": null
+    },
+    "yt_videos_g7": {
+      "status": "not_collected",
+      "value": null,
+      "reason": "尚未执行本项采集；Agent必须更新。",
+      "evidence_ids": [],
+      "method": null,
+      "window_start": null,
+      "window_end": null
+    },
+    "yt_velocity_ratio": {
+      "status": "not_collected",
+      "value": null,
+      "reason": "尚未执行本项采集；Agent必须更新。",
+      "evidence_ids": [],
+      "method": null,
+      "window_start": null,
+      "window_end": null
+    },
+    "shareable_moments": {
+      "status": "not_collected",
+      "value": null,
+      "reason": "尚未执行本项采集；Agent必须更新。",
+      "evidence_ids": [],
+      "method": null,
+      "window_start": null,
+      "window_end": null
+    },
+    "content_updates14": {
+      "status": "not_collected",
+      "value": null,
+      "reason": "尚未执行本项采集；Agent必须更新。",
+      "evidence_ids": [],
+      "method": null,
+      "window_start": null,
+      "window_end": null
+    },
+    "post_update_baseline": {
+      "status": "not_collected",
+      "value": null,
+      "reason": "尚未执行本项采集；Agent必须更新。",
+      "evidence_ids": [],
+      "method": null,
+      "window_start": null,
+      "window_end": null
+    }
+  },
+  "diagnostics": {
+    "baseline_ccu": null,
+    "baseline_evidence_ids": [],
+    "entity_count_verified": null,
+    "new_entities14": null,
+    "first_reward_seconds": null,
+    "paid_promotion": null,
+    "hypotheses": [],
+    "counter_evidence": []
+  },
+  "collection_log": [
+    {
+      "family": "roblox_identity",
+      "status": "not_attempted",
+      "detail": "Agent必须实际尝试并替换本项记录。"
+    },
+    {
+      "family": "roblox_history",
+      "status": "not_attempted",
+      "detail": "Agent必须实际尝试并替换本项记录。"
+    },
+    {
+      "family": "gameplay",
+      "status": "not_attempted",
+      "detail": "Agent必须实际尝试并替换本项记录。"
+    },
+    {
+      "family": "updates",
+      "status": "not_attempted",
+      "detail": "Agent必须实际尝试并替换本项记录。"
+    },
+    {
+      "family": "youtube",
+      "status": "not_attempted",
+      "detail": "Agent必须实际尝试并替换本项记录。"
+    },
+    {
+      "family": "community",
+      "status": "not_attempted",
+      "detail": "Agent必须实际尝试并替换本项记录。"
+    }
+  ],
+  "seo_assessment": {
+    "status": "NOT_REQUESTED"
+  }
+}
