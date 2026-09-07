@@ -102,6 +102,36 @@ class CatalogTests(unittest.TestCase):
         for artifact in ARTIFACTS:
             self.assertIn(artifact, self.readme)
 
+    def test_readme_keeps_customer_value_and_single_star_cta(self) -> None:
+        for outcome in (
+            "不想凭感觉选游戏",
+            "避免关键词、证据、页面、上线和外链各自断裂",
+            "可恢复、可复盘",
+        ):
+            self.assertIn(outcome, self.readme)
+        star_cta_lines = [
+            line
+            for line in self.readme.splitlines()
+            if "stargazers" in line and "持续更新" in line and "独立站开发者" in line
+        ]
+        self.assertEqual(len(star_cta_lines), 1)
+
+    def test_readme_states_concrete_rb_auto_boundary(self) -> None:
+        for boundary in ("私有 Agent 工具源码", "操作说明", "首站陪跑"):
+            self.assertIn(boundary, self.readme)
+        self.assertIn("已经使用 AI/Codex 做站", self.readme)
+        self.assertIn("基于真实数据持续运营", self.readme)
+        self.assertIn("不承诺搜索排名、流量或收入", self.readme)
+
+    def test_readme_does_not_regress_to_examples_or_directory_tree(self) -> None:
+        self.assertNotIn("使用示例", self.readme)
+        self.assertNotRegex(self.readme, r"[├└]──")
+        headings = [line.casefold() for line in self.readme.splitlines() if line.startswith("#")]
+        self.assertFalse(
+            any("目录结构" in heading or "repository structure" in heading for heading in headings)
+        )
+        self.assertLessEqual(len(self.readme.splitlines()), 125)
+
     def test_relative_readme_and_catalog_links_exist(self) -> None:
         for document in (README, CATALOG_DOCUMENT):
             content = document.read_text(encoding="utf-8")
