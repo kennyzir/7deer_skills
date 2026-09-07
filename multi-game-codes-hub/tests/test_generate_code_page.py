@@ -60,17 +60,58 @@ class GenerateCodePageTests(unittest.TestCase):
             )
             content = output.read_text(encoding="utf-8")
 
-        self.assertIn("https://codes.example/yba", content)
-        self.assertIn("January 2031", content)
-        self.assertIn("2031-01-02", content)
+        self.assertIn('const baseUrl = "https://codes.example";', content)
+        self.assertIn("canonical: `${baseUrl}/${gameSlug}`", content)
+        self.assertIn('const currentMonth = "January";', content)
+        self.assertIn('const currentYear = "2031";', content)
+        self.assertIn('const generatedDate = "2031-01-02";', content)
         self.assertNotRegex(content, re.compile(r"{{\s*[^{}]+\s*}}"))
         self.assertNotIn("jujutsucalc.com", content)
+        self.assertNotIn("How to Redeem", content)
+        self.assertNotIn("Frequently Asked Questions", content)
+        self.assertNotIn("'@type': 'FAQPage'", content)
+        self.assertNotIn("/tier-list", content)
+        self.assertNotIn("/wiki", content)
+        self.assertNotIn("verified daily", content.lower())
+        self.assertNotIn("updated daily", content.lower())
+        self.assertNotIn("check back daily", content.lower())
+        self.assertIn("must be independently verified", content)
+
+    def test_special_user_strings_are_json_safe_and_optional_sections_render(self) -> None:
+        config = valid_config()
+        config["gameName"] = "King's \"Arena\"\nDeluxe \\ Edition"
+        config["redemptionSteps"] = ["Open King's \"Menu\".\nChoose Codes \\ Redeem."]
+        config["faq"] = [
+            {
+                "question": "What's the \"code\" field?\nIs it safe?",
+                "answer": "Use the supplied game's menu \\ code field.",
+            }
+        ]
+        output_path = self.temp_path / "special.tsx"
+
+        generator.generate_code_page(config, output_path)
+        content = output_path.read_text(encoding="utf-8")
+
+        self.assertIn(
+            f"const gameName = {json.dumps(config['gameName'], ensure_ascii=False)};",
+            content,
+        )
+        self.assertIn(json.dumps(config["redemptionSteps"][0], ensure_ascii=False), content)
+        self.assertIn(json.dumps(config["faq"][0]["question"], ensure_ascii=False), content)
+        self.assertIn("export default function CodesPage()", content)
+        self.assertIn("How to Redeem {gameName} Codes", content)
+        self.assertIn("Frequently Asked Questions", content)
+        self.assertIn("'@type': 'FAQPage'", content)
+        self.assertNotRegex(content, re.compile(r"{{\s*[^{}]+\s*}}"))
 
     def test_explicit_template_path_is_relative_to_caller(self) -> None:
         config_path = self.temp_path / "input.json"
         config_path.write_text(json.dumps(valid_config()), encoding="utf-8")
         template_path = self.temp_path / "custom.tsx"
-        template_path.write_text("{{gameName}} at {{baseUrl}}", encoding="utf-8")
+        template_path.write_text(
+            "const name = {{gameNameJson}}; const base = {{baseUrlJson}};",
+            encoding="utf-8",
+        )
 
         with working_directory(self.temp_path), redirect_stdout(io.StringIO()):
             exit_code = generator.main(
@@ -87,7 +128,7 @@ class GenerateCodePageTests(unittest.TestCase):
         self.assertEqual(exit_code, 0)
         self.assertEqual(
             (self.temp_path / "custom-output.tsx").read_text(encoding="utf-8"),
-            "Your Bizarre Adventure at https://codes.example",
+            'const name = "Your Bizarre Adventure"; const base = "https://codes.example";',
         )
 
     def test_invalid_base_url_fails_without_output(self) -> None:
@@ -119,6 +160,23 @@ class GenerateCodePageTests(unittest.TestCase):
 
         self.assertFalse(output_path.exists())
 
+    def test_unknown_top_level_and_code_fields_fail_without_output(self) -> None:
+        cases = []
+        unknown_top = valid_config()
+        unknown_top["gameDescription"] = "ignored before schema validation"
+        cases.append((unknown_top, "unknown top-level field", "top.tsx"))
+
+        unknown_code = valid_config()
+        unknown_code["activeCodes"][0]["addedDate"] = "2031-01-01"
+        cases.append((unknown_code, r"activeCodes\[0\].*addedDate", "code.tsx"))
+
+        for config, message, filename in cases:
+            with self.subTest(filename=filename):
+                output_path = self.temp_path / filename
+                with self.assertRaisesRegex(generator.InputError, message):
+                    generator.generate_code_page(config, output_path)
+                self.assertFalse(output_path.exists())
+
     def test_quick_game_codes_command_runs_from_repository_root(self) -> None:
         output_path = self.temp_path / "quick-example.tsx"
         result = subprocess.run(
@@ -138,7 +196,8 @@ class GenerateCodePageTests(unittest.TestCase):
 
         self.assertEqual(result.returncode, 0, result.stderr)
         content = output_path.read_text(encoding="utf-8")
-        self.assertIn("https://example.com/yba", content)
+        self.assertIn('const baseUrl = "https://example.com";', content)
+        self.assertIn("canonical: `${baseUrl}/${gameSlug}`", content)
         self.assertIn("GULLIBLE", content)
         self.assertNotRegex(content, re.compile(r"{{\s*[^{}]+\s*}}"))
         self.assertNotIn("jujutsucalc.com", content)

@@ -2,18 +2,16 @@
   "gameName": "Your Bizarre Adventure",
   "gameSlug": "yba",
   "baseUrl": "https://example.com",
-  "gameDescription": "Your Bizarre Adventure is a popular Roblox game based on JoJo's Bizarre Adventure.",
-  "lastUpdated": "2026-04-11",
   "activeCodes": [
-    { "code": "GULLIBLE", "reward": "5 Lucky Arrows", "addedDate": "2026-04-01" },
-    { "code": "STANDPROUD", "reward": "Free Rokakaka", "addedDate": "2026-03-28" },
-    { "code": "BIZARRE2026", "reward": "10,000 Cash", "addedDate": "2026-03-15" }
+    { "code": "GULLIBLE", "reward": "5 Lucky Arrows" },
+    { "code": "STANDPROUD", "reward": "Free Rokakaka" },
+    { "code": "BIZARRE2026", "reward": "10,000 Cash" }
   ],
   "expiredCodes": [
-    { "code": "NEWYEAR26", "reward": "3 Lucky Arrows", "expiredDate": "2026-02-01" },
-    { "code": "HOLIDAY25", "reward": "5,000 Cash", "expiredDate": "2025-12-31" }
+    { "code": "NEWYEAR26", "reward": "3 Lucky Arrows" },
+    { "code": "HOLIDAY25", "reward": "5,000 Cash" }
   ],
-  "howToRedeem": [
+  "redemptionSteps": [
     "Launch Your Bizarre Adventure in Roblox",
     "Click the Menu button on the left side",
     "Click the Settings gear icon",

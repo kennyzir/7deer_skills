@@ -1,6 +1,6 @@
 ---
 name: multi-game-codes-hub
-description: Generate a Next.js Roblox codes page from validated JSON using a reusable TSX template. Use when creating or regenerating a single game's active/expired codes page with metadata, copy controls, FAQ, and breadcrumb schema.
+description: Generate a Next.js Roblox codes page from validated JSON using a reusable TSX template. Use when creating or regenerating a single game's active/expired codes page with metadata, copy controls, optional supplied redemption/FAQ content, and breadcrumb schema.
 metadata:
   keywords: roblox codes, promo codes, game codes, nextjs page generator, faq schema
 ---
@@ -12,7 +12,7 @@ Generate one Next.js codes page from explicit game data. The included generator 
 ## Implemented resources
 
 - [resources/generate_code_page.py](resources/generate_code_page.py): validates JSON and renders a page.
-- [resources/templates/codes_page.tsx](resources/templates/codes_page.tsx): Next.js page template for active/expired codes, redemption guidance, metadata, FAQ, and breadcrumbs.
+- [resources/templates/codes_page.tsx](resources/templates/codes_page.tsx): Next.js page template for active/expired codes, metadata, breadcrumbs, and optional supplied redemption/FAQ content.
 - [resources/components/CopyButton.tsx](resources/components/CopyButton.tsx): client-side copy control with a fallback.
 - [resources/components/CodeTable.tsx](resources/components/CodeTable.tsx): optional reusable code table.
 - [resources/schemas/faq_schema.ts](resources/schemas/faq_schema.ts): FAQ, breadcrumb, and item-list schema helpers.
@@ -40,6 +40,16 @@ The generated template imports `@/components/CopyButton`; copy the included comp
       "code": "OLDCODE",
       "reward": "25 Spins"
     }
+  ],
+  "redemptionSteps": [
+    "Open the game's menu.",
+    "Enter a supplied code in the code field."
+  ],
+  "faq": [
+    {
+      "question": "Where is the code field?",
+      "answer": "The supplied source says it is in the game menu."
+    }
   ]
 }
 ```
@@ -49,7 +59,14 @@ Required top-level fields:
 - `gameName`: non-empty string.
 - `gameSlug`: lowercase letters/digits separated by single hyphens.
 - `baseUrl`: absolute HTTP(S) site URL without credentials, query, or fragment. A trailing slash is normalized away.
-- `activeCodes` and `expiredCodes`: arrays when provided; each entry requires non-empty string `code` and `reward`.
+
+Optional top-level fields:
+
+- `activeCodes` and `expiredCodes`: arrays; each entry supports only `code`, `reward`, `expiryDate`, and `conditions`. `code` and `reward` are required non-empty strings.
+- `redemptionSteps`: array of non-empty strings. The section is omitted when the array is absent or empty.
+- `faq`: array of objects containing only non-empty `question` and `answer` strings. The FAQ section and FAQ schema are omitted when absent or empty.
+
+Unknown top-level, code-entry, or FAQ-entry fields are errors; the generator never silently ignores input.
 
 `baseUrl` drives canonical and breadcrumb URLs. Never reuse an example domain for a real site.
 
@@ -78,15 +95,21 @@ Generation uses the current UTC month, year, and date. It fails before writing o
 
 ## Template variables
 
-- `{{gameName}}`
-- `{{gameSlug}}`
-- `{{baseUrl}}`
-- `{{rewards}}`
+- `{{gameNameJson}}`
+- `{{gameSlugJson}}`
+- `{{baseUrlJson}}`
+- `{{rewardsJson}}`
 - `{{activeCodesData}}`
 - `{{expiredCodesData}}`
-- `{{lastUpdated}}`
-- `{{currentMonth}}`
-- `{{currentYear}}`
+- `{{redemptionStepsData}}`
+- `{{faqItemsData}}`
+- `{{generatedDateJson}}`
+- `{{currentMonthJson}}`
+- `{{currentYearJson}}`
+- `{{redemptionSection}}`
+- `{{faqSchemaDefinition}}`
+- `{{faqSchemaScript}}`
+- `{{faqSection}}`
 
 ## Verification
 
@@ -96,7 +119,7 @@ After generation:
 2. Confirm no `{{...}}` placeholder remains.
 3. Copy or adapt the required component imports.
 4. Run the target Next.js project's typecheck, lint, and build.
-5. Review codes and redemption instructions against a cited primary source; the generator does not verify factual accuracy.
+5. Review codes and any supplied redemption/FAQ content against a cited primary source; the generator does not verify factual accuracy.
 
 ## Roadmap and boundaries
 

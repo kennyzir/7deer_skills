@@ -22,11 +22,21 @@ Create a JSON file containing the target site's base URL and code data:
       "code": "OLDCODE",
       "reward": "25 Spins"
     }
+  ],
+  "redemptionSteps": [
+    "Open the game's menu.",
+    "Enter a supplied code in the code field."
+  ],
+  "faq": [
+    {
+      "question": "Where is the code field?",
+      "answer": "The supplied source says it is in the game menu."
+    }
   ]
 }
 ```
 
-`gameName`, `gameSlug`, and `baseUrl` are required. Code arrays default to empty, but every entry present must contain string `code` and `reward` values. `baseUrl` must be an absolute HTTP(S) URL.
+`gameName`, `gameSlug`, and `baseUrl` are required. Code arrays default to empty; entries support only `code`, `reward`, `expiryDate`, and `conditions`, with `code` and `reward` required. Optional `redemptionSteps` is a string array, and optional `faq` entries contain only `question` and `answer`. Unknown fields fail validation instead of being ignored.
 
 ## Generate
 
@@ -56,6 +66,7 @@ The generator replaces:
 - game name and slug;
 - canonical/breadcrumb base URL;
 - active and expired code arrays;
+- optional supplied redemption steps and FAQ entries;
 - detected reward summary;
 - current UTC month, year, and date.
 

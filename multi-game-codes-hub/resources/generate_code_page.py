@@ -18,6 +18,53 @@ DEFAULT_TEMPLATE_PATH = SKILL_ROOT / "resources" / "templates" / "codes_page.tsx
 TEMPLATE_VARIABLE_RE = re.compile(r"{{\s*[^{}]+\s*}}")
 SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 REQUIRED_CODE_FIELDS = ("code", "reward")
+TOP_LEVEL_FIELDS = {
+    "gameName",
+    "gameSlug",
+    "baseUrl",
+    "activeCodes",
+    "expiredCodes",
+    "redemptionSteps",
+    "faq",
+}
+CODE_FIELDS = {"code", "reward", "expiryDate", "conditions"}
+FAQ_FIELDS = {"question", "answer"}
+
+REDEMPTION_SECTION = """        <section className="mb-12 p-6 bg-gradient-to-br from-zinc-900 to-black border border-zinc-800 rounded-lg">
+          <h2 className="text-2xl font-bold mb-4">How to Redeem {gameName} Codes</h2>
+          <ol className="list-decimal list-inside space-y-3 text-sm text-zinc-400">
+            {redemptionSteps.map((step, index) => (
+              <li key={index}>{step}</li>
+            ))}
+          </ol>
+        </section>"""
+
+FAQ_SCHEMA_DEFINITION = """  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map(item => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer },
+    })),
+  };
+  const faqSchemaMarkup = { __html: JSON.stringify(faqSchema) };"""
+
+FAQ_SCHEMA_SCRIPT = """      <script type="application/ld+json" dangerouslySetInnerHTML={faqSchemaMarkup} />"""
+
+FAQ_SECTION = """        <section className="mb-8">
+          <h2 className="text-xl font-bold mb-4">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {faqItems.map((item, index) => (
+              <details key={index} className="group border border-glass-border rounded-lg bg-card/40">
+                <summary className="cursor-pointer p-4 font-medium text-zinc-200 group-open:border-b group-open:border-glass-border">
+                  {item.question}
+                </summary>
+                <div className="p-4 text-sm text-zinc-400">{item.answer}</div>
+              </details>
+            ))}
+          </div>
+        </section>"""
 
 
 class InputError(ValueError):
@@ -41,21 +88,82 @@ def validate_base_url(value: Any) -> str:
 def validate_codes(value: Any, field_name: str) -> List[Dict[str, Any]]:
     if not isinstance(value, list):
         raise InputError(f"{field_name} must be an array")
+    normalized = []
     for index, entry in enumerate(value):
         if not isinstance(entry, dict):
             raise InputError(f"{field_name}[{index}] must be an object")
+        unknown_fields = set(entry) - CODE_FIELDS
+        if unknown_fields:
+            raise InputError(
+                f"{field_name}[{index}] contains unknown field(s): "
+                f"{', '.join(sorted(unknown_fields))}"
+            )
         for required_field in REQUIRED_CODE_FIELDS:
             field_value = entry.get(required_field)
             if not isinstance(field_value, str) or not field_value.strip():
                 raise InputError(
                     f"{field_name}[{index}].{required_field} must be a non-empty string"
                 )
-    return value
+        normalized_entry = {
+            field: entry[field].strip() if isinstance(entry[field], str) else entry[field]
+            for field in entry
+        }
+        for optional_field in CODE_FIELDS - set(REQUIRED_CODE_FIELDS):
+            if optional_field in normalized_entry and (
+                not isinstance(normalized_entry[optional_field], str)
+                or not normalized_entry[optional_field]
+            ):
+                raise InputError(
+                    f"{field_name}[{index}].{optional_field} must be a non-empty string"
+                )
+        normalized.append(normalized_entry)
+    return normalized
+
+
+def validate_string_array(value: Any, field_name: str) -> List[str]:
+    if not isinstance(value, list):
+        raise InputError(f"{field_name} must be an array")
+    normalized = []
+    for index, entry in enumerate(value):
+        if not isinstance(entry, str) or not entry.strip():
+            raise InputError(f"{field_name}[{index}] must be a non-empty string")
+        normalized.append(entry.strip())
+    return normalized
+
+
+def validate_faq(value: Any) -> List[Dict[str, str]]:
+    if not isinstance(value, list):
+        raise InputError("faq must be an array")
+    normalized = []
+    for index, entry in enumerate(value):
+        if not isinstance(entry, dict):
+            raise InputError(f"faq[{index}] must be an object")
+        unknown_fields = set(entry) - FAQ_FIELDS
+        if unknown_fields:
+            raise InputError(
+                f"faq[{index}] contains unknown field(s): "
+                f"{', '.join(sorted(unknown_fields))}"
+            )
+        normalized_entry = {}
+        for field in sorted(FAQ_FIELDS):
+            field_value = entry.get(field)
+            if not isinstance(field_value, str) or not field_value.strip():
+                raise InputError(f"faq[{index}].{field} must be a non-empty string")
+            normalized_entry[field] = field_value.strip()
+        normalized.append(normalized_entry)
+    return normalized
 
 
 def validate_config(data: Any) -> Dict[str, Any]:
     if not isinstance(data, dict):
         raise InputError("input JSON must be an object")
+
+    unknown_fields = set(data) - TOP_LEVEL_FIELDS
+    if unknown_fields:
+        raise InputError(
+            f"input JSON contains unknown top-level field(s): "
+            f"{', '.join(sorted(unknown_fields))}"
+        )
 
     game_name = data.get("gameName")
     if not isinstance(game_name, str) or not game_name.strip():
@@ -71,6 +179,10 @@ def validate_config(data: Any) -> Dict[str, Any]:
         "baseUrl": validate_base_url(data.get("baseUrl")),
         "activeCodes": validate_codes(data.get("activeCodes", []), "activeCodes"),
         "expiredCodes": validate_codes(data.get("expiredCodes", []), "expiredCodes"),
+        "redemptionSteps": validate_string_array(
+            data.get("redemptionSteps", []), "redemptionSteps"
+        ),
+        "faq": validate_faq(data.get("faq", [])),
     }
 
 
@@ -121,16 +233,25 @@ def generate_code_page(
     else:
         current = current.astimezone(timezone.utc)
 
+    has_faq = bool(data["faq"])
     replacements = {
-        "{{gameName}}": data["gameName"],
-        "{{gameSlug}}": data["gameSlug"],
-        "{{baseUrl}}": data["baseUrl"],
-        "{{rewards}}": reward_summary(data["activeCodes"]),
+        "{{gameNameJson}}": json.dumps(data["gameName"], ensure_ascii=False),
+        "{{gameSlugJson}}": json.dumps(data["gameSlug"], ensure_ascii=False),
+        "{{baseUrlJson}}": json.dumps(data["baseUrl"], ensure_ascii=False),
+        "{{rewardsJson}}": json.dumps(reward_summary(data["activeCodes"]), ensure_ascii=False),
         "{{activeCodesData}}": json.dumps(data["activeCodes"], indent=2, ensure_ascii=False),
         "{{expiredCodesData}}": json.dumps(data["expiredCodes"], indent=2, ensure_ascii=False),
-        "{{lastUpdated}}": current.strftime("%Y-%m-%d"),
-        "{{currentMonth}}": current.strftime("%B"),
-        "{{currentYear}}": current.strftime("%Y"),
+        "{{redemptionStepsData}}": json.dumps(
+            data["redemptionSteps"], indent=2, ensure_ascii=False
+        ),
+        "{{faqItemsData}}": json.dumps(data["faq"], indent=2, ensure_ascii=False),
+        "{{generatedDateJson}}": json.dumps(current.strftime("%Y-%m-%d")),
+        "{{currentMonthJson}}": json.dumps(current.strftime("%B")),
+        "{{currentYearJson}}": json.dumps(current.strftime("%Y")),
+        "{{redemptionSection}}": REDEMPTION_SECTION if data["redemptionSteps"] else "",
+        "{{faqSchemaDefinition}}": FAQ_SCHEMA_DEFINITION if has_faq else "",
+        "{{faqSchemaScript}}": FAQ_SCHEMA_SCRIPT if has_faq else "",
+        "{{faqSection}}": FAQ_SECTION if has_faq else "",
     }
 
     content = template

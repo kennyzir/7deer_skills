@@ -1,41 +1,20 @@
-export function generateFAQSchema(gameName: string) {
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+export function generateFAQSchema(items: FAQItem[]) {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: `How do I redeem ${gameName} codes?`,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: `Open ${gameName}, click Settings, find the Codes button, enter the code exactly as shown, and click Submit.`
-        }
-      },
-      {
-        '@type': 'Question',
-        name: `Why isn't my ${gameName} code working?`,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Codes are case-sensitive and may have expired. Check the expiration date and ensure correct spelling without extra spaces.'
-        }
-      },
-      {
-        '@type': 'Question',
-        name: `How often are new ${gameName} codes released?`,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'New codes are typically released during game updates, milestones, and special events. Check back weekly for new codes!'
-        }
-      },
-      {
-        '@type': 'Question',
-        name: `Do ${gameName} codes expire?`,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Yes, most codes expire after a few weeks or when the next update is released. We update this page daily to mark expired codes.'
-        }
+    mainEntity: items.map(item => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer
       }
-    ]
+    }))
   };
 }
 

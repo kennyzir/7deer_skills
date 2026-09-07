@@ -19,7 +19,8 @@ python3 - <<'PY'
 from pathlib import Path
 
 content = Path("/tmp/7deer-quick-game-codes.tsx").read_text(encoding="utf-8")
-assert "https://example.com/yba" in content
+assert 'const baseUrl = "https://example.com";' in content
+assert "canonical: `${baseUrl}/${gameSlug}`" in content
 assert "GULLIBLE" in content
 assert "{{" not in content and "}}" not in content
 assert "jujutsucalc.com" not in content
