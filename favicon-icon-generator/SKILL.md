@@ -1,3 +1,8 @@
+---
+name: favicon-icon-generator
+description: Generate and validate favicon and application icon systems for web projects. Use when creating SVG icons, web manifests, framework metadata, or cross-platform favicon assets.
+---
+
 # Favicon & Icon Generator Skill
 
 ## Overview

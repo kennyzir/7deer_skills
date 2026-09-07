@@ -1,3 +1,8 @@
+---
+name: youtube-game-scout
+description: 从 YouTube 订阅内容中抓取并分析新游戏信号，生成带评分和平台分类的游戏发现报告。适用于通过 Chrome CDP 监测频道和筛选潜力游戏。
+---
+
 # YouTube Game Scout Skill
 
 ## 概述
