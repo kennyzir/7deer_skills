@@ -23,6 +23,10 @@ EXPECTED_CI_TESTS = {
     "seo-backlink-submitter": 7,
     "signallayer-backlinks-client": 6,
 }
+EXPECTED_SAFETY_CHECKS = {
+    "html5-game-radar": 5,
+    "seo-link-strategy": 7,
+}
 ARTIFACTS = (
     "01-opportunity-report.md",
     "02-keyword-map.md",
@@ -60,7 +64,7 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(len(configured), len(set(configured)))
         self.assertEqual(set(configured), actual)
 
-    def test_ci_maturity_is_limited_to_the_five_tested_skills(self) -> None:
+    def test_catalog_separates_behavior_and_safety_maturity(self) -> None:
         tested = {
             entry["name"]: entry["ci_tests"]
             for entry in self.entries
@@ -70,8 +74,25 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(sum(tested.values()), 85)
         for entry in self.entries:
             if entry["name"] not in EXPECTED_CI_TESTS:
-                self.assertEqual(entry["maturity"], "not-ci-tested")
                 self.assertNotIn("ci_tests", entry)
+        safety_checked = {
+            entry["name"]: entry["ci_checks"]
+            for entry in self.entries
+            if entry["maturity"] == "safety-checked"
+        }
+        self.assertEqual(safety_checked, EXPECTED_SAFETY_CHECKS)
+        self.assertEqual(sum(safety_checked.values()), 12)
+        untested = [
+            entry for entry in self.entries if entry["maturity"] == "not-ci-tested"
+        ]
+        self.assertEqual(len(untested), 25)
+        for entry in untested:
+            self.assertNotIn("ci_tests", entry)
+            self.assertNotIn("ci_checks", entry)
+        self.assertIn(
+            "当前五个明确标记的技能在 CI 中共运行 85 个行为测试",
+            self.readme,
+        )
 
     def test_generated_catalog_has_no_drift(self) -> None:
         result = subprocess.run(

@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 import argparse
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import json
 from pathlib import Path
 import re
@@ -15,6 +15,7 @@ from urllib.parse import urlsplit
 
 EMAIL_PATTERN = re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.I)
 ALLOWED_FIELDS = {"name", "source_url", "observed_at", "captured_text", "notes"}
+MAX_CLOCK_SKEW = timedelta(minutes=5)
 
 
 class InputError(ValueError):
@@ -69,6 +70,8 @@ def validate_observed_at(value: Any) -> str | None:
         raise InputError("observed_at must be a valid UTC ISO-8601 timestamp") from error
     if parsed.utcoffset() != timezone.utc.utcoffset(parsed):
         raise InputError("observed_at must be UTC")
+    if parsed > datetime.now(timezone.utc) + MAX_CLOCK_SKEW:
+        raise InputError("observed_at must not be in the future")
     return timestamp
 
 
@@ -84,7 +87,7 @@ def read_input(input_path: Path) -> dict[str, Any]:
     return payload
 
 
-def normalize_opportunity(value: Any) -> dict[str, object]:
+def normalize_opportunity(value: Any) -> list[dict[str, object]]:
     if not isinstance(value, dict):
         raise InputError("each opportunity must be an object")
     unexpected = set(value) - ALLOWED_FIELDS
@@ -111,21 +114,38 @@ def normalize_opportunity(value: Any) -> dict[str, object]:
             seen.add(normalized)
             emails.append(match)
 
-    status = "observed" if emails and observed_at else "unknown"
-    if status == "unknown" and not notes.strip():
-        notes = "No contact address was observed in the supplied evidence."
-    return {
-        "name": name,
-        "source_url": source_url,
-        "observed_at": observed_at,
-        "status": status,
-        "emails": emails if status == "observed" else [],
-        "notes": notes.strip(),
-    }
+    context = notes.strip()
+    if emails and observed_at:
+        return [
+            {
+                "name": name,
+                "email": email,
+                "source_url": source_url,
+                "observed_at": observed_at,
+                "status": "observed",
+                "context": context,
+            }
+            for email in emails
+        ]
+
+    return [
+        {
+            "name": name,
+            "email": None,
+            "source_url": source_url,
+            "observed_at": observed_at,
+            "status": "unknown",
+            "context": context or "No contact address was observed in the supplied evidence.",
+        }
+    ]
 
 
 def build_result(payload: dict[str, Any]) -> dict[str, object]:
-    contacts = [normalize_opportunity(item) for item in payload["opportunities"]]
+    contacts = [
+        contact
+        for item in payload["opportunities"]
+        for contact in normalize_opportunity(item)
+    ]
     return {
         "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace(
             "+00:00", "Z"

@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 import argparse
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import json
 from pathlib import Path
 import re
@@ -25,6 +25,7 @@ CONTACT_FIELDS = {
     "status",
     "context",
 }
+MAX_CLOCK_SKEW = timedelta(minutes=5)
 
 
 class InputError(ValueError):
@@ -77,9 +78,11 @@ def validate_observed_at(value: Any) -> str:
     if not re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", timestamp):
         raise InputError("contact.observed_at must be a UTC ISO-8601 timestamp")
     try:
-        datetime.fromisoformat(timestamp.removesuffix("Z") + "+00:00")
+        observed_at = datetime.fromisoformat(timestamp.removesuffix("Z") + "+00:00")
     except ValueError as error:
         raise InputError("contact.observed_at must be a valid UTC time") from error
+    if observed_at > datetime.now(timezone.utc) + MAX_CLOCK_SKEW:
+        raise InputError("contact.observed_at must not be in the future")
     return timestamp
 
 

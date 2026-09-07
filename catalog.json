@@ -20,7 +20,7 @@
         {"name": "seo-autopilot", "maturity": "not-ci-tested", "boundary": "external-gated"},
         {"name": "auto-page-sync", "maturity": "not-ci-tested", "boundary": "external-gated"},
         {"name": "backlink-discovery", "maturity": "not-ci-tested", "boundary": "research-output"},
-        {"name": "seo-link-strategy", "maturity": "not-ci-tested", "boundary": "external-gated"},
+        {"name": "seo-link-strategy", "maturity": "safety-checked", "ci_checks": 7, "boundary": "external-gated"},
         {"name": "seo-backlink-submitter", "maturity": "ci-tested", "ci_tests": 7, "boundary": "external-gated"},
         {"name": "signallayer-backlinks-client", "maturity": "ci-tested", "ci_tests": 6, "boundary": "external-gated"},
         {"name": "backlink-intelligence", "maturity": "not-ci-tested", "boundary": "external-gated"}
@@ -35,7 +35,7 @@
         {"name": "youtube-game-keywords", "maturity": "not-ci-tested", "boundary": "research-output"},
         {"name": "youtube-intel", "maturity": "not-ci-tested", "boundary": "research-output"},
         {"name": "youtube-content-gen", "maturity": "not-ci-tested", "boundary": "research-output"},
-        {"name": "html5-game-radar", "maturity": "not-ci-tested", "boundary": "research-output"},
+        {"name": "html5-game-radar", "maturity": "safety-checked", "ci_checks": 5, "boundary": "research-output"},
         {"name": "itchio-new-game-hunt", "maturity": "not-ci-tested", "boundary": "research-output"},
         {"name": "x-demand-radar", "maturity": "not-ci-tested", "boundary": "research-output"},
         {"name": "data-scraper-intent", "maturity": "not-ci-tested", "boundary": "research-output"}

@@ -102,6 +102,9 @@ class RedditMonitorTests(unittest.TestCase):
         self.assertNotIn("/tmp/reddit_output.json", content)
         self.assertIn('--output "$REDDIT_OUTPUT"', content)
         self.assertIn("HTML5_REDDIT_OUTPUT", content)
+        self.assertIn("date -u", content)
+        self.assertIn("_$$.json", content)
+        self.assertNotIn('$PWD/reddit_output.json', content)
 
 
 if __name__ == "__main__":

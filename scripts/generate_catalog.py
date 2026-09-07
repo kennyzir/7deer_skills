@@ -21,6 +21,7 @@ CONFIG_PATH = REPO_ROOT / "catalog.json"
 OUTPUT_PATH = REPO_ROOT / "CATALOG.md"
 MATURITY_LABELS = {
     "ci-tested": "CI-tested",
+    "safety-checked": "Safety/contract checked",
     "not-ci-tested": "Not in repository CI",
 }
 BOUNDARY_LABELS = {
@@ -118,8 +119,19 @@ def validate_config(config: dict[str, Any], descriptions: dict[str, str]) -> Non
             if maturity == "ci-tested":
                 if not isinstance(skill.get("ci_tests"), int) or skill["ci_tests"] <= 0:
                     raise CatalogError(f"CI-tested skill {name} requires a positive ci_tests count")
-            elif "ci_tests" in skill:
-                raise CatalogError(f"non-CI-tested skill {name} must not declare ci_tests")
+                if "ci_checks" in skill:
+                    raise CatalogError(f"CI-tested skill {name} must not declare ci_checks")
+            elif maturity == "safety-checked":
+                if not isinstance(skill.get("ci_checks"), int) or skill["ci_checks"] <= 0:
+                    raise CatalogError(
+                        f"safety-checked skill {name} requires a positive ci_checks count"
+                    )
+                if "ci_tests" in skill:
+                    raise CatalogError(f"safety-checked skill {name} must not declare ci_tests")
+            elif "ci_tests" in skill or "ci_checks" in skill:
+                raise CatalogError(
+                    f"skill without repository checks {name} must not declare check counts"
+                )
             configured_names.append(name)
 
     duplicates = sorted({name for name in configured_names if configured_names.count(name) > 1})
@@ -140,8 +152,13 @@ def escape_table_cell(value: str) -> str:
 
 def render_catalog(config: dict[str, Any], descriptions: dict[str, str]) -> str:
     skill_total = len(descriptions)
-    test_total = sum(
+    behavior_test_total = sum(
         skill.get("ci_tests", 0)
+        for group in config["groups"]
+        for skill in group["skills"]
+    )
+    safety_check_total = sum(
+        skill.get("ci_checks", 0)
         for group in config["groups"]
         for skill in group["skills"]
     )
@@ -152,8 +169,9 @@ def render_catalog(config: dict[str, Any], descriptions: dict[str, str]) -> str:
         "",
         f"This catalog covers all {skill_total} top-level Skills. Descriptions come directly from each `SKILL.md` frontmatter; grouping, maturity, and execution boundaries come from `catalog.json`.",
         "",
-        "Maturity is deliberately narrow: **CI-tested** means this repository currently treats that Skill's behavior suite as a maturity signal. **Not in repository CI** means no comprehensive CI maturity claim; a row may still have narrow safety or contract checks. It does not mean unusable or low quality. The current CI-tested rows account for "
-        f"{test_total} tests.",
+        "Maturity is deliberately narrow: **CI-tested** means a complete behavior suite is used as a maturity signal; **Safety/contract checked** means CI covers only narrow default-safety or input/output contracts; **Not in repository CI** means no repository-level checks. The current CI-tested rows account for "
+        f"{behavior_test_total} behavior tests, while safety/contract-checked rows account for "
+        f"{safety_check_total} checks.",
         "",
         "Execution-boundary labels describe the broadest behavior represented by a Skill. Reading external sources still depends on tool availability and access. Sending, submitting, deploying, purchasing, scheduling, or calling a paid/mutating API always requires explicit user authorization.",
         "",
@@ -174,6 +192,8 @@ def render_catalog(config: dict[str, Any], descriptions: dict[str, str]) -> str:
             maturity = MATURITY_LABELS[skill["maturity"]]
             if skill["maturity"] == "ci-tested":
                 maturity += f" ({skill['ci_tests']} tests)"
+            elif skill["maturity"] == "safety-checked":
+                maturity += f" ({skill['ci_checks']} checks)"
             lines.append(
                 "| "
                 f"[`{skill['name']}`]({skill['name']}/SKILL.md) | "

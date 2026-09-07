@@ -30,10 +30,10 @@ Each opportunity or contact record must support these fields:
 |---|---|
 | `name` | User-provided or runtime-discovered platform/contact label. |
 | `source_url` | Exact page where the opportunity or contact evidence was observed. |
-| `observed_at` | UTC timestamp for the actual observation, or `null`. |
+| `observed_at` | Past UTC timestamp for the actual observation, or `null`. Future times are rejected. |
 | `status` | `observed` only with captured evidence and time; otherwise `unknown`. |
-| `email` / `emails` | Values present in captured evidence; never constructed from hints. |
-| `notes` | Limits, conflicts, access failures, payment/login requirements, or next check. |
+| `email` | One value present in captured evidence, or `null`; never constructed from hints. |
+| `context` | User-supplied limits, conflicts, access failures, or relevance notes. |
 
 Keep sources and observation times when data is handed from research to drafting. If a page cannot be checked, preserve the candidate with `status: unknown` rather than filling likely values.
 
@@ -49,7 +49,7 @@ Input JSON:
     {
       "name": "Example Directory",
       "source_url": "https://directory.example/contact",
-      "observed_at": "2030-01-15T09:45:00Z",
+      "observed_at": "2020-01-15T09:45:00Z",
       "captured_text": "Contact: editor@example.com",
       "notes": "Captured from the public contact page."
     },
@@ -68,11 +68,13 @@ python3 scripts/contact_discoverer.py --input candidates.json
 python3 scripts/contact_discoverer.py --input candidates.json --output contacts.json
 ```
 
-Without `--output`, JSON goes to stdout. An existing output path is never overwritten. The first record can become `observed`; the second remains `unknown` with no invented email.
+Without `--output`, JSON goes to stdout. An existing output path is never overwritten. The first record can become `observed`; the second remains `unknown` with no invented email. If supplied evidence contains multiple distinct addresses, the normalizer emits one contact record per address so every record keeps a single unambiguous recipient.
 
 ## 2. Generate local drafts
 
 Use [scripts/email_generator.py](scripts/email_generator.py) with user-provided product, sender, and contact data. It performs no browsing and contains no sending implementation.
+
+The normalizer's `contacts` array is already the exact contact schema accepted here. Copy that array unchanged into a new object with `product` and `sender`; omit only the normalizer's top-level `generated_at`. No field renaming or implicit conversion is required.
 
 ```json
 {
@@ -91,7 +93,7 @@ Use [scripts/email_generator.py](scripts/email_generator.py) with user-provided 
       "name": "Example Directory",
       "email": "editor@example.com",
       "source_url": "https://directory.example/contact",
-      "observed_at": "2030-01-15T09:45:00Z",
+      "observed_at": "2020-01-15T09:45:00Z",
       "status": "observed",
       "context": "User-provided reason this audience is relevant."
     }

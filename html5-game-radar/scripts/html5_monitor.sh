@@ -20,7 +20,11 @@ echo "========================================"
 # Source functions
 #===========================================================
 SCRIPT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
-REDDIT_OUTPUT="${HTML5_REDDIT_OUTPUT:-$PWD/reddit_output.json}"
+if [ -n "${HTML5_REDDIT_OUTPUT:-}" ]; then
+    REDDIT_OUTPUT="$HTML5_REDDIT_OUTPUT"
+else
+    REDDIT_OUTPUT="$PWD/reddit_output_$(date -u '+%Y%m%dT%H%M%SZ')_$$.json"
+fi
 
 if [ -f "$SCRIPT_DIR/itch_scraper.py" ]; then
     echo "[1/5] 抓取 itch.io..."
