@@ -1,0 +1,4 @@
+interface:
+  display_name: "Roblox Homepage Ranking Auditor"
+  short_description: "Audit RB Auto golden homepage structure"
+  default_prompt: "Inspect this repository and rendered homepage with the RB Auto Golden Homepage model. Score structural ranking potential, map root/child intent ownership, detect blockers, and return minimal repair work orders without changing code."

@@ -1,0 +1,106 @@
+schema_version: "1.0"
+model_name: rb-auto-golden-homepage
+model_scope: homepage_structural_ranking_power
+
+exclusions_from_structural_score:
+  - backlinks
+  - domain_age
+  - current_traffic
+  - keyword_search_volume
+  - brand_strength
+  - factual_source_citations
+  - freshness_dates
+  - maintainability
+  - future_extensibility
+  - production_cost
+  - generic_risk_penalty
+
+rating_scale:
+  minimum: 0
+  maximum: 5
+  increment: 0.5
+
+dimensions:
+  main_topic_clarity:
+    weight: 10
+    pass_minimum: 8
+  core_intent_satisfaction:
+    weight: 20
+    pass_minimum: 17
+  query_coverage:
+    weight: 14
+  information_gain:
+    weight: 18
+    pass_minimum: 14
+  content_depth_specificity:
+    weight: 14
+  topic_structure:
+    weight: 8
+  internal_link_efficiency:
+    weight: 10
+  search_intent_boundary:
+    weight: 6
+    pass_minimum: 5
+
+verdicts:
+  structural:
+    pass:
+      minimum_total: 85
+      require_no_blockers: true
+      require_dimension_minimums: true
+    remediate:
+      minimum_total: 75
+    blocked:
+      below_total: 75
+      any_fatal_blocker: true
+  publication:
+    ready_requires:
+      - structural_pass
+      - technical_eligibility_pass
+      - fact_consistency_pass
+      - delivery_runtime_pass
+
+query_treatment_values:
+  primary: 1.0
+  direct: 1.0
+  summary: 0.6
+  status: 0.5
+  link-only: 0.25
+  keyword-only: 0.0
+  excluded: 0.0
+
+information_gain_levels:
+  L0: generic genre-level explanation
+  L1: concrete game-specific facts, entities, or steps
+  L2: comparison, priority, consequence, threshold, or decision route
+  L3: calculator, planner, comparator, queryable database, or personalized result
+
+fatal_structural_blockers:
+  - HOME_NO_PRIMARY_PLAYER_JOB
+  - HOME_NO_MAIN_ENGINE
+  - HOME_ENGINE_MISMATCH
+  - HOME_KEYWORD_ONLY_MODULE
+  - HOME_EMPTY_CODES_PROMISE
+  - HOME_FAKE_TIER_LIST
+  - HOME_LOW_GAME_SPECIFICITY
+  - HOME_NO_L2_OR_L3_GAIN
+  - HOME_FULL_CHILD_DUPLICATION
+  - HOME_INTENT_OWNER_CONFLICT
+  - HOME_DUPLICATE_FULL_TOOL
+  - HOME_P0_LINK_MISSING
+  - HOME_GENERIC_FALLBACK
+
+similarity_thresholds:
+  section_review: 0.35
+  section_block: 0.50
+  minimum_meaningful_tokens: 50
+  tool_signature_block: 0.70
+
+audit_confidence_weights:
+  rendered_html: 25
+  homepage_source_and_data: 20
+  child_routes: 15
+  runtime_interaction: 15
+  keyword_or_homepage_plan: 10
+  route_and_link_manifest: 10
+  mobile_viewport: 5

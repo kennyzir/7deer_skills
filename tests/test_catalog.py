@@ -60,7 +60,7 @@ class CatalogTests(unittest.TestCase):
             frontmatter(path)["name"] for path in sorted(REPO_ROOT.glob("*/SKILL.md"))
         }
         configured = [entry["name"] for entry in self.entries]
-        self.assertEqual(len(actual), 32)
+        self.assertEqual(len(actual), 33)
         self.assertEqual(len(configured), len(set(configured)))
         self.assertEqual(set(configured), actual)
 
@@ -85,7 +85,7 @@ class CatalogTests(unittest.TestCase):
         untested = [
             entry for entry in self.entries if entry["maturity"] == "not-ci-tested"
         ]
-        self.assertEqual(len(untested), 25)
+        self.assertEqual(len(untested), 26)
         for entry in untested:
             self.assertNotIn("ci_tests", entry)
             self.assertNotIn("ci_checks", entry)

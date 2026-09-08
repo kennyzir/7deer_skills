@@ -2,7 +2,7 @@
 
 # Skill Catalog
 
-This catalog covers all 32 top-level Skills. Descriptions come directly from each `SKILL.md` frontmatter; grouping, maturity, and execution boundaries come from `catalog.json`.
+This catalog covers all 33 top-level Skills. Descriptions come directly from each `SKILL.md` frontmatter; grouping, maturity, and execution boundaries come from `catalog.json`.
 
 Maturity is deliberately narrow: **CI-tested** means a complete behavior suite is used as a maturity signal; **Safety/contract checked** means CI covers only narrow default-safety or input/output contracts; **Not in repository CI** means no repository-level checks. The current CI-tested rows account for 85 behavior tests, while safety/contract-checked rows account for 12 checks.
 
@@ -16,6 +16,7 @@ Skills that map directly to opportunity selection, evidence-backed site delivery
 |---|---|---|---|
 | [`roblox-hit-evaluator`](roblox-hit-evaluator/SKILL.md) | Evaluate a Roblox game's 30-day breakout potential from public evidence with auditable scores, missing-data bounds, frozen forecasts, and outcome reviews. | CI-tested (47 tests) | May read external sources; produces research/local artifacts |
 | [`roblox-site-architect`](roblox-site-architect/SKILL.md) | Orchestrate an evidence-backed seven-stage Roblox site growth pipeline from opportunity assessment through keyword research, source collection, site planning, SEO QA, freshness, and growth. Use when work needs staged artifacts and explicit handoffs rather than a one-click site generator. | CI-tested (17 tests) | Can reach external side effects; explicit authorization required |
+| [`roblox-homepage-ranking-auditor`](roblox-homepage-ranking-auditor/SKILL.md) | Audit a Roblox or game-site homepage against the RB Auto Golden Homepage model. Use when Codex must inspect a live homepage or repository, identify the primary player job and main engine, score structural ranking potential across eight dimensions, detect empty query modules, weak information gain, root/child intent conflicts, duplicate full tools, generic content, and missing P0 internal links, then return evidence-backed PASS/REMEDIATE/BLOCKED and minimal repair orders. Do not use for generic site-wide SEO audits, backlink analysis, traffic forecasting, or factual accuracy scoring alone. | Not in repository CI | May read external sources; produces research/local artifacts |
 | [`site-keyword-research`](site-keyword-research/SKILL.md) | 整站关键词研究与深度挖掘。输入一个网站域名或URL，自动完成：首页主题分析 → 递归式关键词树扩展（Google联想词多级分叉）→ 去重合并 → 关键词分层 → 10词SERP详细分析 → 3词定方向，最终输出完整 Markdown 报告。 触发条件：用户说"分析网站关键词"、"关键词研究"、"keyword research"、"挖掘某网站的关键词"、或提供一个URL说"分析这个网站的SEO关键词机会"。 | Not in repository CI | May read external sources; produces research/local artifacts |
 | [`keyword-competition-analysis`](keyword-competition-analysis/SKILL.md) | 谷歌关键词竞争度分析。当用户要求分析某个关键词的搜索竞争度、SEO难度、关键词排名机会、市场调研，或要求"分析下XXX关键词"时触发。使用浏览器抓取Google搜索结果页作为主要数据源，输出结构化竞争度报告。 | Not in repository CI | May read external sources; produces research/local artifacts |
 | [`google-trends-to-pages`](google-trends-to-pages/SKILL.md) | 将 Google Trends 关键词分类为搜索意图并生成 SEO 页面结构建议。适用于根据搜索量和增长率确定内容优先级、标题层级、内链与 Schema 类型。 | Not in repository CI | May read external sources; produces research/local artifacts |

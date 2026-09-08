@@ -8,6 +8,7 @@
       "skills": [
         {"name": "roblox-hit-evaluator", "maturity": "ci-tested", "ci_tests": 47, "boundary": "research-output"},
         {"name": "roblox-site-architect", "maturity": "ci-tested", "ci_tests": 17, "boundary": "external-gated"},
+        {"name": "roblox-homepage-ranking-auditor", "maturity": "not-ci-tested", "boundary": "research-output"},
         {"name": "site-keyword-research", "maturity": "not-ci-tested", "boundary": "research-output"},
         {"name": "keyword-competition-analysis", "maturity": "not-ci-tested", "boundary": "research-output"},
         {"name": "google-trends-to-pages", "maturity": "not-ci-tested", "boundary": "research-output"},

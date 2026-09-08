@@ -1,0 +1,200 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://7deer.example/schemas/homepage-audit-v1.json",
+  "title": "RB Auto Golden Homepage Audit",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "target",
+    "baseline",
+    "strategy",
+    "structural_score",
+    "intent_ownership",
+    "blockers",
+    "gates",
+    "verdicts",
+    "audit_confidence",
+    "repair_orders"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "target": {
+      "type": "object",
+      "required": ["homepage"],
+      "properties": {
+        "homepage": {"type": "string"},
+        "game_name": {"type": ["string", "null"]},
+        "repository": {"type": ["string", "null"]}
+      },
+      "additionalProperties": true
+    },
+    "baseline": {
+      "type": "object",
+      "required": ["audit_mode", "audited_at"],
+      "properties": {
+        "audit_mode": {"enum": ["combined", "repository", "url", "html"]},
+        "audited_at": {"type": "string"},
+        "branch": {"type": ["string", "null"]},
+        "git_sha": {"type": ["string", "null"]},
+        "worktree": {"enum": ["clean", "dirty", "unavailable"]},
+        "limitations": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "strategy": {
+      "type": "object",
+      "required": ["primary_player_job", "player_problem", "main_engine", "layout_variant", "basis"],
+      "properties": {
+        "game_archetype": {"type": ["string", "null"]},
+        "primary_player_job": {"type": ["string", "null"]},
+        "player_problem": {"type": ["string", "null"]},
+        "main_engine": {
+          "type": "object",
+          "required": ["type", "mode", "location"],
+          "properties": {
+            "type": {"type": "string"},
+            "mode": {"type": "string"},
+            "location": {"type": "string"},
+            "fit_summary": {"type": ["string", "null"]}
+          },
+          "additionalProperties": true
+        },
+        "layout_variant": {"type": "string"},
+        "basis": {"enum": ["DECLARED", "OBSERVED", "INFERRED"]}
+      },
+      "additionalProperties": true
+    },
+    "structural_score": {
+      "type": "object",
+      "required": ["total", "dimensions"],
+      "properties": {
+        "total": {"type": "number", "minimum": 0, "maximum": 100},
+        "dimensions": {
+          "type": "object",
+          "required": [
+            "main_topic_clarity",
+            "core_intent_satisfaction",
+            "query_coverage",
+            "information_gain",
+            "content_depth_specificity",
+            "topic_structure",
+            "internal_link_efficiency",
+            "search_intent_boundary"
+          ],
+          "additionalProperties": {"$ref": "#/$defs/dimensionScore"}
+        }
+      }
+    },
+    "intent_ownership": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["query_family", "canonical_owner", "homepage_treatment", "conflict"],
+        "properties": {
+          "query_family": {"type": "string"},
+          "canonical_owner": {"type": "string"},
+          "homepage_treatment": {"enum": ["primary", "direct", "summary", "status", "link-only", "keyword-only", "excluded"]},
+          "answer_depth": {"enum": ["full", "partial", "status-only", "none"]},
+          "conflict": {"type": "boolean"},
+          "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}}
+        },
+        "additionalProperties": true
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code", "severity", "evidence", "effect"],
+        "properties": {
+          "code": {"type": "string"},
+          "severity": {"enum": ["fatal", "major", "minor"]},
+          "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}},
+          "effect": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "gates": {
+      "type": "object",
+      "required": ["technical_eligibility", "fact_consistency", "delivery_runtime"],
+      "properties": {
+        "technical_eligibility": {"$ref": "#/$defs/gate"},
+        "fact_consistency": {"$ref": "#/$defs/gate"},
+        "delivery_runtime": {"$ref": "#/$defs/gate"}
+      }
+    },
+    "verdicts": {
+      "type": "object",
+      "required": ["structural", "publication"],
+      "properties": {
+        "structural": {"enum": ["PASS", "REMEDIATE", "BLOCKED"]},
+        "publication": {"enum": ["READY", "NOT_READY", "NOT_VERIFIED"]},
+        "decisive_reason": {"type": "string"}
+      }
+    },
+    "audit_confidence": {
+      "type": "object",
+      "required": ["score", "available_evidence", "missing_evidence"],
+      "properties": {
+        "score": {"type": "integer", "minimum": 0, "maximum": 100},
+        "available_evidence": {"type": "array", "items": {"type": "string"}},
+        "missing_evidence": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "repair_orders": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/repairOrder"}
+    }
+  },
+  "$defs": {
+    "evidence": {
+      "type": "object",
+      "required": ["source", "observation"],
+      "properties": {
+        "source": {"type": "string"},
+        "location": {"type": ["string", "null"]},
+        "observation": {"type": "string"},
+        "kind": {"enum": ["source", "rendered", "runtime", "route", "inference"]}
+      },
+      "additionalProperties": true
+    },
+    "dimensionScore": {
+      "type": "object",
+      "required": ["raw_rating", "weight", "weighted_score", "reason", "evidence"],
+      "properties": {
+        "raw_rating": {"type": "number", "minimum": 0, "maximum": 5, "multipleOf": 0.5},
+        "weight": {"type": "number"},
+        "weighted_score": {"type": "number"},
+        "reason": {"type": "string"},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}}
+      }
+    },
+    "gate": {
+      "type": "object",
+      "required": ["result", "evidence"],
+      "properties": {
+        "result": {"enum": ["PASS", "FAIL", "NOT_CHECKED"]},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}},
+        "effect": {"type": ["string", "null"]}
+      }
+    },
+    "repairOrder": {
+      "type": "object",
+      "required": ["id", "priority", "problem_code", "user_result", "change", "acceptance_criteria", "out_of_scope"],
+      "properties": {
+        "id": {"type": "string"},
+        "priority": {"enum": ["P0", "P1", "P2"]},
+        "problem_code": {"type": "string"},
+        "user_result": {"type": "string"},
+        "allowed_files": {"type": "array", "items": {"type": "string"}},
+        "must_preserve": {"type": "array", "items": {"type": "string"}},
+        "change": {"type": "string"},
+        "acceptance_criteria": {"type": "array", "items": {"type": "string"}},
+        "tests": {"type": "array", "items": {"type": "string"}},
+        "out_of_scope": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    }
+  }
+}
